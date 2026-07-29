@@ -6,7 +6,6 @@ use ConsoleComponents\Writer;
 use DomainException;
 use Valet\CommandLine;
 use Valet\Contracts\PackageManager;
-use Valet\Contracts\ServiceManager;
 
 class Pacman implements PackageManager
 {
@@ -14,10 +13,6 @@ class Pacman implements PackageManager
      * @var CommandLine
      */
     public $cli;
-    /**
-     * @var ServiceManager
-     */
-    public $serviceManager;
     /**
      * @var array
      */
@@ -34,10 +29,9 @@ class Pacman implements PackageManager
     /**
      * Create a new Apt instance.
      */
-    public function __construct(CommandLine $cli, ServiceManager $serviceManager)
+    public function __construct(CommandLine $cli)
     {
         $this->cli = $cli;
-        $this->serviceManager = $serviceManager;
     }
 
     /**
@@ -137,14 +131,6 @@ class Pacman implements PackageManager
         $version = preg_replace('~[^\d]~', '', $version);
         $pattern = 'php{VERSION_WITHOUT_DOT}-';
         return str_replace('{VERSION_WITHOUT_DOT}', $version, $pattern);
-    }
-
-    /**
-     * Restart dnsmasq in Ubuntu.
-     */
-    public function restartNetworkManager(): void
-    {
-        $this->serviceManager->restart('NetworkManager');
     }
 
     /**

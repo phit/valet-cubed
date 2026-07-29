@@ -6,9 +6,9 @@ use ConsoleComponents\Writer;
 use Mockery;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Valet\Configuration;
-use Valet\DnsMasq;
 use Valet\Facades\Configuration as ConfigurationFacade;
 use Valet\Filesystem;
+use Valet\Hosts;
 use Valet\Mysql;
 use Valet\Nginx;
 use Valet\Ngrok;
@@ -23,6 +23,13 @@ use function Valet\swap;
 
 class CliTest extends TestCase
 {
+    private function expectHostsRestart(): void
+    {
+        $hosts = Mockery::mock(Hosts::class);
+        $hosts->shouldReceive('restart')->withNoArgs()->once();
+        swap(Hosts::class, $hosts);
+    }
+
     /**
      * @test
      */
@@ -48,9 +55,9 @@ class CliTest extends TestCase
     public function itWillSetDomainInConfig(): void
     {
         Writer::fake();
-        $dnsmasq = Mockery::mock(DnsMasq::class);
-        $dnsmasq->shouldReceive('updateDomain')->once()->with('localhost');
-        swap(DnsMasq::class, $dnsmasq);
+        $hosts = Mockery::mock(Hosts::class);
+        $hosts->shouldReceive('updateDomain')->once()->with('localhost');
+        swap(Hosts::class, $hosts);
 
         $config = Mockery::mock(Configuration::class);
         $config->shouldReceive('get')->with('domain')->andReturn('test')->once();
@@ -185,6 +192,7 @@ class CliTest extends TestCase
         $config = Mockery::mock(Configuration::class);
         $config->shouldReceive('addPath')->with($expectedDirectory)->once();
         swap(Configuration::class, $config);
+        $this->expectHostsRestart();
 
         $this->tester->run(['command' => 'park', 'path' => $directory]);
 
@@ -243,6 +251,7 @@ class CliTest extends TestCase
         $config = Mockery::mock(Configuration::class);
         $config->shouldReceive('removePath')->with($expectedDirectory)->once();
         swap(Configuration::class, $config);
+        $this->expectHostsRestart();
 
         $this->tester->run(['command' => 'forget', 'path' => $directory]);
 
@@ -304,6 +313,7 @@ class CliTest extends TestCase
         $nginx = Mockery::mock(Nginx::class);
         $nginx->shouldReceive('restart')->withNoArgs()->once();
         swap(Nginx::class, $nginx);
+        $this->expectHostsRestart();
 
         $this->tester->run(['command' => 'proxy', 'domain' => $domain, 'host' => $host, '--secure' => $isSecure]);
 
@@ -407,6 +417,7 @@ class CliTest extends TestCase
         $nginx = Mockery::mock(Nginx::class);
         $nginx->shouldReceive('restart')->withNoArgs()->once();
         swap(Nginx::class, $nginx);
+        $this->expectHostsRestart();
 
         $this->tester->run(['command' => 'unproxy', 'domain' => $domain]);
 
@@ -522,6 +533,7 @@ class CliTest extends TestCase
             ->once()
             ->andReturn('direct-path');
         swap(SiteLink::class, $siteLink);
+        $this->expectHostsRestart();
 
         $this->tester->run(['command' => 'link']);
 
@@ -549,6 +561,7 @@ class CliTest extends TestCase
         $siteLink = Mockery::mock(SiteLink::class);
         $siteLink->shouldReceive('unlink')->with($domainName)->once();
         swap(SiteLink::class, $siteLink);
+        $this->expectHostsRestart();
 
         $this->tester->run(['command' => 'unlink']);
 
@@ -624,6 +637,7 @@ class CliTest extends TestCase
         $nginx = Mockery::mock(Nginx::class);
         $nginx->shouldReceive('restart')->withNoArgs()->once();
         swap(Nginx::class, $nginx);
+        $this->expectHostsRestart();
 
         $this->tester->run(['command' => 'secure', 'domain' => $domain]);
 
@@ -667,6 +681,7 @@ class CliTest extends TestCase
         $nginx = Mockery::mock(Nginx::class);
         $nginx->shouldReceive('restart')->withNoArgs()->once();
         swap(Nginx::class, $nginx);
+        $this->expectHostsRestart();
 
         $this->tester->run(['command' => 'unsecure', 'domain' => $domain]);
 

@@ -1,13 +1,17 @@
 <?php
 
+/**
+ * Valet Linux+ console application.
+ */
+
 use ConsoleComponents\Writer;
 use Illuminate\Container\Container;
 use Silly\Application;
 use Valet\Drivers\ValetDriver;
 use Valet\Facades\Configuration;
 use Valet\Facades\DevTools;
-use Valet\Facades\DnsMasq;
 use Valet\Facades\Filesystem;
+use Valet\Facades\Hosts;
 use Valet\Facades\Mailpit;
 use Valet\Facades\Mysql;
 use Valet\Facades\Nginx;
@@ -58,8 +62,8 @@ $app->command('install [--ignore-selinux] [--mariadb]', function ($ignoreSELinux
     Configuration::install();
     Nginx::install();
     PhpFpm::install();
-    DnsMasq::install(Configuration::get('domain'));
     Mailpit::install();
+    Hosts::install(Configuration::get('domain'));
     ValetRedis::install();
     Nginx::restart();
     Mysql::install($mariadb);
@@ -95,7 +99,7 @@ if (is_dir(VALET_HOME_PATH)) {
      */
     $app->command('start [services]*', function ($services) {
         if (empty($services)) {
-            DnsMasq::restart();
+            Hosts::restart();
             PhpFpm::restart();
             Nginx::restart();
             Mailpit::restart();
@@ -119,8 +123,8 @@ if (is_dir(VALET_HOME_PATH)) {
                     Mailpit::restart();
                     break;
 
-                case 'dnsmasq':
-                    DnsMasq::restart();
+                case 'hosts':
+                    Hosts::restart();
                     break;
 
                 case 'mysql':
@@ -143,7 +147,7 @@ if (is_dir(VALET_HOME_PATH)) {
      */
     $app->command('restart [services]*', function ($services) {
         if (empty($services)) {
-            DnsMasq::restart();
+            Hosts::restart();
             PhpFpm::restart();
             Nginx::restart();
             Mailpit::restart();
@@ -168,8 +172,8 @@ if (is_dir(VALET_HOME_PATH)) {
                     Mailpit::restart();
                     break;
 
-                case 'dnsmasq':
-                    DnsMasq::restart();
+                case 'hosts':
+                    Hosts::restart();
                     break;
 
                 case 'mysql':
@@ -237,7 +241,7 @@ if (is_dir(VALET_HOME_PATH)) {
     $app->command('uninstall', function () {
         Nginx::uninstall();
         PhpFpm::uninstall();
-        DnsMasq::uninstall();
+        Hosts::uninstall();
         Mailpit::uninstall();
         Configuration::uninstall();
         Valet::uninstall();
@@ -295,11 +299,12 @@ if (is_dir(VALET_HOME_PATH)) {
             return;
         }
 
-        DnsMasq::updateDomain($domain = trim($domain, '.'));
+        $domain = trim($domain, '.');
         $oldDomain = Configuration::get('domain');
 
         Configuration::set('domain', $domain);
         SiteSecure::reSecureForNewDomain($oldDomain, $domain);
+        Hosts::updateDomain($domain);
         PhpFpm::restart();
         Nginx::restart();
 
@@ -354,6 +359,7 @@ if (is_dir(VALET_HOME_PATH)) {
     $app->command('park [path]', function ($path = null) {
         $path = $path ?: getcwd();
         Configuration::addPath($path);
+        Hosts::restart();
 
         Writer::info("The [$path] directory has been added to Valet's paths.");
     })->descriptions('Register the current working (or specified) directory with Valet');
@@ -381,6 +387,7 @@ if (is_dir(VALET_HOME_PATH)) {
     $app->command('forget [path]', function ($path = null) {
         $path = $path ?: getcwd();
         Configuration::removePath($path);
+        Hosts::restart();
 
         Writer::info("The [$path] directory has been removed from Valet's paths.");
     })->descriptions('Remove the current working (or specified) directory from Valet\'s list of paths');
@@ -411,6 +418,7 @@ if (is_dir(VALET_HOME_PATH)) {
         }
 
         SiteProxy::proxyCreate($domain, $host, $secure);
+        Hosts::restart();
         Nginx::restart();
 
         $protocol = $secure ? 'https' : 'http';
@@ -435,6 +443,7 @@ if (is_dir(VALET_HOME_PATH)) {
         }
 
         SiteSecure::unsecure($domain);
+        Hosts::restart();
         Nginx::restart();
 
         Writer::info('Valet will no longer proxy [' . $domain . '].');
@@ -455,6 +464,7 @@ if (is_dir(VALET_HOME_PATH)) {
     $app->command('link [name]', function ($name) {
         $name = $name ?: basename(getcwd());
         $linkPath = SiteLink::link(getcwd(), $name);
+        Hosts::restart();
 
         Writer::info('A [' . $name . '] symbolic link has been created in [' . $linkPath . '].');
     })->descriptions('Link the current working directory to Valet');
@@ -465,6 +475,7 @@ if (is_dir(VALET_HOME_PATH)) {
     $app->command('unlink [name]', function ($name) {
         $name = $name ?: basename(getcwd());
         SiteLink::unlink($name);
+        Hosts::restart();
 
         Writer::info('The [' . $name . '] symbolic link has been removed.');
     })->descriptions('Remove the specified Valet link');
@@ -486,6 +497,7 @@ if (is_dir(VALET_HOME_PATH)) {
         $url = Configuration::parseDomain($url);
 
         SiteSecure::secure($url);
+        Hosts::restart();
         Nginx::restart();
 
         Writer::info('The [' . $url . '] site has been secured with a fresh TLS certificate.');
@@ -499,6 +511,7 @@ if (is_dir(VALET_HOME_PATH)) {
         $url = Configuration::parseDomain($url);
 
         SiteSecure::unsecure($url, true);
+        Hosts::restart();
         Nginx::restart();
 
         Writer::info('The [' . $url . '] site will now serve traffic over HTTP.');

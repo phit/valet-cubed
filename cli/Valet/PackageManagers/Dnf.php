@@ -6,7 +6,6 @@ use ConsoleComponents\Writer;
 use DomainException;
 use Valet\CommandLine;
 use Valet\Contracts\PackageManager;
-use Valet\Contracts\ServiceManager;
 
 class Dnf implements PackageManager
 {
@@ -14,10 +13,6 @@ class Dnf implements PackageManager
      * @var CommandLine
      */
     public $cli;
-    /**
-     * @var ServiceManager
-     */
-    public $serviceManager;
     /**
      * @var array
      */
@@ -34,10 +29,9 @@ class Dnf implements PackageManager
     /**
      * Create a new Apt instance.
      */
-    public function __construct(CommandLine $cli, ServiceManager $serviceManager)
+    public function __construct(CommandLine $cli)
     {
         $this->cli = $cli;
-        $this->serviceManager = $serviceManager;
     }
 
     /**
@@ -126,14 +120,6 @@ class Dnf implements PackageManager
     {
         $pattern = 'php{VERSION}-';
         return str_replace('{VERSION}', $version, $pattern);
-    }
-
-    /**
-     * Restart dnsmasq in Fedora.
-     */
-    public function restartNetworkManager(): void
-    {
-        $this->serviceManager->restart('NetworkManager');
     }
 
     /**

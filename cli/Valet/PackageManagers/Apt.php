@@ -6,7 +6,6 @@ use ConsoleComponents\Writer;
 use DomainException;
 use Valet\CommandLine;
 use Valet\Contracts\PackageManager;
-use Valet\Contracts\ServiceManager;
 
 class Apt implements PackageManager
 {
@@ -14,11 +13,6 @@ class Apt implements PackageManager
      * @var CommandLine
      */
     public $cli;
-    /**
-     * @var ServiceManager
-     */
-    public $serviceManager;
-
     private const PACKAGES = [
         'redis' => 'redis-server',
         'mysql' => 'mysql-server',
@@ -33,10 +27,9 @@ class Apt implements PackageManager
     /**
      * Create a new Apt instance.
      */
-    public function __construct(CommandLine $cli, ServiceManager $serviceManager)
+    public function __construct(CommandLine $cli)
     {
         $this->cli = $cli;
-        $this->serviceManager = $serviceManager;
     }
 
     /**
@@ -131,14 +124,6 @@ class Apt implements PackageManager
     {
         $pattern = 'php{VERSION}-';
         return str_replace('{VERSION}', $version, $pattern);
-    }
-
-    /**
-     * Restart dnsmasq in Ubuntu.
-     */
-    public function restartNetworkManager(): void
-    {
-        $this->serviceManager->restart(['NetworkManager']);
     }
 
     /**

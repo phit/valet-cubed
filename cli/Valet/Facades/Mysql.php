@@ -5,7 +5,7 @@ namespace Valet\Facades;
 /**
  * Class Mysql.
  *
- * @method static void        install()
+ * @method static void        install(bool $useMariaDB = false)
  * @method static void        stop()
  * @method static void        restart()
  * @method static void        uninstall()

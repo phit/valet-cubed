@@ -38,9 +38,7 @@ class Configuration
      */
     public function uninstall(): void
     {
-        if ($this->files->isDir(VALET_HOME_PATH)) {
-            $this->files->remove(VALET_HOME_PATH);
-        }
+        // never delete configs
     }
 
     /**

@@ -3,7 +3,7 @@
 namespace Valet\Facades;
 
 /**
- * Class DnsMasq.
+ * Class Hosts.
  *
  * @method static void install(string $domain)
  * @method static void stop()
@@ -11,6 +11,6 @@ namespace Valet\Facades;
  * @method static void updateDomain(string $newDomain)
  * @method static void uninstall()
  */
-class DnsMasq extends Facade
+class Hosts extends Facade
 {
 }

@@ -6,7 +6,6 @@ use ConsoleComponents\Writer;
 use DomainException;
 use Valet\CommandLine;
 use Valet\Contracts\PackageManager;
-use Valet\Contracts\ServiceManager;
 
 class Eopkg implements PackageManager
 {
@@ -14,10 +13,6 @@ class Eopkg implements PackageManager
      * @var CommandLine
      */
     public $cli;
-    /**
-     * @var ServiceManager
-     */
-    public $serviceManager;
     /**
      * @var array
      */
@@ -32,10 +27,9 @@ class Eopkg implements PackageManager
     /**
      * Create a new Eopkg instance.
      */
-    public function __construct(CommandLine $cli, ServiceManager $serviceManager)
+    public function __construct(CommandLine $cli)
     {
         $this->cli = $cli;
-        $this->serviceManager = $serviceManager;
     }
 
     /**
@@ -130,14 +124,6 @@ class Eopkg implements PackageManager
     {
         $pattern = 'php{VERSION}-';
         return str_replace('{VERSION}', $version, $pattern);
-    }
-
-    /**
-     * Restart dnsmasq in Ubuntu.
-     */
-    public function restartNetworkManager(): void
-    {
-        $this->serviceManager->restart('NetworkManager');
     }
 
     /**
