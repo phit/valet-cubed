@@ -175,16 +175,16 @@ class PhpFpm
     public function normalizePhpVersion(string $version): string
     {
         preg_match(
-            '/^(?:php[@-]?)?(?<MAJOR_VERSION>[\d]{1}).?(?<MINOR_VERSION>[\d]{1})$/i',
+            '/\A(?:php[@-]?)?(?<MAJOR_VERSION>\d)(?:\.(?<DOTTED>\d{1,2})|(?<COMPACT>\d))\z/i',
             $version,
             $matches
         );
 
-        if (!isset($matches['MAJOR_VERSION'], $matches['MINOR_VERSION'])) {
+        if (!isset($matches['MAJOR_VERSION'])) {
             return '';
         }
 
-        return \sprintf('%s.%s', $matches['MAJOR_VERSION'], $matches['MINOR_VERSION']);
+        return \sprintf('%s.%s', $matches['MAJOR_VERSION'], $matches['DOTTED'] !== '' ? $matches['DOTTED'] : $matches['COMPACT']);
     }
 
     /**

@@ -534,7 +534,15 @@ class PhpFpmTest extends TestCase
             [
                 'invalid-8.0',
             ],
+            [
+                '8;2',
+            ],
         ];
+    }
+
+    public function testNormalizesTwoDigitMinorVersion(): void
+    {
+        $this->assertSame('8.10', $this->phpFpm->normalizePhpVersion('php8.10'));
     }
 
     /**
