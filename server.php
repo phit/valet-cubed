@@ -1,7 +1,7 @@
 <?php
 
-require_once './cli/includes/require-drivers.php';
-require_once './cli/Valet/Server.php';
+require_once __DIR__ . '/cli/includes/require-drivers.php';
+require_once __DIR__ . '/cli/Valet/Server.php';
 
 use Valet\Drivers\ValetDriver;
 use Valet\Server;
