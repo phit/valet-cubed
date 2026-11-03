@@ -39,11 +39,10 @@ class Dnf implements PackageManager
      */
     public function installed(string $package): bool
     {
-        $query = "dnf list installed {$package} | grep {$package} | sed 's_  _\\t_g' | sed 's_\\._\\t_g' | cut -f 1";
+        $escaped = escapeshellarg($package);
+        $output = $this->cli->run("rpm -q {$escaped} >/dev/null 2>&1 && echo ok || echo no");
 
-        $packages = explode(PHP_EOL, $this->cli->run($query));
-
-        return in_array($package, $packages);
+        return trim($output) === 'ok';
     }
 
     /**
