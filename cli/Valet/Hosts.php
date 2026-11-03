@@ -204,7 +204,7 @@ class Hosts
             ? implode(PHP_EOL, $block) . PHP_EOL
             : $contents . PHP_EOL . PHP_EOL . implode(PHP_EOL, $block) . PHP_EOL;
 
-        $this->files->put($this->hostsPath, $contents);
+        $this->writeHostsFile($contents);
     }
 
     private function removeValetHosts(): void
@@ -213,10 +213,20 @@ class Hosts
             return;
         }
 
-        $this->files->put(
-            $this->hostsPath,
-            rtrim($this->withoutValetHosts($this->files->get($this->hostsPath))) . PHP_EOL
-        );
+        $this->writeHostsFile(rtrim($this->withoutValetHosts($this->files->get($this->hostsPath))) . PHP_EOL);
+    }
+
+    private function writeHostsFile(string $contents): void
+    {
+        $temporaryPath = VALET_HOME_PATH . '/hosts.tmp';
+
+        $this->files->putAsUser($temporaryPath, $contents);
+        $this->cli->passthru(sprintf(
+            'sudo cp %s %s',
+            escapeshellarg($temporaryPath),
+            escapeshellarg($this->hostsPath)
+        ));
+        $this->files->unlink($temporaryPath);
     }
 
     private function withoutValetHosts(string $contents): string

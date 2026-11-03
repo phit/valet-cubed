@@ -3,7 +3,8 @@
 set -e
 
 SOURCE="${BASH_SOURCE[0]}"
-SUDO_COMMANDS="uninstall install start restart stop unsecure secure use isolate unisolate proxy unproxy"
+SUDO_COMMANDS="uninstall install start restart stop unsecure secure use isolate unisolate proxy unproxy park forget link unlink"
+DEPENDENCY_COMMANDS="uninstall install start restart stop unsecure secure use isolate unisolate proxy unproxy"
 HOME_PATH=$HOME
 
 function check_dependencies() {
@@ -65,7 +66,11 @@ fi
 # us to never require the end users to manually specify each sudo.
 if [[ -n $1 && $SUDO_COMMANDS =~ $1 ]]
 then
-    check_dependencies
+    if [[ $DEPENDENCY_COMMANDS =~ $1 ]]
+    then
+        check_dependencies
+    fi
+
     if [[ "$EUID" -ne 0 ]]
     then
         sudo env HOME="$HOME_PATH" "$SOURCE" "$@"

@@ -82,10 +82,7 @@ class HostsTest extends TestCase
                 '',
             ]));
 
-        $this->filesystem
-            ->shouldReceive('put')
-            ->once()
-            ->with('/etc/hosts', '127.0.0.1 localhost' . PHP_EOL);
+        $this->expectHostsFileWrite('127.0.0.1 localhost' . PHP_EOL);
 
         $this->hosts->uninstall();
 
@@ -120,10 +117,7 @@ class HostsTest extends TestCase
                 '',
             ]));
 
-        $this->filesystem
-            ->shouldReceive('put')
-            ->once()
-            ->with('/etc/hosts', '127.0.0.1 localhost' . PHP_EOL);
+        $this->expectHostsFileWrite('127.0.0.1 localhost' . PHP_EOL);
 
         $this->hosts->stop();
     }
@@ -189,10 +183,7 @@ class HostsTest extends TestCase
             ->with('/etc/hosts')
             ->andReturn('127.0.0.1 localhost' . PHP_EOL);
 
-        $this->filesystem
-            ->shouldReceive('put')
-            ->once()
-            ->with('/etc/hosts', '127.0.0.1 localhost' . PHP_EOL);
+        $this->expectHostsFileWrite('127.0.0.1 localhost' . PHP_EOL);
 
         $this->hosts->updateDomain('test');
     }
@@ -339,9 +330,30 @@ class HostsTest extends TestCase
             '',
         ]);
 
+        $this->expectHostsFileWrite($expected);
+    }
+
+    private function expectHostsFileWrite(string $contents): void
+    {
+        $temporaryPath = VALET_HOME_PATH . '/hosts.tmp';
+
         $this->filesystem
-            ->shouldReceive('put')
+            ->shouldReceive('putAsUser')
             ->once()
-            ->with('/etc/hosts', $expected);
+            ->with($temporaryPath, $contents);
+
+        $this->commandLine
+            ->shouldReceive('passthru')
+            ->once()
+            ->with(sprintf(
+                'sudo cp %s %s',
+                escapeshellarg($temporaryPath),
+                escapeshellarg('/etc/hosts')
+            ));
+
+        $this->filesystem
+            ->shouldReceive('unlink')
+            ->once()
+            ->with($temporaryPath);
     }
 }
