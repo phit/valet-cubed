@@ -127,9 +127,9 @@ class SiteIsolate
 
         $siteConf = $this->files->get($this->nginxPath($url));
         if (strpos($siteConf, '# ' . ISOLATED_PHP_VERSION) !== false) {
-            preg_match('/^# ISOLATED_PHP_VERSION=(.*?)\n/m', $siteConf, $version);
-
-            return $version[1];
+            if (preg_match('/^# ISOLATED_PHP_VERSION=([^\s]+)/m', $siteConf, $version)) {
+                return $version[1];
+            }
         }
 
         return null;
