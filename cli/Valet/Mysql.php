@@ -61,7 +61,7 @@ class Mysql
             $this->currentPackage = $package;
             if (!$this->pm instanceof Pacman) {
                 $phpVersion = PhpFpmFacade::getCurrentVersion();
-                $this->pm->ensureInstalled("php{$phpVersion}-mysql");
+                $this->pm->ensureInstalled($this->pm->getPhpExtensionPrefix($phpVersion) . 'mysql');
             }
         }
 

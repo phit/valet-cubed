@@ -114,6 +114,7 @@ class MysqlTest extends TestCase
         $phpFpm = Mockery::mock(PhpFpm::class);
         swap(PhpFpm::class, $phpFpm);
         $phpFpm->shouldReceive('getCurrentVersion')->once()->andReturn('8.2');
+        $this->packageManager->shouldReceive('getPhpExtensionPrefix')->with('8.2')->once()->andReturn('php8.2-');
 
         $this->packageManager
             ->shouldReceive('packageName')
