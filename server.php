@@ -101,6 +101,22 @@ if (! $frontControllerPath) {
     Server::show404();
 }
 
+/**
+ * Unset our variables to avoid leaking Valet internals into the user's application.
+ */
+unset(
+    $valetConfig,
+    $uriForIpAddressExtraction,
+    $host,
+    $server,
+    $uri,
+    $siteName,
+    $valetSitePath,
+    $valetDriver,
+    $isPhpFile,
+    $staticFilePath,
+);
+
 chdir(dirname($frontControllerPath));
 
-require_once $frontControllerPath;
+require $frontControllerPath;

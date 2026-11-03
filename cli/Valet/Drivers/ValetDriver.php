@@ -185,7 +185,7 @@ abstract class ValetDriver
             return;
         }
 
-        $variables = include_once $varFilePath;
+        $variables = include $varFilePath;
 
         $variablesToSet = $variables['*'] ?? [];
 
