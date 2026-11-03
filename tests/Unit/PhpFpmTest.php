@@ -591,6 +591,76 @@ class PhpFpmTest extends TestCase
 
     /**
      * @test
+     */
+    public function itFallsBackToConfiguredBinaryWhenDefaultPhpIsIgnored(): void
+    {
+        $devTools = Mockery::mock(DevTools::class);
+        swap(DevTools::class, $devTools);
+
+        $devTools->shouldReceive('getBin')
+            ->with('php', ['/usr/local/bin/php'])
+            ->once()
+            ->andReturn(false);
+
+        $this->config->shouldReceive('get')
+            ->with('fallback_binary')
+            ->once()
+            ->andReturn('/usr/bin/php8.4');
+
+        $this->filesystem->shouldReceive('exists')
+            ->with('/usr/bin/php8.4')
+            ->once()
+            ->andReturn(true);
+
+        $this->assertSame('/usr/bin/php8.4', $this->phpFpm->getPhpExecutablePath());
+    }
+
+    /**
+     * @test
+     */
+    public function itFallsBackToUsrBinPhpWhenNoConfiguredBinaryExists(): void
+    {
+        $devTools = Mockery::mock(DevTools::class);
+        swap(DevTools::class, $devTools);
+
+        $devTools->shouldReceive('getBin')
+            ->with('php', ['/usr/local/bin/php'])
+            ->once()
+            ->andReturn(false);
+
+        $this->config->shouldReceive('get')
+            ->with('fallback_binary')
+            ->once()
+            ->andReturn(null);
+
+        $this->filesystem->shouldReceive('exists')->with('/usr/bin/php')->once()->andReturn(true);
+
+        $this->assertSame('/usr/bin/php', $this->phpFpm->getPhpExecutablePath());
+    }
+
+    /**
+     * @test
+     */
+    public function itFallsBackToUsrBinPhpVersionWhenVersionedLookupFails(): void
+    {
+        $devTools = Mockery::mock(DevTools::class);
+        swap(DevTools::class, $devTools);
+
+        $devTools->shouldReceive('getBin')
+            ->with('php8.2', ['/usr/local/bin/php'])
+            ->once()
+            ->andReturn(false);
+
+        $this->filesystem->shouldReceive('exists')
+            ->with('/usr/bin/php8.2')
+            ->once()
+            ->andReturn(true);
+
+        $this->assertSame('/usr/bin/php8.2', $this->phpFpm->getPhpExecutablePath('8.2'));
+    }
+
+    /**
+     * @test
      * @dataProvider executableVersionProvider
      */
     public function itWillGetFpmSocketFile(string $version, string $expectedSocketFile): void

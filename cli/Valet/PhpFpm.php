@@ -202,12 +202,28 @@ class PhpFpm
     public function getPhpExecutablePath(string $version = null)
     {
         if (!$version) {
-            return DevToolsFacade::getBin('php', ['/usr/local/bin/php']);
+            $bin = DevToolsFacade::getBin('php', ['/usr/local/bin/php']);
+            if ($bin) {
+                return $bin;
+            }
+
+            $fallback = $this->config->get('fallback_binary');
+            if (is_string($fallback) && $fallback !== '' && $this->files->exists($fallback)) {
+                return $fallback;
+            }
+
+            return $this->files->exists('/usr/bin/php') ? '/usr/bin/php' : false;
         }
 
         $version = $this->normalizePhpVersion($version);
 
-        return DevToolsFacade::getBin('php' . $version, ['/usr/local/bin/php']);
+        $bin = DevToolsFacade::getBin('php' . $version, ['/usr/local/bin/php']);
+        if ($bin) {
+            return $bin;
+        }
+
+        $candidate = '/usr/bin/php' . $version;
+        return $version !== '' && $this->files->exists($candidate) ? $candidate : false;
     }
 
     public function fpmSocketFile(string $version): string
