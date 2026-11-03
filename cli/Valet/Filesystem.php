@@ -379,6 +379,10 @@ class Filesystem
      */
     public function scandir(string $path): array
     {
+        if (!is_dir($path)) {
+            return [];
+        }
+
         return collect(scandir($path))
             ->reject(function ($file) {
                 return in_array($file, ['.', '..', '.keep']);
