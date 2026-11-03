@@ -25,6 +25,9 @@ class Typo3ValetDriverTest extends BaseDriverTestCase
         $driver = new Typo3ValetDriver();
 
         $projectPath = $this->projectDir('typo3');
+        $_SERVER['HTTP_HOST'] = 'my-site.test';
+        $driver->beforeLoading($projectPath, 'my-site', '/');
         $this->assertEquals($projectPath.'/web/index.php', $driver->frontControllerPath($projectPath, 'my-site', '/'));
+        $this->assertSame('my-site.test', $_SERVER['SERVER_NAME']);
     }
 }

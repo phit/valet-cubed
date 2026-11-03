@@ -49,7 +49,7 @@ class Typo3ValetDriver extends ValetDriver
         // without modifying the URI, redirect if necessary
         $this->handleRedirectBackendShorthandUris($uri);
 
-        $_SERVER['SERVER_NAME'] = $siteName.'.dev';
+        $_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
         $_SERVER['DOCUMENT_URI'] = $uri;
         $_SERVER['SCRIPT_NAME'] = $uri;
         $_SERVER['PHP_SELF'] = $uri;
