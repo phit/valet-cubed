@@ -31,6 +31,28 @@ class Server
     }
 
     /**
+     * Determine whether a resolved path stays inside the given root directory.
+     *
+     * Guards against path traversal: both arguments are resolved with realpath()
+     * and the path must equal the root or sit beneath it. Returns false when
+     * either path cannot be resolved (e.g. the file does not exist).
+     */
+    public static function isWithin(string $path, string $root): bool
+    {
+        $realPath = realpath($path);
+        $realRoot = realpath($root);
+
+        if ($realPath === false || $realRoot === false) {
+            return false;
+        }
+
+        // Note: avoid str_starts_with(); this runs under the site's (possibly
+        // isolated, older) PHP version.
+        return $realPath === $realRoot
+            || strpos($realPath, $realRoot.DIRECTORY_SEPARATOR) === 0;
+    }
+
+    /**
      * Show the Valet 404 "Not Found" page.
      */
     public static function show404()

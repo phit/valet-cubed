@@ -79,6 +79,12 @@ $uri = $valetDriver->mutateUri($uri);
 $isPhpFile = pathinfo($uri, PATHINFO_EXTENSION) === 'php';
 
 if ($uri !== '/' && ! $isPhpFile && $staticFilePath = $valetDriver->isStaticFile($valetSitePath, $siteName, $uri)) {
+    // Refuse to serve a static file that resolves outside the site root
+    // (path traversal, e.g. an encoded "../" in the request URI).
+    if (! Server::isWithin($staticFilePath, $valetSitePath)) {
+        Server::show404();
+    }
+
     $valetDriver->serveStaticFile($staticFilePath, $valetSitePath, $siteName, $uri);
     return;
 }
@@ -98,6 +104,14 @@ if (! $frontControllerPath) {
         Server::showDirectoryListing($valetSitePath, $uri);
     }
 
+    Server::show404();
+}
+
+/**
+ * Refuse to execute a front controller that resolves outside the site root
+ * (path traversal via the request URI).
+ */
+if (! Server::isWithin($frontControllerPath, $valetSitePath)) {
     Server::show404();
 }
 
