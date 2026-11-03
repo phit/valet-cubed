@@ -182,6 +182,29 @@ class Nginx
     }
 
     /**
+     * Refresh Valet's router path without replacing custom site configuration.
+     */
+    private function rewriteIsolatedNginxFiles(): void
+    {
+        foreach ($this->configuredSites() as $site) {
+            $path = VALET_HOME_PATH . '/Nginx/' . $site;
+            $contents = $this->files->get($path);
+            if (!str_contains($contents, '# ' . ISOLATED_PHP_VERSION)) {
+                continue;
+            }
+
+            $updated = preg_replace_callback(
+                '~^(\s*(?:rewrite\s+\^\s+|error_page\s+404\s+|fastcgi_index\s+|fastcgi_param\s+SCRIPT_FILENAME\s+))/[^\s;]*/server\.php(?=\s|;)~m',
+                static fn ($match) => $match[1] . VALET_SERVER_PATH,
+                $contents
+            );
+            if ($updated !== null && $updated !== $contents) {
+                $this->files->putAsUser($path, $updated);
+            }
+        }
+    }
+
+    /**
      * Disable Apache2 Service.
      */
     private function handleApacheService(): void
@@ -237,5 +260,6 @@ class Nginx
         $this->files->putAsUser($nginxDirectory . '/.keep', "\n");
 
         $this->rewriteSecureNginxFiles();
+        $this->rewriteIsolatedNginxFiles();
     }
 }
