@@ -6,10 +6,16 @@ use Valet\Drivers\Specific\ContaoValetDriver;
 
 class ContaoValetDriverTest extends BaseDriverTestCase
 {
+    public function test_it_preserves_legacy_contao_routing()
+    {
+        $driver = new ContaoValetDriver();
+        $path = $this->projectDir('contao-legacy');
+        $this->assertTrue($driver->serves($path, 'my-site', '/'));
+        $this->assertSame($path.'/web/app.php', $driver->frontControllerPath($path, 'my-site', '/'));
+    }
+
     public function test_it_serves_contao_projects()
     {
-        $this->markTestSkipped('Fork ships the legacy Contao 3/4 driver (expects vendor/contao + web/app.php); the upstream fixture is modern Contao 4.9+/5 (public/index.php). Re-enable after modernizing the fork driver (see .review U6).');
-
         $driver = new ContaoValetDriver();
 
         $this->assertTrue($driver->serves($this->projectDir('contao'), 'my-site', '/'));
@@ -24,8 +30,6 @@ class ContaoValetDriverTest extends BaseDriverTestCase
 
     public function test_it_gets_front_controller()
     {
-        $this->markTestSkipped('Fork ships the legacy Contao 3/4 driver; its front controller is web/app.php, not the modern public/index.php. Re-enable after modernizing the fork driver (see .review U6).');
-
         $driver = new ContaoValetDriver();
 
         $projectPath = $this->projectDir('contao');
