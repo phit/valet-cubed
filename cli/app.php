@@ -276,15 +276,15 @@ if (is_dir(VALET_HOME_PATH)) {
 
         if (Valet::onLatestVersion($version)) {
             Writer::info('You have the latest version of Valet Linux+');
-            passthru($script);
+            passthru(escapeshellarg($script));
         } else {
             Writer::warn('There is a new release of Valet Linux+');
             Writer::warn('Updating now...');
             $latestVersion = Valet::getLatestVersion();
             if ($latestVersion) {
-                passthru($script . " update $latestVersion");
+                passthru(escapeshellarg($script) . ' update ' . escapeshellarg($latestVersion));
             } else {
-                passthru($script . ' update');
+                passthru(escapeshellarg($script) . ' update');
             }
         }
     })->descriptions('Update Valet Linux+ and clean up cruft');

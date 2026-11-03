@@ -54,7 +54,7 @@ class Valet
         $fallbackBin = '/usr/bin/php';
         $phpBin = $_SERVER['_'] ?? $fallbackBin;
         $phpBin = $this->files->realpath($phpBin);
-        if ($phpBin !== VALET_ROOT_PATH . 'php') {
+        if ($phpBin !== VALET_ROOT_PATH . '/php') {
             ConfigurationFacade::set('fallback_binary', $phpBin);
         } else {
             ConfigurationFacade::set('fallback_binary', $fallbackBin);

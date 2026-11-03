@@ -117,10 +117,10 @@ function user(): string
 function group()
 {
     if (!isset($_SERVER['SUDO_USER'])) {
-        return exec('id -gn '.$_SERVER['USER']);
+        return exec('id -gn '.escapeshellarg($_SERVER['USER']));
     }
 
-    return exec('id -gn '.$_SERVER['SUDO_USER']);
+    return exec('id -gn '.escapeshellarg($_SERVER['SUDO_USER']));
 }
 
 /**

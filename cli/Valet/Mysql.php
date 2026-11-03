@@ -59,7 +59,7 @@ class Mysql
             }
             $package = $useMariaDB ? $this->pm->packageName('mariadb') : $this->pm->packageName('mysql');
             $this->currentPackage = $package;
-            if (!$this->pm instanceof Pacman && !extension_loaded('mysql')) {
+            if (!$this->pm instanceof Pacman) {
                 $phpVersion = PhpFpmFacade::getCurrentVersion();
                 $this->pm->ensureInstalled("php{$phpVersion}-mysql");
             }
@@ -206,13 +206,18 @@ class Mysql
         }
 
         $credentials = $this->getCredentials();
-        $command = "mysqldump -u {$credentials['user']} -p{$credentials['password']} ".escapeshellarg($database).' ';
+        $clientConfig = $this->writeClientConfig($credentials);
+        $command = 'mysqldump --defaults-extra-file=' . escapeshellarg($clientConfig) . ' ' . escapeshellarg($database) . ' ';
         if ($exportSql) {
             $command .= ' > '.escapeshellarg($filename);
         } else {
             $command .= ' | gzip > '.escapeshellarg($filename);
         }
-        $this->cli->run($command);
+        try {
+            $this->cli->run($command);
+        } finally {
+            unlink($clientConfig);
+        }
 
         return [
             'database' => $database,
@@ -250,16 +255,14 @@ class Mysql
         }
         $database = escapeshellarg($database);
         $credentials = $this->getCredentials();
-        $this->cli->run(
-            \sprintf(
-                '%smysql -u %s -p%s %s %s',
-                $gzip,
-                $credentials['user'],
-                $credentials['password'],
-                $database,
-                $sqlFile
-            )
-        );
+        $clientConfig = $this->writeClientConfig($credentials);
+        try {
+            $this->cli->run(
+                \sprintf('%smysql --defaults-extra-file=%s %s %s', $gzip, escapeshellarg($clientConfig), $database, $sqlFile)
+            );
+        } finally {
+            unlink($clientConfig);
+        }
     }
 
     /**
@@ -286,10 +289,10 @@ class Mysql
      */
     private function isDatabaseExists(string $name): bool
     {
-        $query = $this->query("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '$name'");
-        $query->execute();
+        $query = $this->getConnection()->prepare('SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = ?');
+        $query->execute([$name]);
 
-        return (bool) $query->rowCount();
+        return (bool) $query->fetch();
     }
 
     /**
@@ -399,17 +402,25 @@ class Mysql
     private function createValetUser(string $password): void
     {
         $success = true;
-        $query = "sudo mysql -e \"CREATE USER '".self::DATABASE_USER."'@'localhost' IDENTIFIED WITH mysql_native_password BY '".$password."';GRANT ALL PRIVILEGES ON *.* TO '".self::DATABASE_USER."'@'localhost' WITH GRANT OPTION;FLUSH PRIVILEGES;\"";
-        if ($this->isMariaDB()) {
-            $query = "sudo mysql -e \"CREATE USER '".self::DATABASE_USER."'@'localhost' IDENTIFIED BY '".$password."';GRANT ALL PRIVILEGES ON *.* TO '".self::DATABASE_USER."'@'localhost' WITH GRANT OPTION;FLUSH PRIVILEGES;\"";
+        $file = tempnam(sys_get_temp_dir(), 'valet-sql-');
+        if ($file === false) {
+            throw new \RuntimeException('Unable to create temporary MySQL script.');
         }
-        $this->cli->run(
-            $query,
-            function ($statusCode, $error) use (&$success) {
+        $authentication = $this->isMariaDB() ? 'IDENTIFIED BY' : 'IDENTIFIED WITH mysql_native_password BY';
+        $sql = "SET SESSION sql_mode = 'NO_BACKSLASH_ESCAPES';\nCREATE USER '" . self::DATABASE_USER
+            . "'@'localhost' " . $authentication . " '" . str_replace("'", "''", $password) . "';\n"
+            . "GRANT ALL PRIVILEGES ON *.* TO '" . self::DATABASE_USER . "'@'localhost' WITH GRANT OPTION;\nFLUSH PRIVILEGES;\n";
+        try {
+            if (file_put_contents($file, $sql) === false) {
+                throw new \RuntimeException('Unable to write temporary MySQL script.');
+            }
+            $this->cli->run('sudo mysql < ' . escapeshellarg($file), function ($statusCode, $error) use (&$success) {
                 Writer::warn('Setting password for valet user failed due to `['.$statusCode.'] '.$error.'`');
                 $success = false;
-            }
-        );
+            });
+        } finally {
+            unlink($file);
+        }
 
         if ($success !== false) {
             /** @var array<string, string> $config */
@@ -425,11 +436,31 @@ class Mysql
      * Returns the stored password from the config. If not configured returns the default root password.
      * @return array{user: string, password: string}
      */
+    private function writeClientConfig(array $credentials): string
+    {
+        $file = tempnam(sys_get_temp_dir(), 'valet-mysql-');
+        if ($file === false) {
+            throw new \RuntimeException('Unable to create MySQL client configuration.');
+        }
+
+        $escape = static function (string $value): string {
+            return str_replace(["\\", "\"", "\n", "\r"], ["\\\\", "\\\"", "\\n", "\\r"], $value);
+        };
+        $contents = '[client]' . PHP_EOL . 'user="' . $escape($credentials['user']) . '"' . PHP_EOL
+            . 'password="' . $escape($credentials['password']) . '"' . PHP_EOL;
+        if (file_put_contents($file, $contents) === false) {
+            unlink($file);
+            throw new \RuntimeException('Unable to write MySQL client configuration.');
+        }
+
+        return $file;
+    }
+
     private function getCredentials(): array
     {
         /** @var array<string, string> $config */
         $config = $this->configuration->get('mysql', []);
-        if (!isset($config['password']) && $config['password'] !== null) {
+        if (!isset($config['password'])) {
             Writer::warn('Valet database user is not configured!');
             exit;
         }

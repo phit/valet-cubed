@@ -59,13 +59,15 @@ class Server
         });
 
         // Output the HTML for the directory listing
-        echo "<h1>Index of $uri</h1>";
+        echo '<h1>Index of '.htmlspecialchars($uri, ENT_QUOTES).'</h1>';
         echo '<hr>';
         echo implode(
             '<br>'.PHP_EOL,
             array_map(function ($path) use ($uri, $isRoot) {
                 $file = basename($path);
-                return ($isRoot) ? "<a href='/$file'>/$file</a>" : "<a href='$uri/$file'>$uri/$file/</a>";
+                $safeFile = htmlspecialchars($file, ENT_QUOTES);
+                $safeUri = htmlspecialchars($uri, ENT_QUOTES);
+                return ($isRoot) ? "<a href='/$safeFile'>/$safeFile</a>" : "<a href='$safeUri/$safeFile'>$safeUri/$safeFile/</a>";
             }, $paths)
         );
 

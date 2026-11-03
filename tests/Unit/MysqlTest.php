@@ -84,6 +84,26 @@ class MysqlTest extends TestCase
         ];
     }
 
+    public function testExportKeepsCredentialsOutOfCommandAndRemovesTemporaryFile(): void
+    {
+        $password = 'secret "quoted"';
+        $this->config->shouldReceive('get')->with('mysql', [])->once()
+            ->andReturn(['user' => 'valet', 'password' => $password]);
+        $clientConfig = null;
+        $this->commandLine->shouldReceive('run')->once()->andReturnUsing(function ($command) use (&$clientConfig, $password) {
+            $this->assertStringNotContainsString($password, $command);
+            preg_match("/--defaults-extra-file='([^']+)'/", $command, $matches);
+            $clientConfig = $matches[1];
+            $this->assertSame(0600, fileperms($clientConfig) & 0777);
+            $this->assertStringContainsString('password="secret \\"quoted\\""', file_get_contents($clientConfig));
+            return '';
+        });
+
+        $this->mysql->exportDatabase('example', true);
+        $this->assertNotNull($clientConfig);
+        $this->assertFileDoesNotExist($clientConfig);
+    }
+
     /**
      * @test
      * @dataProvider packageDataProvider

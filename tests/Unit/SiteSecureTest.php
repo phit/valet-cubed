@@ -24,6 +24,12 @@ class SiteSecureTest extends TestCase
     private PackageManager $pm;
     private SiteSecure $siteSecure;
 
+    public function testRejectsSiteNamesContainingPaths(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->siteSecure->secure('../site.test');
+    }
+
     public function setUp(): void
     {
         parent::setUp();

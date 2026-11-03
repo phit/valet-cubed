@@ -276,7 +276,8 @@ class Filesystem
     public function commentLine(string $line, string $file): void
     {
         if ($this->exists($file)) {
-            $command = "sed -i '/{$line}/ s/^/# /' {$file}";
+            $pattern = str_replace(['\\', '/'], ['\\\\', '\\/'], $line);
+            $command = 'sed -i ' . escapeshellarg('/' . $pattern . '/ s/^/# /') . ' ' . escapeshellarg($file);
             CommandLine::run($command);
         }
     }
@@ -287,7 +288,8 @@ class Filesystem
     public function uncommentLine(string $line, string $file): void
     {
         if ($this->exists($file)) {
-            $command = "sed -i '/{$line}/ s/# *//' {$file}";
+            $pattern = str_replace(['\\', '/'], ['\\\\', '\\/'], $line);
+            $command = 'sed -i ' . escapeshellarg('/' . $pattern . '/ s/# *//') . ' ' . escapeshellarg($file);
             CommandLine::run($command);
         }
     }
