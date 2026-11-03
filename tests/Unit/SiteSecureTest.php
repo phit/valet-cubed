@@ -93,7 +93,7 @@ class SiteSecureTest extends TestCase
         $this->commandLine
             ->shouldReceive('run')
             ->once()
-            ->with('sudo update-ca-certificates');
+            ->with($this->pm->getCaUpdateCommand());
 
         $caExpireInDate = (new \DateTime())->diff(new \DateTime("+20 years"));
         $expiryInDays = (int)$caExpireInDate->format('%a'); // 20 years in days
@@ -125,7 +125,7 @@ class SiteSecureTest extends TestCase
         $this->commandLine
             ->shouldReceive('run')
             ->once()
-            ->with('sudo update-ca-certificates');
+            ->with($this->pm->getCaUpdateCommand());
 
         $this->commandLine
             ->shouldReceive('runAsUser')

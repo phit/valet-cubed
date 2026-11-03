@@ -120,7 +120,15 @@ class Pacman implements PackageManager
      */
     public function getCaCertificatesPath(): string
     {
-        return '/usr/share/ca-certificates';
+        return '/etc/ca-certificates/trust-source/anchors';
+    }
+
+    /**
+     * Get the command to update CA certificates
+     */
+    public function getCaUpdateCommand(): string
+    {
+        return 'sudo update-ca-trust';
     }
 
     /**

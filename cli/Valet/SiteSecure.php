@@ -190,7 +190,7 @@ class SiteSecure
     private function unTrustCa(): void
     {
         $this->files->remove(\sprintf('%s/%s.crt', $this->pm->getCaCertificatesPath(), $this->caCertificatePem));
-        $this->cli->run('sudo update-ca-certificates');
+        $this->cli->run($this->pm->getCaUpdateCommand());
     }
 
     /**
@@ -202,7 +202,7 @@ class SiteSecure
             $caPemPath,
             sprintf('%s/%s.crt', $this->pm->getCaCertificatesPath(), $this->caCertificatePem)
         );
-        $this->cli->run('sudo update-ca-certificates');
+        $this->cli->run($this->pm->getCaUpdateCommand());
 
         $this->cli->runAsUser(sprintf(
             'certutil -d sql:$HOME/.pki/nssdb -A -t TC -n "%s" -i "%s"',

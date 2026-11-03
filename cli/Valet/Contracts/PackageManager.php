@@ -48,4 +48,9 @@ interface PackageManager
      * Get package name by service
      */
     public function packageName(string $name): string;
+
+    /**
+     * Get the command to update CA certificates
+     */
+    public function getCaUpdateCommand(): string;
 }

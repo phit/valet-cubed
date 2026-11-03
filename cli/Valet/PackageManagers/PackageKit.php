@@ -118,6 +118,14 @@ class PackageKit implements PackageManager
     }
 
     /**
+     * Get the command to update CA certificates
+     */
+    public function getCaUpdateCommand(): string
+    {
+        return 'sudo update-ca-trust';
+    }
+
+    /**
      * Determine php extension pattern.
      */
     public function getPhpExtensionPrefix(string $version): string
