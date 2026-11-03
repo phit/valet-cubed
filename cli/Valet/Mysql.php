@@ -45,6 +45,8 @@ class Mysql
             $this->currentPackage = $packageName;
         } elseif ($this->pm->installed($packageName = $this->pm->packageName('mariadb'))) {
             $this->currentPackage = $packageName;
+        } elseif ($this->pm instanceof Dnf && $this->pm->installed('mysql-community-server')) {
+            $this->currentPackage = 'mysql-community-server';
         }
     }
 
