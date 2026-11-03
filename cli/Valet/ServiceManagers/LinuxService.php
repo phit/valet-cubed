@@ -172,6 +172,9 @@ class LinuxService implements ServiceManager
      */
     private function getRealService(string $service): string
     {
+        if (!preg_match('/\A[a-zA-Z0-9_@.:-]+\z/', $service) || $service[0] === '-' || $service === '.' || $service === '..') {
+            throw new DomainException('Invalid service name.');
+        }
         return collect($service)->first(
             function ($service) {
                 return !strpos(
