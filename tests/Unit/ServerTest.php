@@ -95,4 +95,30 @@ class ServerTest extends TestCase
             @rmdir($sibling);
         }
     }
+
+    /**
+     * @test
+     */
+    public function it_extracts_the_valet_site_from_an_ip_address_uri(): void
+    {
+        // Mirrors the LAN/IP-access flow: REQUEST_URI is "domain.test/auth/login"
+        // (leading slash already trimmed) and the TLD comes from config['domain'].
+        $this->assertSame(
+            'my-site.test',
+            Server::valetSiteFromIpAddressUri('my-site.test/auth/login', 'test')
+        );
+        $this->assertSame(
+            'my-site.test',
+            Server::valetSiteFromIpAddressUri('my-site.test', 'test')
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function it_returns_null_when_the_ip_address_uri_has_no_matching_tld(): void
+    {
+        $this->assertNull(Server::valetSiteFromIpAddressUri('my-site.dev/auth', 'test'));
+        $this->assertNull(Server::valetSiteFromIpAddressUri('', 'test'));
+    }
 }

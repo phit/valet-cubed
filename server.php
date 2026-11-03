@@ -26,7 +26,7 @@ $valetConfig = json_decode(file_get_contents(VALET_HOME_PATH.'/config.json'), tr
 if (Server::hostIsIpAddress($_SERVER['HTTP_HOST'])) {
     $uriForIpAddressExtraction = ltrim($_SERVER['REQUEST_URI'], '/');
 
-    if ($host = Server::valetSiteFromIpAddressUri($uriForIpAddressExtraction, $valetConfig['tld'])) {
+    if ($host = Server::valetSiteFromIpAddressUri($uriForIpAddressExtraction, $valetConfig['domain'])) {
         $_SERVER['HTTP_HOST'] = $host;
         $_SERVER['REQUEST_URI'] = str_replace($host, '', $uriForIpAddressExtraction);
     }
