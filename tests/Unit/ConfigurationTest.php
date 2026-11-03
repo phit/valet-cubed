@@ -162,31 +162,8 @@ class ConfigurationTest extends TestCase
     /**
      * @test
      */
-    public function itWillUninstallSuccessfully(): void
+    public function itPreservesConfigurationOnUninstall(): void
     {
-        $this->filesystem
-            ->shouldReceive('isDir')
-            ->once()
-            ->with(VALET_HOME_PATH)
-            ->andReturn(true);
-        $this->filesystem
-            ->shouldReceive('remove')
-            ->once()
-            ->with(VALET_HOME_PATH);
-
-        $this->configuration->uninstall();
-    }
-
-    /**
-     * @test
-     */
-    public function itWillNotUninstallWhenDirectoryNotExist(): void
-    {
-        $this->filesystem
-            ->shouldReceive('isDir')
-            ->once()
-            ->with(VALET_HOME_PATH)
-            ->andReturn(false);
         $this->filesystem
             ->shouldNotReceive('remove')
             ->with(VALET_HOME_PATH);
