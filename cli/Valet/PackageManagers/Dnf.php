@@ -26,6 +26,8 @@ class Dnf implements PackageManager
         'mariadb' => 'mariadb-server',
     ];
 
+    private array $phpConventionCache = [];
+
     /**
      * Create a new Apt instance.
      */
@@ -98,10 +100,9 @@ class Dnf implements PackageManager
      */
     public function getPhpFpmName(string $version): string
     {
-        $pattern = !empty(self::PHP_FPM_PATTERN_BY_VERSION[$version])
-            ? self::PHP_FPM_PATTERN_BY_VERSION[$version] : 'php{VERSION}-fpm';
-
-        return str_replace('{VERSION}', $version, $pattern);
+        return $this->resolvePhpConvention($version) === 'remi-scl'
+            ? 'php' . str_replace('.', '', $version) . '-php-fpm'
+            : 'php-fpm';
     }
 
     /**
@@ -135,8 +136,32 @@ class Dnf implements PackageManager
      */
     public function getPhpExtensionPrefix(string $version): string
     {
-        $pattern = 'php{VERSION}-';
-        return str_replace('{VERSION}', $version, $pattern);
+        return $this->resolvePhpConvention($version) === 'remi-scl'
+            ? 'php' . str_replace('.', '', $version) . '-php-'
+            : 'php-';
+    }
+
+    private function resolvePhpConvention(string $version): string
+    {
+        if (!preg_match('/\A\d+\.\d+\z/', $version)) {
+            throw new \InvalidArgumentException('Invalid PHP version.');
+        }
+        if (isset($this->phpConventionCache[$version])) {
+            return $this->phpConventionCache[$version];
+        }
+
+        $package = 'php' . str_replace('.', '', $version) . '-php-fpm';
+        if ($this->installed($package)) {
+            return $this->phpConventionCache[$version] = 'remi-scl';
+        }
+
+        $nativeVersion = trim($this->cli->run("rpm -q --queryformat '%{VERSION}' php-fpm 2>/dev/null || true"));
+        if (preg_match('/\A' . preg_quote($version, '/') . '(?:\.|\z)/', $nativeVersion)) {
+            return $this->phpConventionCache[$version] = 'native';
+        }
+
+        $output = $this->cli->run('dnf info ' . escapeshellarg($package) . ' >/dev/null 2>&1 && echo ok || echo no');
+        return $this->phpConventionCache[$version] = (trim($output) === 'ok' ? 'remi-scl' : 'native');
     }
 
     /**
