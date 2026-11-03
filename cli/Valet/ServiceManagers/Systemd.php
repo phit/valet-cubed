@@ -10,6 +10,11 @@ use Valet\Filesystem;
 
 class Systemd implements ServiceManager
 {
+    private const SERVICE_ALIASES = [
+        'mysql' => ['mysql', 'mysqld'],
+        'mariadb' => ['mariadb', 'mysql', 'mysqld'],
+        'mysqld' => ['mysqld', 'mysql'],
+    ];
     /**
      * @var CommandLine
      */
@@ -181,13 +186,12 @@ class Systemd implements ServiceManager
         if (!preg_match('/\A[a-zA-Z0-9_@.:-]+\z/', $service) || $service[0] === '-' || $service === '.' || $service === '..') {
             throw new DomainException('Invalid service name.');
         }
-        return collect($service)->first(
-            function ($service) {
-                return strpos($this->cli->run("systemctl status $service | grep Loaded"), 'Loaded: loaded');
-            },
-            function () {
-                throw new DomainException('Unable to determine service name.');
+        foreach (self::SERVICE_ALIASES[$service] ?? [$service] as $candidate) {
+            if (str_contains($this->cli->run('systemctl status ' . escapeshellarg($candidate) . ' | grep Loaded'), 'Loaded: loaded')) {
+                return $candidate;
             }
-        );
+        }
+
+        throw new DomainException('Unable to determine service name.');
     }
 }

@@ -12,6 +12,15 @@ use Valet\Tests\TestCase;
 
 class ServiceManagerSecurityTest extends TestCase
 {
+    public function testSystemdFindsMysqlServiceAlias(): void
+    {
+        $cli = Mockery::mock(CommandLine::class);
+        $cli->shouldReceive('run')->once()->with("systemctl status 'mysql' | grep Loaded")->andReturn('not found');
+        $cli->shouldReceive('run')->once()->with("systemctl status 'mysqld' | grep Loaded")->andReturn('Loaded: loaded');
+        $cli->shouldReceive('quietly')->once()->with('sudo systemctl start mysqld');
+        (new Systemd($cli, Mockery::mock(Filesystem::class)))->start('mysql');
+    }
+
     /** @dataProvider invalidServiceNames */
     public function testRejectsInvalidServiceNamesBeforeRunningCommands(string $manager, string $service): void
     {
