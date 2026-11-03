@@ -112,6 +112,16 @@ class Dnf implements PackageManager
         return '/usr/share/pki/ca-trust-source';
     }
 
+    public function getPhpFpmServiceName(string $version): string
+    {
+        return $this->getPhpFpmName($version);
+    }
+
+    public function getPhpExtensionName(string $version, string $extension): string
+    {
+        return $this->getPhpExtensionPrefix($version) . $extension;
+    }
+
     /**
      * Get the command to update CA certificates
      */

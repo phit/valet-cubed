@@ -38,6 +38,8 @@ class PhpFpmTest extends TestCase
         $this->config = Mockery::mock(Configuration::class);
         $this->commandLine = Mockery::mock(CommandLine::class);
         $this->packageManager = Mockery::mock(PackageManager::class);
+        $this->packageManager->shouldReceive('getPhpFpmServiceName')->byDefault()->andReturnUsing(fn ($version) => 'php' . $version . '-fpm');
+        $this->packageManager->shouldReceive('getPhpExtensionName')->byDefault()->andReturnUsing(fn ($version, $extension) => 'php' . $version . '-' . $extension);
         $this->serviceManager = Mockery::mock(ServiceManager::class);
         $this->filesystem = Mockery::mock(Filesystem::class);
         $this->site = Mockery::mock(Site::class);
@@ -133,7 +135,7 @@ class PhpFpmTest extends TestCase
         $prefix = \sprintf('php%s-', $expectedVersion);
         $this->packageManager
             ->shouldReceive('getPhpFpmName')
-            ->times(3)
+            ->once()
             ->with($expectedVersion)
             ->andReturn($fpmName);
 
@@ -148,12 +150,6 @@ class PhpFpmTest extends TestCase
             ->once()
             ->with($fpmName)
             ->andReturnFalse();
-
-        $this->packageManager
-            ->shouldReceive('getPhpExtensionPrefix')
-            ->once()
-            ->with($expectedVersion)
-            ->andReturn($prefix);
 
         $this->packageManager
             ->shouldReceive('ensureInstalled')
@@ -228,7 +224,7 @@ class PhpFpmTest extends TestCase
             ->once();
 
         $this->packageManager
-            ->shouldReceive('getPhpFpmName')
+            ->shouldReceive('getPhpFpmServiceName')
             ->with($expectedVersion)
             ->once()
             ->andReturn('php' . $expectedVersion . '-fpm');
@@ -262,7 +258,7 @@ class PhpFpmTest extends TestCase
         $prefix = \sprintf('php%s-', $expectedVersion);
         $this->packageManager
             ->shouldReceive('getPhpFpmName')
-            ->times(6)
+            ->once()
             ->with($expectedVersion)
             ->andReturn($fpmName);
 
@@ -277,12 +273,6 @@ class PhpFpmTest extends TestCase
             ->once()
             ->with($fpmName)
             ->andReturnFalse();
-
-        $this->packageManager
-            ->shouldReceive('getPhpExtensionPrefix')
-            ->once()
-            ->with($expectedVersion)
-            ->andReturn($prefix);
 
         $this->packageManager
             ->shouldReceive('ensureInstalled')
@@ -387,7 +377,7 @@ class PhpFpmTest extends TestCase
             ->andReturn($expectedVersion);
 
         $this->packageManager
-            ->shouldReceive('getPhpFpmName')
+            ->shouldReceive('getPhpFpmServiceName')
             ->with($currentVersion)
             ->once()
             ->andReturn('php' . $currentVersion . '-fpm');
@@ -428,7 +418,7 @@ class PhpFpmTest extends TestCase
         $fpmName = 'php' . $expectedVersion . '-fpm';
 
         $this->packageManager
-            ->shouldReceive('getPhpFpmName')
+            ->shouldReceive('getPhpFpmServiceName')
             ->with($expectedVersion)
             ->andReturn($fpmName);
 
@@ -449,7 +439,7 @@ class PhpFpmTest extends TestCase
         $fpmName = 'php' . $expectedVersion . '-fpm';
 
         $this->packageManager
-            ->shouldReceive('getPhpFpmName')
+            ->shouldReceive('getPhpFpmServiceName')
             ->with($expectedVersion)
             ->andReturn($fpmName);
 
@@ -470,7 +460,7 @@ class PhpFpmTest extends TestCase
         $fpmName = 'php' . $expectedVersion . '-fpm';
 
         $this->packageManager
-            ->shouldReceive('getPhpFpmName')
+            ->shouldReceive('getPhpFpmServiceName')
             ->with($expectedVersion)
             ->andReturn($fpmName);
 

@@ -279,7 +279,7 @@ class PhpFpm
             $version = $this->getCurrentVersion();
         }
 
-        return $this->pm->getPhpFpmName($version);
+        return $this->pm->getPhpFpmServiceName($version);
     }
 
     private function updateNginxConfigFiles(string $version): void
@@ -312,9 +312,8 @@ class PhpFpm
     private function installExtensions(string $version): void
     {
         $extArray = [];
-        $extensionPrefix = $this->pm->getPhpExtensionPrefix($version);
         foreach (self::COMMON_EXTENSIONS as $ext) {
-            $extArray[] = "{$extensionPrefix}{$ext}";
+            $extArray[] = $this->pm->getPhpExtensionName($version, $ext);
         }
         $this->pm->ensureInstalled(implode(' ', $extArray));
     }
@@ -388,6 +387,7 @@ class PhpFpm
             '/etc/php8/fpm/php-fpm.d', // openSUSE PHP8
             '/etc/php-fpm.d', // Fedora
             '/etc/php/php-fpm.d', // Arch
+            '/etc/fpm' . $version . '/php-fpm.d', // ALT Linux
         ])->first(function ($path) {
             return $this->files->isDir($path);
         }, function () {

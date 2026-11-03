@@ -34,6 +34,8 @@ interface PackageManager
      */
     public function getPhpFpmName(string $version): string;
 
+    public function getPhpFpmServiceName(string $version): string;
+
     /**
      * Get Php fpm service name from distro
      */
@@ -43,6 +45,8 @@ interface PackageManager
      * Get Php extension pattern from distro
      */
     public function getPhpExtensionPrefix(string $version): string;
+
+    public function getPhpExtensionName(string $version, string $extension): string;
 
     /**
      * Get package name by service

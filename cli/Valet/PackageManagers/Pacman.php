@@ -123,6 +123,16 @@ class Pacman implements PackageManager
         return '/etc/ca-certificates/trust-source/anchors';
     }
 
+    public function getPhpFpmServiceName(string $version): string
+    {
+        return $this->getPhpFpmName($version);
+    }
+
+    public function getPhpExtensionName(string $version, string $extension): string
+    {
+        return $this->getPhpExtensionPrefix($version) . $extension;
+    }
+
     /**
      * Get the command to update CA certificates
      */

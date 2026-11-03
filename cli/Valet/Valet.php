@@ -13,6 +13,7 @@ use Valet\Facades\Nginx as NginxFacade;
 use Valet\Facades\PhpFpm as PhpFpmFacade;
 use Valet\Facades\Request as RequestFacade;
 use Valet\PackageManagers\Apt;
+use Valet\PackageManagers\AltLinux;
 use Valet\PackageManagers\Dnf;
 use Valet\PackageManagers\Eopkg;
 use Valet\PackageManagers\PackageKit;
@@ -241,6 +242,7 @@ class Valet
     private function getAvailablePackageManager(): string
     {
         return collect([
+            AltLinux::class,
             Apt::class,
             Dnf::class,
             Pacman::class,
