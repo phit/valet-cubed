@@ -131,11 +131,17 @@ class Mysql
         if (!empty($config['user'])) {
             $defaultUser = $config['user'];
         }
-        /** @var string $user */
+        /** @var ?string $user */
         $user = Writer::ask('Please enter MySQL/MariaDB user:', $defaultUser);
+        if ($user === null || $user === '') {
+            $user = $defaultUser ?? 'root';
+        }
 
-        /** @var string $password */
+        /** @var ?string $password */
         $password = Writer::ask('Please enter MySQL/MariaDB password:');
+        if ($password === null) {
+            $password = '';
+        }
 
         $connection = $this->validateCredentials($user, $password);
         if (!$connection) {
