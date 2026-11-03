@@ -16,15 +16,10 @@ class Hosts
     public CommandLine $cli;
     public Filesystem $files;
     public Configuration $config;
+    private ResolvedDns $resolvedDns;
+    private bool $usingDelegatedDns = false;
 
     public string $hostsPath = '/etc/hosts';
-    public string $rclocal = '/etc/rc.local';
-    public string $dnsmasqconf = '/etc/dnsmasq.conf';
-    public string $dnsmasqOpts = '/etc/dnsmasq.d/options';
-    public string $resolvedConfigPath = '/etc/systemd/resolved.conf';
-    public string $configPath = '/etc/dnsmasq.d/valet';
-    public string $nmConfigPath = '/etc/NetworkManager/conf.d/valet.conf';
-
     private string $startMarker = '# Valet Linux+ hosts start';
     private string $endMarker = '# Valet Linux+ hosts end';
 
@@ -36,13 +31,15 @@ class Hosts
         ServiceManager $sm,
         Filesystem $files,
         CommandLine $cli,
-        Configuration $config
+        Configuration $config,
+        ?ResolvedDns $resolvedDns = null
     ) {
         $this->pm = $pm;
         $this->sm = $sm;
         $this->cli = $cli;
         $this->files = $files;
         $this->config = $config;
+        $this->resolvedDns = $resolvedDns ?? new ResolvedDns($files, $cli);
     }
 
     /**
@@ -50,8 +47,10 @@ class Hosts
      */
     public function install(string $domain): void
     {
-        $this->removeLegacyDnsConfiguration();
         $this->updateDomain($domain);
+        Writer::info($this->usingDelegatedDns
+            ? 'Using systemd-resolved delegation for wildcard domains.'
+            : 'Using /etc/hosts for local domains; wildcard subdomains are unavailable.');
     }
 
     /**
@@ -59,6 +58,7 @@ class Hosts
      */
     public function stop(): void
     {
+        $this->resolvedDns->deactivate();
         $this->removeValetHosts();
     }
 
@@ -75,6 +75,14 @@ class Hosts
      */
     public function updateDomain(string $newDomain): void
     {
+        if ($this->resolvedDns->activate($newDomain)) {
+            $this->usingDelegatedDns = true;
+            $this->removeValetHosts();
+            return;
+        }
+
+        $this->usingDelegatedDns = false;
+        $this->resolvedDns->deactivate();
         $hosts = $this->hostnames($newDomain);
 
         if (empty($hosts)) {
@@ -86,37 +94,14 @@ class Hosts
     }
 
     /**
-     * Remove Valet host entries and old dnsmasq integration files.
+     * Remove Valet host entries.
      */
     public function uninstall(): void
     {
-        $this->removeLegacyDnsConfiguration();
+        $this->resolvedDns->deactivate();
         $this->removeValetHosts();
 
         Writer::info('Valet host entries have been removed');
-    }
-
-    /**
-     * Remove files written by Valet's old dnsmasq-based resolver integration.
-     */
-    private function removeLegacyDnsConfiguration(): void
-    {
-        $this->sm->removeValetDns();
-
-        $this->cli->passthru('rm -rf /opt/valet-linux');
-        $this->files->unlink($this->configPath);
-        $this->files->unlink($this->dnsmasqOpts);
-        $this->files->unlink($this->nmConfigPath);
-        $this->files->unlink('/etc/dnsmasq.d/network-manager');
-
-        $this->files->restore($this->resolvedConfigPath);
-        $this->files->restore($this->rclocal);
-        $this->files->restore($this->dnsmasqconf);
-        $this->files->commentLine('IGNORE_RESOLVCONF', '/etc/default/dnsmasq');
-
-        if ($this->sm->isSystemd()) {
-            $this->cli->quietly('sudo systemctl enable --now systemd-resolved');
-        }
     }
 
     /**
@@ -213,7 +198,11 @@ class Hosts
             return;
         }
 
-        $this->writeHostsFile(rtrim($this->withoutValetHosts($this->files->get($this->hostsPath))) . PHP_EOL);
+        $contents = $this->files->get($this->hostsPath);
+        if (!str_contains($contents, $this->startMarker)) {
+            return;
+        }
+        $this->writeHostsFile(rtrim($this->withoutValetHosts($contents)) . PHP_EOL);
     }
 
     private function writeHostsFile(string $contents): void

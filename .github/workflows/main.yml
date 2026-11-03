@@ -3,9 +3,29 @@ name: CI
 on: [pull_request]
 
 jobs:
+  resolved_dns:
+    name: Systemd DNS delegation (Ubuntu VM)
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y dnsmasq-base systemd-resolved
+          composer install --no-interaction --prefer-dist
+      - name: Use resolved's local stub in the disposable VM
+        run: |
+          sudo systemctl enable --now systemd-resolved.service
+          sudo ln -sfn /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+      - name: Test wildcard delegation and cleanup
+        run: sudo env CI=true VALET_DISPOSABLE_DNS_TEST=1 PATH="$PATH" php tests/integration/resolved-dns.php
   test:
     name: Build & Test
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-26.04
     strategy:
       matrix:
         php:
@@ -28,7 +48,7 @@ jobs:
         run: vendor/bin/phpunit
   cs_fixer:
     name: CS Fixer
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-26.04
     strategy:
       matrix:
         php:

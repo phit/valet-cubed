@@ -12,6 +12,7 @@ use Valet\Contracts\PackageManager;
 use Valet\Contracts\ServiceManager;
 use Valet\Filesystem;
 use Valet\Hosts;
+use Valet\ResolvedDns;
 use Valet\Tests\TestCase;
 
 class HostsTest extends TestCase
@@ -22,6 +23,7 @@ class HostsTest extends TestCase
     private Filesystem|MockObject $filesystem;
     private Configuration|MockObject $configuration;
     private Hosts $hosts;
+    private ResolvedDns|MockObject $resolvedDns;
 
     public function setUp(): void
     {
@@ -32,13 +34,17 @@ class HostsTest extends TestCase
         $this->filesystem = Mockery::mock(Filesystem::class);
         $this->commandLine = Mockery::mock(CommandLine::class);
         $this->configuration = Mockery::mock(Configuration::class);
+        $this->resolvedDns = Mockery::mock(ResolvedDns::class);
+        $this->resolvedDns->shouldReceive('activate')->byDefault()->andReturn(false);
+        $this->resolvedDns->shouldReceive('deactivate')->byDefault();
 
         $this->hosts = new Hosts(
             $this->packageManager,
             $this->serviceManager,
             $this->filesystem,
             $this->commandLine,
-            $this->configuration
+            $this->configuration,
+            $this->resolvedDns
         );
     }
 
@@ -47,10 +53,21 @@ class HostsTest extends TestCase
      */
     public function itWillInstallSuccessfully(): void
     {
-        $this->expectLegacyDnsCleanup();
         $this->expectHostDiscovery('test');
 
         $this->hosts->install('test');
+    }
+
+    public function testDelegatedResolverReplacesOnlyTheManagedHostsBlock(): void
+    {
+        $this->resolvedDns->shouldReceive('activate')->once()->with('test')->andReturn(true);
+        $this->resolvedDns->shouldNotReceive('deactivate');
+        $this->filesystem->shouldReceive('exists')->once()->with('/etc/hosts')->andReturnTrue();
+        $this->filesystem->shouldReceive('get')->once()->with('/etc/hosts')->andReturn(
+            "127.0.0.1 localhost\n\n# Valet Linux+ hosts start\n127.0.0.1 app.test\n# Valet Linux+ hosts end\n"
+        );
+        $this->expectHostsFileWrite("127.0.0.1 localhost\n");
+        $this->hosts->updateDomain('test');
     }
 
     /**
@@ -59,8 +76,6 @@ class HostsTest extends TestCase
     public function itWillUninstallSuccessfully(): void
     {
         Writer::fake();
-
-        $this->expectLegacyDnsCleanup();
 
         $this->filesystem
             ->shouldReceive('exists')
@@ -183,63 +198,7 @@ class HostsTest extends TestCase
             ->with('/etc/hosts')
             ->andReturn('127.0.0.1 localhost' . PHP_EOL);
 
-        $this->expectHostsFileWrite('127.0.0.1 localhost' . PHP_EOL);
-
         $this->hosts->updateDomain('test');
-    }
-
-    private function expectLegacyDnsCleanup(): void
-    {
-        $this->serviceManager
-            ->shouldReceive('removeValetDns')
-            ->once();
-
-        $this->commandLine
-            ->shouldReceive('passthru')
-            ->once()
-            ->with('rm -rf /opt/valet-linux');
-
-        foreach (
-            [
-                '/etc/dnsmasq.d/valet',
-                '/etc/dnsmasq.d/options',
-                '/etc/NetworkManager/conf.d/valet.conf',
-                '/etc/dnsmasq.d/network-manager',
-            ] as $path
-        ) {
-            $this->filesystem
-                ->shouldReceive('unlink')
-                ->once()
-                ->with($path);
-        }
-
-        foreach (
-            [
-                '/etc/systemd/resolved.conf',
-                '/etc/rc.local',
-                '/etc/dnsmasq.conf',
-            ] as $path
-        ) {
-            $this->filesystem
-                ->shouldReceive('restore')
-                ->once()
-                ->with($path);
-        }
-
-        $this->filesystem
-            ->shouldReceive('commentLine')
-            ->once()
-            ->with('IGNORE_RESOLVCONF', '/etc/default/dnsmasq');
-
-        $this->serviceManager
-            ->shouldReceive('isSystemd')
-            ->once()
-            ->andReturnTrue();
-
-        $this->commandLine
-            ->shouldReceive('quietly')
-            ->once()
-            ->with('sudo systemctl enable --now systemd-resolved');
     }
 
     private function expectHostDiscovery(string $domain): void
