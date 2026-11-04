@@ -225,6 +225,7 @@ verify_restored() {
         } > "$OUT/http-$PHASE.log"
         check "Valet site serves over HTTP" false
     fi
+    check "database accepts the credentials Valet saved" database_login
     if [[ "$(getenforce 2>/dev/null)" == Enforcing ]]; then
         check "only nginx and PHP-FPM run permissive under SELinux" bash -c "semanage permissive -l -n | grep -qx '\s*httpd_t\s*'"
     fi
@@ -519,6 +520,16 @@ Valet\Facades\DnsMasq::install('test');
 echo "original DnsMasq::install() finished\n";
 PHP
     env HOME=/home/valet LEGACY_HOME="$home" php /tmp/legacy-dns.php
+}
+
+# Valet saves either its own user (new install) or the credentials it was
+# given for an existing server.
+database_login() {
+    local config=/home/valet/.config/valet/config.json user password
+    user="$(jq -r '.mysql.user // empty' "$config")" || return 1
+    password="$(jq -r '.mysql.password // empty' "$config")"
+    [[ -n "$user" ]] || return 1
+    MYSQL_PWD="$password" "$(command -v mariadb || command -v mysql)" -h localhost -u "$user" -e 'SELECT 1' >/dev/null
 }
 
 valet_install() {
