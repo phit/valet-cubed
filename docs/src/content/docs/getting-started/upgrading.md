@@ -14,7 +14,7 @@ composer global remove genesisweb/valet-linux-plus
 composer global require phit/valet-cubed
 ```
 
-The two packages conflict, so Composer refuses to install Valet Cubed while Valet Linux+ is still installed.
+The two packages conflict, so Composer refuses to install Valet Cubed while Valet Linux+ is still installed. The same goes for the original Valet Linux (`cpriego/valet-linux`): remove it with `composer global remove cpriego/valet-linux` if you have it.
 
 ## 2. Run the installer again
 

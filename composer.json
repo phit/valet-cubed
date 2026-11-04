@@ -66,6 +66,7 @@
         "ext-zip": "*"
     },
     "conflict": {
+        "cpriego/valet-linux": "*",
         "genesisweb/valet-linux-plus": "*"
     },
     "scripts": {
