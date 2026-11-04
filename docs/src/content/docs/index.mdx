@@ -1,0 +1,43 @@
+---
+title: Valet Cubed
+description: A fast, minimal PHP development environment for Linux.
+template: splash
+hero:
+  tagline: A fast, minimal PHP development environment for Linux. No Vagrant, no Docker, no editing /etc/hosts by hand.
+  actions:
+    - text: Get started
+      link: /getting-started/requirements/
+      icon: right-arrow
+    - text: View on GitHub
+      link: https://github.com/phit/valet-cubed
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+Valet Cubed runs Nginx and PHP-FPM in the background and serves every project in your sites folder at `http://project-name.test`. It uses a few megabytes of RAM and gets out of your way.
+
+It is a fork of [Valet Linux+](https://github.com/valet-linux-plus/valet-linux-plus), which forked [Valet Linux](https://github.com/cpriego/valet-linux), which forked [Laravel Valet](https://github.com/laravel/valet). Hence the name.
+
+<CardGrid>
+	<Card title="Park a folder, get sites" icon="rocket">
+		Every folder in a parked directory becomes a site. Link single projects, secure them with trusted
+		HTTPS certificates, or proxy them to a local port.
+	</Card>
+	<Card title="Leaves your DNS alone" icon="approve-check">
+		Valet only answers for its own domain. Your network's DNS servers and LAN names keep working.
+	</Card>
+	<Card title="Any PHP version" icon="setting">
+		Switch the default PHP version, or isolate single sites on anything from PHP 7.0 to 8.5 that your
+		distribution's repositories offer.
+	</Card>
+	<Card title="Batteries included" icon="puzzle">
+		MySQL or MariaDB, Redis, and Mailpit for catching outgoing mail, all managed by the same
+		`valet` command.
+	</Card>
+</CardGrid>
+
+## Tested on
+
+Every change runs through real installs on Ubuntu 24.04 and 26.04, Debian 13, Fedora 44, AlmaLinux 10, Arch Linux, openSUSE Leap 16.0 and ALT Linux p11.
