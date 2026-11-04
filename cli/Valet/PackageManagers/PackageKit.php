@@ -25,6 +25,18 @@ class PackageKit implements PackageManager
     ];
 
     /**
+     * openSUSE, the main PackageKit user, names packages differently. Leap
+     * ships MariaDB only.
+     */
+    private const SUSE_PACKAGES = [
+        'redis' => 'redis',
+        'mysql' => 'mariadb',
+        'mariadb' => 'mariadb',
+    ];
+
+    private ?bool $suse = null;
+
+    /**
      * Create a new Apt instance.
      */
     public function __construct(CommandLine $cli)
@@ -103,6 +115,9 @@ class PackageKit implements PackageManager
      */
     public function getPhpFpmName(string $version): string
     {
+        if ($this->suse()) {
+            return $this->getPhpExtensionPrefix($version) . 'fpm';
+        }
         $pattern = !empty(self::PHP_FPM_PATTERN_BY_VERSION[$version])
             ? self::PHP_FPM_PATTERN_BY_VERSION[$version] : 'php{VERSION}-fpm';
 
@@ -114,16 +129,20 @@ class PackageKit implements PackageManager
      */
     public function getCaCertificatesPath(): string
     {
-        return '/usr/share/pki/ca-trust-source';
+        return $this->suse() ? '/etc/pki/trust/anchors' : '/usr/share/pki/ca-trust-source';
     }
 
     public function getPhpFpmServiceName(string $version): string
     {
-        return $this->getPhpFpmName($version);
+        return $this->suse() ? 'php-fpm' : $this->getPhpFpmName($version);
     }
 
     public function getPhpExtensionName(string $version, string $extension): string
     {
+        if ($this->suse() && $extension === 'xml') {
+            $extension = 'dom';
+        }
+
         return $this->getPhpExtensionPrefix($version) . $extension;
     }
 
@@ -132,7 +151,7 @@ class PackageKit implements PackageManager
      */
     public function getCaUpdateCommand(): string
     {
-        return 'update-ca-trust';
+        return $this->suse() ? 'update-ca-certificates' : 'update-ca-trust';
     }
 
     /**
@@ -140,6 +159,10 @@ class PackageKit implements PackageManager
      */
     public function getPhpExtensionPrefix(string $version): string
     {
+        // openSUSE packages one PHP per major version: php8-fpm, php8-gd.
+        if ($this->suse()) {
+            return 'php' . strtok($version, '.') . '-';
+        }
         $pattern = 'php{VERSION}-';
         return str_replace('{VERSION}', $version, $pattern);
     }
@@ -149,9 +172,20 @@ class PackageKit implements PackageManager
      */
     public function packageName(string $name): string
     {
-        if (isset(self::PACKAGES[$name])) {
-            return self::PACKAGES[$name];
+        $packages = $this->suse() ? self::SUSE_PACKAGES : self::PACKAGES;
+        if (isset($packages[$name])) {
+            return $packages[$name];
         }
         throw new \InvalidArgumentException(\sprintf('Package not found by %s', $name));
+    }
+
+    private function suse(): bool
+    {
+        if ($this->suse === null) {
+            $osRelease = $this->cli->run('cat /etc/os-release 2>/dev/null');
+            $this->suse = preg_match('/^ID(_LIKE)?="?[^"\n]*suse/mi', $osRelease) === 1;
+        }
+
+        return $this->suse;
     }
 }
