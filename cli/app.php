@@ -8,6 +8,7 @@ use ConsoleComponents\Writer;
 use Illuminate\Container\Container;
 use Silly\Application;
 use Symfony\Component\Console\Output\OutputInterface;
+use Valet\Contracts\PackageManager;
 use Valet\Drivers\ValetDriver;
 use Valet\Facades\Configuration;
 use Valet\Facades\DevTools;
@@ -74,6 +75,7 @@ $app->command('install [--ignore-selinux] [--mariadb]', function ($ignoreSELinux
     passthru(dirname(__FILE__) . '/scripts/update.sh'); // Clean up cruft
     Requirements::check();
     $legacyDns()->warnIfLegacy('valet install');
+    Container::getInstance()->make(PackageManager::class)->setup();
     Configuration::install();
     if (!$ignoreSELinux) {
         SeLinux::install();

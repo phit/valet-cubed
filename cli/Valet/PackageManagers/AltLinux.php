@@ -20,7 +20,7 @@ class AltLinux implements PackageManager
     public $serviceManager;
 
     private const PACKAGES = [
-        'redis' => 'redis-server',
+        'redis' => 'redis',
         'mysql' => 'mariadb-server', // ALTLinux uses MariaDB by default
         'mariadb' => 'mariadb-server',
     ];
@@ -99,7 +99,12 @@ class AltLinux implements PackageManager
      */
     public function setup(): void
     {
-        // Nothing to do
+        // ALT keeps the package lists in a per-boot private /tmp, so they are
+        // empty until apt-get update runs.
+        Writer::twoColumnDetail('Package lists', 'Updating');
+        $this->cli->run('apt-get update', function ($exitCode, $errorOutput) {
+            Writer::warn(\sprintf('apt-get update failed (%s): %s', $exitCode, trim($errorOutput)));
+        });
     }
 
     /**
@@ -173,11 +178,17 @@ class AltLinux implements PackageManager
      */
     public function getPhpExtensionName(string $version, string $extension): string
     {
-        // Special case for mysql in ALTLinux
-        if ($extension === 'mysql') {
-            return 'php' . $version . '-mysqlnd';
-        }
-        return $this->getPhpExtensionPrefix($version) . '-' . $extension;
+        $prefix = $this->getPhpExtensionPrefix($version);
+
+        return match ($extension) {
+            // Part of the php package itself.
+            'cli', 'posix' => $prefix,
+            'xml' => $prefix . '-xmlreader',
+            // ALT packages each PDO driver separately.
+            'mysql' => $prefix . '-pdo_mysql',
+            'pgsql' => $prefix . '-pdo_pgsql',
+            default => $prefix . '-' . $extension,
+        };
     }
 
     /**
