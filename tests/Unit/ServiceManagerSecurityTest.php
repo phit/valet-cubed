@@ -6,9 +6,9 @@ use DomainException;
 use Mockery;
 use Valet\CommandLine;
 use Valet\Filesystem;
+use Valet\RunAs;
 use Valet\ServiceManagers\LinuxService;
 use Valet\ServiceManagers\Systemd;
-use Valet\RunAs;
 use Valet\Tests\TestCase;
 
 class ServiceManagerSecurityTest extends TestCase
@@ -22,7 +22,9 @@ class ServiceManagerSecurityTest extends TestCase
         (new Systemd($cli, Mockery::mock(Filesystem::class)))->start('mysql');
     }
 
-    /** @dataProvider invalidServiceNames */
+    /**
+     * @dataProvider invalidServiceNames
+     */
     public function testRejectsInvalidServiceNamesBeforeRunningCommands(string $manager, string $service): void
     {
         $cli = Mockery::mock(CommandLine::class);
