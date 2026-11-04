@@ -60,7 +60,8 @@ note() {
 }
 
 as_valet() {
-    sudo -u valet -H env PATH="/home/valet/.config/composer/vendor/bin:/home/valet/.composer/vendor/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin" \
+    # runuser, not sudo: ALT Linux does not list root in sudoers.
+    runuser -u valet -- env HOME=/home/valet PATH="/home/valet/.config/composer/vendor/bin:/home/valet/.composer/vendor/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin" \
         COMPOSER_HOME=/home/valet/.config/composer bash -c "cd ~ && $1"
 }
 
@@ -169,8 +170,9 @@ same_resolver_as() {
 }
 
 same_files_as() {
-    # same_files_as LABEL PATTERN: listed files are identical.
-    diff <(grep -E "$2" "$STATE/$1/files.tsv") <(grep -E "$2" "$STATE/now/files.tsv")
+    # same_files_as LABEL PATTERN [EXCLUDE]: listed files are identical.
+    local exclude="${3:-^$}"
+    diff <(grep -E "$2" "$STATE/$1/files.tsv" | grep -vE "$exclude") <(grep -E "$2" "$STATE/now/files.tsv" | grep -vE "$exclude")
 }
 
 no_public_upstreams_added() {
@@ -269,6 +271,12 @@ provision() {
             fi
             dnf install -y NetworkManager dnsmasq php-cli php-mbstring php-xml php-pdo php-process php-zip \
                 unzip git jq xsel nss-tools bind-utils curl e2fsprogs || die "package installation failed"
+            # The original installer cannot run without systemd-resolved (it
+            # aborts on the missing unit), so only RHEL-family machines that
+            # had it installed can carry the legacy layout.
+            if [[ "$SCENARIO" == legacy* ]] && ! systemctl cat systemd-resolved.service >/dev/null 2>&1; then
+                dnf install -y systemd-resolved || gap "systemd-resolved unavailable; the original installer cannot run here"
+            fi
             ;;
         pacman)
             pacman -Syu --noconfirm networkmanager dnsmasq php unzip git jq xsel nss bind curl e2fsprogs which \
@@ -278,12 +286,17 @@ provision() {
         zypper)
             zypper -n refresh && zypper -n install NetworkManager dnsmasq php8-cli php8-mbstring php8-xmlreader \
                 php8-dom php8-pdo php8-posix php8-curl php8-zip php8-phar php8-openssl php8-iconv php8-tokenizer \
-                php8-ctype unzip git jq xsel mozilla-nss-tools bind-utils curl e2fsprogs \
+                php8-ctype unzip git jq xsel mozilla-nss-tools bind-utils curl e2fsprogs which PackageKit \
                 || die "package installation failed"
+            # As on RHEL: the original installer needs systemd-resolved.
+            if [[ "$SCENARIO" == legacy* ]] && ! systemctl cat systemd-resolved.service >/dev/null 2>&1; then
+                zypper -n install systemd-resolved || gap "systemd-resolved unavailable; the original installer cannot run here"
+            fi
             ;;
         altapt)
+            # dom, phar, posix and tokenizer are part of php8.3 on p11.
             apt-get update && apt-get install -y NetworkManager-daemon dnsmasq php8.3 php8.3-mbstring php8.3-xmlreader \
-                php8.3-dom php8.3-pdo php8.3-posix php8.3-curl php8.3-zip php8.3-phar php8.3-openssl unzip git jq xsel \
+                php8.3-pdo php8.3-curl php8.3-zip php8.3-openssl unzip git jq xsel \
                 nss-utils bind-utils curl e2fsprogs || gap "ALT package set unavailable; see guest-provision.log"
             ;;
     esac
@@ -310,8 +323,6 @@ Wants=network-pre.target
 ExecStartPre=-/sbin/ip netns add lan
 ExecStartPre=-/sbin/ip link add lan0 type veth peer name lan0p
 ExecStartPre=-/sbin/ip link set lan0p netns lan
-ExecStartPre=-/sbin/ip addr add 10.53.0.2/24 dev lan0
-ExecStartPre=/sbin/ip link set lan0 up
 ExecStartPre=-/usr/bin/nsenter --net=/run/netns/lan /sbin/ip addr add 10.53.0.1/24 dev lan0p
 ExecStartPre=/usr/bin/nsenter --net=/run/netns/lan /sbin/ip link set lan0p up
 ExecStartPre=/usr/bin/nsenter --net=/run/netns/lan /sbin/ip link set lo up
@@ -328,7 +339,7 @@ After=vmtest-lan-dns.service
 Requires=vmtest-lan-dns.service
 
 [Service]
-ExecStart=$dnsmasq --keep-in-foreground --conf-file=/dev/null --no-resolv --no-hosts --bind-interfaces --listen-address=10.53.0.2 --port=5354 --server=10.0.2.3 --pid-file=
+ExecStart=$dnsmasq --keep-in-foreground --conf-file=/dev/null --no-resolv --no-hosts --bind-dynamic --listen-address=10.53.0.2 --port=5354 --server=10.0.2.3 --pid-file=
 Restart=on-failure
 
 [Install]
@@ -338,18 +349,30 @@ UNIT
     systemctl enable vmtest-lan-dns.service vmtest-lan-relay.service
     if command -v getenforce >/dev/null && [[ "$(getenforce)" == Enforcing ]]; then
         # The relay is test infrastructure; let dnsmasq bind its port.
-        command -v semanage >/dev/null || dnf install -y policycoreutils-python-utils >/dev/null
+        if ! command -v semanage >/dev/null; then
+            case "$FAMILY" in
+                zypper) zypper -n install policycoreutils-python-utils >/dev/null ;;
+                *) dnf install -y policycoreutils-python-utils >/dev/null ;;
+            esac
+        fi
         semanage port -a -t dns_port_t -p udp 5354 && semanage port -a -t dns_port_t -p tcp 5354 \
             || die "cannot label the LAN relay port for SELinux"
     fi
 
-    # Desktop-like networking: NetworkManager owns the wired link and uses
-    # the LAN server as its DNS server.
+    # Desktop-like networking: NetworkManager owns the wired link and the
+    # link to the LAN DNS server, and announces that server on its own link.
+    # systemd-resolved sends a link's DNS queries out of that link, so the
+    # server must not be announced on eth0, behind which it is unreachable.
     mkdir -p /etc/NetworkManager/conf.d /etc/NetworkManager/system-connections /etc/cloud/cloud.cfg.d
     echo 'network: {config: disabled}' > /etc/cloud/cloud.cfg.d/99-valet-vm-network.cfg
+    # Cloud images also run systemd-networkd (Ubuntu 26.04 from a dracut
+    # .network file). Two managers on one link race to set its DNS servers
+    # in systemd-resolved, which no desktop does.
+    systemctl mask systemd-networkd.service systemd-networkd.socket 2>/dev/null || true
     : > /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
     printf '[connectivity]\nenabled=false\n' > /etc/NetworkManager/conf.d/90-user.conf
-    printf '[keyfile]\nunmanaged-devices=interface-name:lan0;interface-name:lan1\n' > /etc/NetworkManager/conf.d/91-vmtest-dummy.conf
+    printf '[keyfile]\nunmanaged-devices=interface-name:lan1\n\n[device-vmtest-lan]\nmatch-device=interface-name:lan0\nmanaged=1\n' \
+        > /etc/NetworkManager/conf.d/91-vmtest-dummy.conf
     cat > /etc/NetworkManager/system-connections/vmtest-wired.nmconnection <<EOF
 [connection]
 id=vmtest-wired
@@ -357,18 +380,41 @@ type=ethernet
 autoconnect=true
 autoconnect-priority=100
 
+# Any wired device except the LAN veth, whose name differs per distribution.
+[match]
+interface-name=!lan0;!lan1;
+
 [ipv4]
 method=auto
 ignore-auto-dns=true
-dns=10.53.0.1;
 
 [ipv6]
 method=ignore
 EOF
-    chmod 600 /etc/NetworkManager/system-connections/vmtest-wired.nmconnection
+    # vmtest-lan-dns.service only creates the veth pair; this profile owns the
+    # host side. A negative priority makes this the only DNS server and the
+    # default route for all domains.
+    cat > /etc/NetworkManager/system-connections/vmtest-lan.nmconnection <<EOF
+[connection]
+id=vmtest-lan
+type=ethernet
+interface-name=lan0
+autoconnect=true
+
+[ipv4]
+method=manual
+address1=10.53.0.2/24
+never-default=true
+dns=10.53.0.1;
+dns-priority=-10
+
+[ipv6]
+method=ignore
+EOF
+    chmod 600 /etc/NetworkManager/system-connections/vmtest-wired.nmconnection /etc/NetworkManager/system-connections/vmtest-lan.nmconnection
     # Cloud images ship their own wired profiles (cloud-init, "System eth0").
     for profile in /etc/NetworkManager/system-connections/* /etc/sysconfig/network-scripts/ifcfg-eth* /etc/sysconfig/network-scripts/ifcfg-ens*; do
-        [[ -e "$profile" && "$profile" != */vmtest-wired.nmconnection ]] || continue
+        [[ -e "$profile" && "$profile" != */vmtest-*.nmconnection ]] || continue
         if grep -qiE 'type=(ethernet|802-3-ethernet)|^TYPE=Ethernet' "$profile"; then
             echo "removing cloud network profile $profile"
             rm -f "$profile"
@@ -444,7 +490,11 @@ scenario() {
     local release="$LEGACY_SPEC"
     [[ "$SCENARIO" == legacy-watcher ]] && release="$LEGACY_WATCHER_SPEC"
     echo "--- installing original $release"
+    # Old releases depend on packages with security advisories, which
+    # Composer now refuses; users installed them before the advisories.
+    as_valet "composer global config policy.advisories.block false"
     valet_install_package "$release" || gap "original $release cannot be installed with Composer on $DISTRO"
+    as_valet "composer global config --unset policy.advisories.block"
     as_valet "composer global show genesisweb/valet-linux-plus" | tee "$OUT/legacy-package.txt"
     as_valet "valet install --no-interaction --ignore-selinux" > "$OUT/legacy-install.log" 2>&1
     echo "original installer exit status: $?" | tee -a "$OUT/legacy-install.log"
@@ -455,6 +505,13 @@ scenario() {
         note "the original installer failed before configuring DNS ($(grep -m1 -iE 'unable to|error|fatal' "$OUT/legacy-install.log" | tr -s ' ' | cut -c1-120)); running only its DNS component"
         legacy_dns_component >> "$OUT/legacy-install.log" 2>&1
         legacy_markers || gap "the original $release DNS component did not configure DNS on $DISTRO (see legacy-install.log)"
+    fi
+    if [[ "$(cat /etc/dnsmasq.d/valet)" == "address=/./127.0.0.1" ]]; then
+        # 1.5.x configures dnsmasq before writing its configuration, so the
+        # first install on a fresh machine sends every name to 127.0.0.1.
+        # Users then ran install again, which writes the configured domain.
+        note "the first original install had no domain yet (address=/./127.0.0.1); running it again like a user would"
+        as_valet "valet install --no-interaction --ignore-selinux" >> "$OUT/legacy-install.log" 2>&1
     fi
     as_valet "cd ~/sites && valet park" >> "$OUT/legacy-install.log" 2>&1
     sleep 2
@@ -486,10 +543,14 @@ scenario() {
 
     install_checkout
     snapshot now
+    # Install removes the MailHog link that old releases kept in /opt/valet-linux.
     check "normal install does not modify legacy DNS files" \
-        same_files_as legacy '^/(etc/(dnsmasq|NetworkManager|resolv|default/dnsmasq|systemd/(resolved|system/valet-dns))|opt/valet-linux)'
+        same_files_as legacy '^/(etc/(dnsmasq|NetworkManager|resolv|default/dnsmasq|systemd/(resolved|system/valet-dns))|opt/valet-linux)' '^/opt/valet-linux/mailhog\b'
     check "normal install warns about the legacy integration" grep -q 'dns:migrate' "$OUT/install.log"
     snapshot pre-migration
+    # Rollback must restore the legacy behaviour, which is not always a
+    # working wildcard (see the note after the original install).
+    resolves_to sub.app.test 127.0.0.1 && touch "$STATE/pre-migration/wildcard-resolves"
 
     as_valet "valet dns:migrate --dry-run" | tee "$OUT/plan.txt"
     as_valet "valet dns:migrate --dry-run --json" > "$OUT/plan.json"
@@ -529,7 +590,13 @@ database_login() {
     user="$(jq -r '.mysql.user // empty' "$config")" || return 1
     password="$(jq -r '.mysql.password // empty' "$config")"
     [[ -n "$user" ]] || return 1
-    MYSQL_PWD="$password" "$(command -v mariadb || command -v mysql)" -h localhost -u "$user" -e 'SELECT 1' >/dev/null
+    # The server may still be starting right after a reboot.
+    local attempt
+    for attempt in $(seq 1 30); do
+        MYSQL_PWD="$password" "$(command -v mariadb || command -v mysql)" -h localhost -u "$user" -e 'SELECT 1' >/dev/null 2>&1 && return 0
+        sleep 1
+    done
+    return 1
 }
 
 valet_install() {
@@ -538,6 +605,12 @@ valet_install() {
     # user root, empty password (socket auth as root), no retry, link php.
     # Debian ships no mysql-server; Valet falls back to MariaDB there.
     as_valet "printf 'root\\n\\nno\\nyes\\n' | valet install"
+    # The first command after upgrading from a ~/.valet release only moves
+    # the configuration and asks to run the command again.
+    if [[ -d /home/valet/.valet && ! -e "$STATE/valet-home-moved" ]]; then
+        touch "$STATE/valet-home-moved"
+        as_valet "printf 'root\\n\\nno\\nyes\\n' | valet install"
+    fi
 }
 
 install_checkout() {
@@ -569,12 +642,18 @@ after_reboot() {
         as_valet "valet dns:rollback --yes" | tee "$OUT/rollback.log"
         check "rollback reports success" grep -q 'restored and verified' "$OUT/rollback.log"
         snapshot now
+        # The restarted valet-dns watcher rewrites its runtime files.
         check "rollback restores the pre-migration files" \
-            same_files_as pre-migration '^/(etc/(dnsmasq|NetworkManager|resolv|default/dnsmasq|systemd/(resolved|system/valet-dns|dns-delegate))|opt/valet-linux)'
+            same_files_as pre-migration '^/(etc/(dnsmasq|NetworkManager|resolv|default/dnsmasq|systemd/(resolved|system/valet-dns|dns-delegate))|opt/valet-linux)' \
+            '^/opt/valet-linux/(dns-servers|resolv\.conf|resolvfiles\.log|watch\.(pid|log))\s'
         # Rollback stops a unit that had failed; "failed" and "inactive" are both stopped.
         check "rollback restores the pre-migration services" \
             diff <(sed 's#/failed$#/inactive#' "$STATE/pre-migration/units.tsv") <(sed 's#/failed$#/inactive#' "$STATE/now/units.tsv")
-        check "legacy wildcard works again after rollback" resolves_to sub.app.test 127.0.0.1
+        if [[ -e "$STATE/pre-migration/wildcard-resolves" ]]; then
+            check "legacy wildcard works again after rollback" resolves_to sub.app.test 127.0.0.1
+        else
+            note "the legacy wildcard did not resolve before migration either; not expected after rollback"
+        fi
 
         local verify=(--verify-host="$LAN_NAME")
         [[ "$SCENARIO" == legacy-user-dnsmasq ]] && verify+=(--verify-host="$USER_ZONE_NAME")
