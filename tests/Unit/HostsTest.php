@@ -39,6 +39,7 @@ class HostsTest extends TestCase
         $this->resolvedDns = Mockery::mock(ResolvedDns::class);
         $this->resolvedDns->shouldReceive('activate')->byDefault()->andReturn(false);
         $this->resolvedDns->shouldReceive('deactivate')->byDefault();
+        $this->resolvedDns->shouldReceive('requiresDnsOverTls')->byDefault()->andReturn(false);
 
         $this->hosts = new Hosts(
             $this->packageManager,

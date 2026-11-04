@@ -53,7 +53,21 @@ class ResolvedDns
         }
 
         return trim($this->cli->run('systemctl is-active systemd-resolved.service 2>/dev/null')) === 'active'
+            && !$this->requiresDnsOverTls()
             && $this->binary() !== null;
+    }
+
+    /**
+     * Whether resolved only talks to DNS servers over TLS (DNSOverTLS=yes).
+     * Delegates inherit this, and the local dnsmasq doesn't speak TLS, so
+     * every lookup through the delegation would hang until it times out.
+     */
+    public function requiresDnsOverTls(): bool
+    {
+        $status = $this->cli->run('timeout 5 resolvectl status 2>/dev/null');
+        $global = explode("\n\n", trim($status))[0];
+
+        return (bool) preg_match('/^\s*Protocols:.*\+DNSOverTLS\b/m', $global);
     }
 
     public function activate(string $domain): bool
@@ -146,13 +160,15 @@ class ResolvedDns
      */
     private function delegationAnswers(string $domain): bool
     {
-        for ($attempt = 1; $attempt <= 20; $attempt++) {
+        // A probe that doesn't answer within two seconds counts as a miss, so a
+        // broken delegation fails within half a minute instead of hanging.
+        for ($attempt = 1; $attempt <= 10; $attempt++) {
             $probe = 'valet-check-' . bin2hex(random_bytes(8)) . '.' . $domain;
-            $answer = $this->cli->run('resolvectl query --type=A --cache=no ' . escapeshellarg($probe) . ' 2>&1');
+            $answer = $this->cli->run('timeout 2 resolvectl query --type=A --cache=no ' . escapeshellarg($probe) . ' 2>&1');
             if (preg_match('/(?<![0-9.])127\.0\.0\.1(?![0-9.])/', $answer)) {
                 return true;
             }
-            ($this->sleep)(250000);
+            ($this->sleep)(500000);
         }
 
         return false;

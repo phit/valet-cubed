@@ -50,10 +50,16 @@ class Hosts
      */
     public function install(string $domain): void
     {
+        Writer::info(sprintf('Setting up name resolution for .%s...', $domain));
         $this->updateDomain($domain);
-        Writer::info($this->usingDelegatedDns
-            ? 'Using systemd-resolved delegation for wildcard domains.'
-            : 'Using /etc/hosts for local domains; wildcard subdomains are unavailable.');
+        if ($this->usingDelegatedDns) {
+            Writer::info('Using systemd-resolved delegation for wildcard domains.');
+            return;
+        }
+        if ($this->resolvedDns->requiresDnsOverTls()) {
+            Writer::warn('systemd-resolved is set to DNSOverTLS=yes, which Valet\'s local DNS server cannot offer.');
+        }
+        Writer::info('Using /etc/hosts for local domains; wildcard subdomains are unavailable.');
     }
 
     /**

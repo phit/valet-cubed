@@ -19,6 +19,7 @@ class ResolvedDnsTest extends TestCase
     private ?string $failure = null;
     private string $probeAnswer = '127.0.0.1';
     private int $staleProbes = 0;
+    private string $resolvedStatus = "Global\n         Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported\n";
     private ResolvedDns $dns;
 
     public function setUp(): void
@@ -45,13 +46,14 @@ class ResolvedDnsTest extends TestCase
             if ($command === $this->failure && $onError !== null) {
                 $onError(1, 'failed');
             }
-            if (str_starts_with($command, 'resolvectl query --type=A --cache=no ')) {
+            if (str_starts_with($command, 'timeout 2 resolvectl query --type=A --cache=no ')) {
                 return $this->staleProbes-- > 0 ? 'resolve call failed: No appropriate name servers or networks' : $this->probeAnswer;
             }
             return match ($command) {
                 'systemctl --version 2>/dev/null' => $this->version,
                 'systemctl is-active systemd-resolved.service 2>/dev/null' => $this->resolverStatus,
                 'command -v dnsmasq 2>/dev/null' => $this->binary,
+                'timeout 5 resolvectl status 2>/dev/null' => $this->resolvedStatus,
                 default => '',
             };
         });
@@ -98,6 +100,25 @@ class ResolvedDnsTest extends TestCase
 
         $this->assertSame('user configuration', $this->files[ResolvedDns::FORMER_UNIT]);
         $this->assertNotContains('systemctl disable --now valet-linux-plus-dns.service', $this->commands);
+    }
+
+    public function testFallsBackWithoutChangingDnsWhenResolvedRequiresDnsOverTls(): void
+    {
+        // Delegates inherit DNSOverTLS=yes, and the local dnsmasq has no TLS.
+        $this->resolvedStatus = "Global\n         Protocols: -LLMNR -mDNS +DNSOverTLS DNSSEC=yes/supported\n"
+            . "  resolv.conf mode: stub\n\nLink 2 (eth0)\n         Protocols: +DefaultRoute +DNSOverTLS\n";
+
+        $this->assertTrue($this->dns->requiresDnsOverTls());
+        $this->assertFalse($this->dns->activate('test'));
+        $this->assertSame([], $this->files);
+    }
+
+    public function testOpportunisticDnsOverTlsStillAllowsTheDelegation(): void
+    {
+        $this->resolvedStatus = "Global\n         Protocols: -LLMNR -mDNS DNSOverTLS=opportunistic DNSSEC=allow-downgrade\n";
+
+        $this->assertFalse($this->dns->requiresDnsOverTls());
+        $this->assertTrue($this->dns->activate('test'));
     }
 
     public function testUnsupportedOrNonActiveResolverFallsBackWithoutChangingDns(): void
