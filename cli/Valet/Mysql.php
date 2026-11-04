@@ -417,6 +417,24 @@ class Mysql
     /**
      * Set root password of Mysql.
      */
+    /**
+     * The service manager may return before the server accepts connections
+     * (ALT Linux starts MariaDB in a chroot).
+     */
+    private function waitForServer(): void
+    {
+        for ($attempt = 1; $attempt <= 30; $attempt++) {
+            $ready = true;
+            $this->cli->run('mysqladmin --silent ping', function () use (&$ready) {
+                $ready = false;
+            }, RunAs::Root);
+            if ($ready) {
+                return;
+            }
+            sleep(1);
+        }
+    }
+
     private function createValetUser(string $password): void
     {
         $success = true;
@@ -432,6 +450,7 @@ class Mysql
             if (file_put_contents($file, $sql) === false) {
                 throw new \RuntimeException('Unable to write temporary MySQL script.');
             }
+            $this->waitForServer();
             $this->cli->run('mysql < ' . escapeshellarg($file), function ($statusCode, $error) use (&$success) {
                 Writer::warn('Setting password for valet user failed due to `['.$statusCode.'] '.$error.'`');
                 $success = false;

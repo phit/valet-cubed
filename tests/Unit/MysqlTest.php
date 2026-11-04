@@ -13,6 +13,7 @@ use Valet\Filesystem;
 use Valet\Mysql;
 use Valet\PackageManagers\Apt;
 use Valet\PhpFpm;
+use Valet\RunAs;
 use Valet\Tests\TestCase;
 
 use function Valet\swap;
@@ -159,6 +160,13 @@ class MysqlTest extends TestCase
 
         $this->commandLine
             ->shouldReceive('run')
+            ->with('mysqladmin --silent ping', Mockery::type('callable'), RunAs::Root)
+            ->once()
+            ->andReturn('');
+
+        $this->commandLine
+            ->shouldReceive('run')
+            ->with(Mockery::pattern('/^mysql < /'), Mockery::type('callable'), RunAs::Root)
             ->once()
             ->andReturn('');
 
