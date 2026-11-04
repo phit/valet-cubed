@@ -33,11 +33,7 @@ class SiteProxy
             throw new \InvalidArgumentException(sprintf('"%s" is not a valid URL', $host));
         }
 
-        $domain = $this->config->get('domain');
-
-        if (!str_ends_with($url, '.' . $domain)) {
-            $url .= '.' . $domain;
-        }
+        $url = $this->config->parseDomain($url);
 
         $siteConf = $this->files->get(
             $secure
@@ -63,6 +59,27 @@ class SiteProxy
                 $siteConf
             );
         }
+    }
+
+    /**
+     * Remove the proxy for the specified domain, secured or not.
+     *
+     * @return bool false if the domain is not a proxy
+     */
+    public function proxyDelete(string $url): bool
+    {
+        $url = $this->config->parseDomain($url);
+
+        if ($this->getProxyHostForSite($url) === null) {
+            return false;
+        }
+
+        // Removes the certificate of a secured proxy and its configuration.
+        $this->siteSecure->unsecure($url);
+        // A proxy that was never secured has a configuration but no certificate.
+        $this->files->unlink($this->nginxPath($url));
+
+        return true;
     }
 
     /**

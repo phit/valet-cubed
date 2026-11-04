@@ -390,9 +390,9 @@ class CliTest extends TestCase
     {
         Writer::fake();
 
-        $siteSecure = Mockery::mock(SiteSecure::class);
-        $siteSecure->shouldReceive('unsecure')->with($expectedDomain)->once();
-        swap(SiteSecure::class, $siteSecure);
+        $siteProxy = Mockery::mock(SiteProxy::class);
+        $siteProxy->shouldReceive('proxyDelete')->with($expectedDomain)->once()->andReturnTrue();
+        swap(SiteProxy::class, $siteProxy);
 
         $nginx = Mockery::mock(Nginx::class);
         $nginx->shouldReceive('restart')->withNoArgs()->once();
@@ -410,6 +410,26 @@ class CliTest extends TestCase
             $expectedMessage,
             $output->fetch()
         );
+    }
+
+    #[Test]
+    public function itWillRefuseToUnproxyASiteThatIsNotAProxy(): void
+    {
+        Writer::fake();
+
+        $siteProxy = Mockery::mock(SiteProxy::class);
+        $siteProxy->shouldReceive('proxyDelete')->with('blog.test')->once()->andReturnFalse();
+        swap(SiteProxy::class, $siteProxy);
+
+        $nginx = Mockery::mock(Nginx::class);
+        $nginx->shouldReceive('restart')->never();
+        swap(Nginx::class, $nginx);
+
+        $this->tester->run(['command' => 'unproxy', 'domain' => 'blog']);
+
+        /** @var BufferedOutput $output */
+        $output = Writer::output();
+        $this->assertStringContainsString('[blog.test] is not a proxy.', $output->fetch());
     }
 
     public static function invalidUnproxyDataProvider(): array

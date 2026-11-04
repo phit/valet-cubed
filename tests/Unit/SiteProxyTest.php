@@ -3,8 +3,8 @@
 namespace Unit;
 
 use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
 use Valet\Configuration;
 use Valet\Filesystem;
 use Valet\SiteProxy;
@@ -13,9 +13,9 @@ use Valet\Tests\TestCase;
 
 class SiteProxyTest extends TestCase
 {
-    private Configuration|MockObject $config;
-    private Filesystem|MockObject $filesystem;
-    private SiteSecure|MockObject $siteSecure;
+    private Configuration&MockInterface $config;
+    private Filesystem&MockInterface $filesystem;
+    private SiteSecure&MockInterface $siteSecure;
     private SiteProxy $siteProxy;
 
     public function setUp(): void
@@ -37,10 +37,10 @@ class SiteProxyTest extends TestCase
     public function itWillCreateProxy(): void
     {
         $this->config
-            ->shouldReceive('get')
+            ->shouldReceive('parseDomain')
             ->once()
-            ->with('domain')
-            ->andReturn('test');
+            ->with('site')
+            ->andReturn('site.test');
 
         $this->filesystem
             ->shouldReceive('get')
@@ -54,6 +54,33 @@ class SiteProxyTest extends TestCase
             ->with('site.test', 'http://localhost:8000');
 
         $this->siteProxy->proxyCreate('site', 'http://localhost:8000', true);
+    }
+
+    #[Test]
+    public function itWillDeleteAProxyThatWasNeverSecured(): void
+    {
+        // unsecure() only removes configurations that have a certificate.
+        $this->config->shouldReceive('parseDomain')->with('app')->andReturn('app.test');
+        $this->filesystem->shouldReceive('exists')->with(VALET_HOME_PATH . '/Nginx/app.test')->andReturnTrue();
+        $this->filesystem->shouldReceive('get')->with(VALET_HOME_PATH . '/Nginx/app.test')
+            ->andReturn('proxy_pass http://localhost:3000;');
+        $this->siteSecure->shouldReceive('unsecure')->once()->with('app.test');
+        $this->filesystem->shouldReceive('unlink')->once()->with(VALET_HOME_PATH . '/Nginx/app.test');
+
+        $this->assertTrue($this->siteProxy->proxyDelete('app'));
+    }
+
+    #[Test]
+    public function itWillNotDeleteASiteThatIsNotAProxy(): void
+    {
+        $this->config->shouldReceive('parseDomain')->with('blog.test')->andReturn('blog.test');
+        $this->filesystem->shouldReceive('exists')->with(VALET_HOME_PATH . '/Nginx/blog.test')->andReturnTrue();
+        $this->filesystem->shouldReceive('get')->with(VALET_HOME_PATH . '/Nginx/blog.test')
+            ->andReturn('fastcgi_pass unix:/run/php.sock;');
+        $this->siteSecure->shouldNotReceive('unsecure');
+        $this->filesystem->shouldNotReceive('unlink');
+
+        $this->assertFalse($this->siteProxy->proxyDelete('blog.test'));
     }
 
     #[Test]

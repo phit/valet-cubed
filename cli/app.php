@@ -494,7 +494,10 @@ if (is_dir(VALET_HOME_PATH)) {
             $domain .= '.' . $tld;
         }
 
-        SiteSecure::unsecure($domain);
+        if (!SiteProxy::proxyDelete($domain)) {
+            Writer::error('[' . $domain . '] is not a proxy.');
+            return;
+        }
         Hosts::restart();
         Nginx::restart();
 
