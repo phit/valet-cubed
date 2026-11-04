@@ -194,6 +194,19 @@ valet_install_package() {
     as_valet "composer global config --no-interaction allow-plugins true >/dev/null; composer global require --no-interaction -W '$1'"
 }
 
+lan_nip_io() {
+    # Other devices reach sites as <site>.<address>.nip.io.
+    # Secured sites are served over HTTP this way too. --resolve stands in for
+    # nip.io's public DNS.
+    local address site
+    address="$(ip -4 -o route get 1.1.1.1 | grep -oP 'src \K\S+')"
+    [[ -n "$address" ]] || return 1
+    for site in app tls; do
+        curl -sS --max-time 10 --resolve "$site.$address.nip.io:80:$address" "http://$site.$address.nip.io/" \
+            | grep -qx valet-ok || return 1
+    done
+}
+
 legacy_markers() {
     [[ -f /etc/dnsmasq.d/valet ]]
 }
@@ -232,6 +245,7 @@ verify_restored() {
     # Applications calling other local sites use PHP's curl, which must trust
     # Valet's certificate authority too.
     check "PHP's curl trusts the Valet certificate" as_valet "php -r '\$c = curl_init(\"https://tls.test/\"); curl_setopt(\$c, CURLOPT_RETURNTRANSFER, true); \$r = curl_exec(\$c); echo curl_error(\$c); exit(\$r === \"valet-ok\" ? 0 : 1);'"
+    check "sites are reachable from the LAN through nip.io names" lan_nip_io
     check "database accepts the credentials Valet saved" database_login
     if [[ "$(getenforce 2>/dev/null)" == Enforcing ]]; then
         check "only nginx and PHP-FPM run permissive under SELinux" bash -c "semanage permissive -l -n | grep -qx '\s*httpd_t\s*'"

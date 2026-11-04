@@ -68,6 +68,21 @@ valet unproxy app
 | `valet fetch-share-url` | Print the URL of the running ngrok tunnel. |
 | `valet ngrok-auth <token>` | Store your ngrok auth token. Sharing needs an ngrok account. |
 
+## Sharing on your local network
+
+Valet's Nginx listens on all network interfaces, so other devices on your network can reach your sites through [nip.io](https://nip.io), a public DNS service that resolves a name containing an IP address to that address. Find your machine's LAN address with `ip -4 addr`, then open the site at `http://<site>.<address>.nip.io` from another device:
+
+```text
+http://blog.192.168.1.20.nip.io
+```
+
+Valet recognises the `.nip.io` suffix and serves the `blog` site. This needs:
+
+- the other device to reach nip.io's DNS (or your router to pass such lookups on),
+- your firewall to allow incoming connections on port 80.
+
+This serves sites over plain HTTP, secured ones included, because Valet's certificates are only for `.test` names and only your machine trusts them. For an HTTPS link, use `valet share`.
+
 ## Ports
 
 Valet listens on ports 80 and 443. To change them:
