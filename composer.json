@@ -63,7 +63,8 @@
         "phpstan/phpstan": "^2.1",
         "friendsofphp/php-cs-fixer": "^3.95",
         "symfony/var-dumper": "^7.0 || ^8.0",
-        "ext-zip": "*"
+        "ext-zip": "*",
+        "phpstan/phpstan-mockery": "^2.0"
     },
     "conflict": {
         "cpriego/valet-linux": "*",
@@ -71,9 +72,18 @@
     },
     "scripts": {
         "post-install-cmd": [],
-        "post-update-cmd": []
+        "post-update-cmd": [],
+        "check": [
+            "Composer\\Config::disableProcessTimeout",
+            "@php vendor/bin/phpunit",
+            "@php vendor/bin/php-cs-fixer check --config=.php-cs-fixer.dist.php",
+            "@php vendor/bin/phpstan analyse --no-progress --memory-limit=2G"
+        ]
     },
     "bin": [
         "valet"
-    ]
+    ],
+    "scripts-descriptions": {
+        "check": "Run the unit tests, the code style check and PHPStan, like CI does"
+    }
 }

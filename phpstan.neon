@@ -1,4 +1,5 @@
 includes:
+	- vendor/phpstan/phpstan-mockery/extension.neon
 	# Errors that existed when PHPStan was added to CI. Fix them over time and
 	# regenerate with: vendor/bin/phpstan analyse --generate-baseline phpstan-baseline.neon
 	- phpstan-baseline.neon

@@ -14,14 +14,15 @@ composer install
 ./valet --version
 ```
 
-## Unit tests and code style
+## Unit tests, code style and static analysis
+
+Run all three before pushing:
 
 ```bash
-vendor/bin/phpunit
-vendor/bin/php-cs-fixer check --config=.php-cs-fixer.dist.php
+composer check
 ```
 
-CI runs both on PHP 8.2 to 8.5 for every pull request.
+This runs PHPUnit, PHP CS Fixer and PHPStan, like CI does. CI runs the tests on PHP 8.2 to 8.5, and PHPStan on PHP 8.4 against `phpstan-baseline.neon`, which lists the errors that existed when PHPStan was added. New code must not add errors. If you fix some, regenerate the baseline with `vendor/bin/phpstan analyse --generate-baseline phpstan-baseline.neon`.
 
 ## Testing in virtual machines
 

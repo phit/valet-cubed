@@ -1185,7 +1185,7 @@ parameters:
 		-
 			message: '#^Binary operation "\." between ''\.'' and mixed results in an error\.$#'
 			identifier: binaryOp.invalid
-			count: 3
+			count: 1
 			path: cli/Valet/SiteProxy.php
 
 		-
@@ -1963,26 +1963,8 @@ parameters:
 			path: tests/Drivers/WordPressValetDriverTest.php
 
 		-
-			message: '#^Parameter \#1 \$cli of class Valet\\PackageManagers\\AltLinux constructor expects Valet\\CommandLine, Mockery\\MockInterface given\.$#'
-			identifier: argument.type
-			count: 2
-			path: tests/Unit/AltLinuxTest.php
-
-		-
-			message: '#^Parameter \#2 \$serviceManager of class Valet\\PackageManagers\\AltLinux constructor expects Valet\\Contracts\\ServiceManager, Mockery\\MockInterface given\.$#'
-			identifier: argument.type
-			count: 2
-			path: tests/Unit/AltLinuxTest.php
-
-		-
 			message: '#^Method Valet\\Tests\\Unit\\AptTest\:\:candidateProvider\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
-			count: 1
-			path: tests/Unit/AptTest.php
-
-		-
-			message: '#^Parameter \#1 \$cli of class Valet\\PackageManagers\\Apt constructor expects Valet\\CommandLine, Mockery\\MockInterface given\.$#'
-			identifier: argument.type
 			count: 1
 			path: tests/Unit/AptTest.php
 
@@ -2029,18 +2011,6 @@ parameters:
 			path: tests/Unit/ConfigurationTest.php
 
 		-
-			message: '#^Parameter \#1 \$files of class Valet\\Configuration constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/ConfigurationTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\ConfigurationTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/ConfigurationTest.php
-
-		-
 			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\:\:shouldNotReceive\(\)\.$#'
 			identifier: method.notFound
 			count: 1
@@ -2053,54 +2023,6 @@ parameters:
 			path: tests/Unit/DevToolsTest.php
 
 		-
-			message: '#^Parameter \#1 \$pm of class Valet\\DevTools constructor expects Valet\\Contracts\\PackageManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\PackageManager\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/DevToolsTest.php
-
-		-
-			message: '#^Parameter \#2 \$sm of class Valet\\DevTools constructor expects Valet\\Contracts\\ServiceManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\ServiceManager\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/DevToolsTest.php
-
-		-
-			message: '#^Parameter \#3 \$cli of class Valet\\DevTools constructor expects Valet\\CommandLine, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\CommandLine\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/DevToolsTest.php
-
-		-
-			message: '#^Parameter \#4 \$files of class Valet\\DevTools constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/DevToolsTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\DevToolsTest\:\:\$commandLine \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/DevToolsTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\DevToolsTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/DevToolsTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\DevToolsTest\:\:\$packageManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/DevToolsTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\DevToolsTest\:\:\$serviceManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\ServiceManager\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/DevToolsTest.php
-
-		-
 			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertSame\(\) with string and string will always evaluate to true\.$#'
 			identifier: method.alreadyNarrowedType
 			count: 1
@@ -2109,36 +2031,6 @@ parameters:
 		-
 			message: '#^Method Valet\\Tests\\Unit\\DnfTest\:\:redisProvider\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
-			count: 1
-			path: tests/Unit/DnfTest.php
-
-		-
-			message: '#^Parameter \#1 \$cli of class Valet\\PackageManagers\\Dnf constructor expects Valet\\CommandLine, Mockery\\MockInterface given\.$#'
-			identifier: argument.type
-			count: 5
-			path: tests/Unit/DnfTest.php
-
-		-
-			message: '#^Parameter \#2 \$sm of class Valet\\Mysql constructor expects Valet\\Contracts\\ServiceManager, Mockery\\MockInterface given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/DnfTest.php
-
-		-
-			message: '#^Parameter \#3 \$cli of class Valet\\Mysql constructor expects Valet\\CommandLine, Mockery\\MockInterface given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/DnfTest.php
-
-		-
-			message: '#^Parameter \#4 \$files of class Valet\\Mysql constructor expects Valet\\Filesystem, Mockery\\MockInterface given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/DnfTest.php
-
-		-
-			message: '#^Parameter \#5 \$configuration of class Valet\\Mysql constructor expects Valet\\Configuration, Mockery\\MockInterface given\.$#'
-			identifier: argument.type
 			count: 1
 			path: tests/Unit/DnfTest.php
 
@@ -2170,78 +2062,6 @@ parameters:
 			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\ResolvedDns\:\:shouldReceive\(\)\.$#'
 			identifier: method.notFound
 			count: 2
-			path: tests/Unit/HostsTest.php
-
-		-
-			message: '#^Parameter \#1 \$pm of class Valet\\Hosts constructor expects Valet\\Contracts\\PackageManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\PackageManager\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/HostsTest.php
-
-		-
-			message: '#^Parameter \#2 \$sm of class Valet\\Hosts constructor expects Valet\\Contracts\\ServiceManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\ServiceManager\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/HostsTest.php
-
-		-
-			message: '#^Parameter \#3 \$files of class Valet\\Hosts constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/HostsTest.php
-
-		-
-			message: '#^Parameter \#4 \$cli of class Valet\\Hosts constructor expects Valet\\CommandLine, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\CommandLine\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/HostsTest.php
-
-		-
-			message: '#^Parameter \#5 \$config of class Valet\\Hosts constructor expects Valet\\Configuration, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Configuration\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/HostsTest.php
-
-		-
-			message: '#^Parameter \#6 \$resolvedDns of class Valet\\Hosts constructor expects Valet\\ResolvedDns\|null, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\ResolvedDns\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/HostsTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\HostsTest\:\:\$commandLine \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/HostsTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\HostsTest\:\:\$configuration \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/HostsTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\HostsTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/HostsTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\HostsTest\:\:\$packageManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/HostsTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\HostsTest\:\:\$resolvedDns \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\ResolvedDns\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/HostsTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\HostsTest\:\:\$serviceManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\ServiceManager\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
 			path: tests/Unit/HostsTest.php
 
 		-
@@ -2323,72 +2143,6 @@ parameters:
 			path: tests/Unit/MailpitTest.php
 
 		-
-			message: '#^Parameter \#1 \$pm of class Valet\\Mailpit constructor expects Valet\\Contracts\\PackageManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\PackageManager\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/MailpitTest.php
-
-		-
-			message: '#^Parameter \#2 \$sm of class Valet\\Mailpit constructor expects Valet\\Contracts\\ServiceManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\ServiceManager\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/MailpitTest.php
-
-		-
-			message: '#^Parameter \#3 \$cli of class Valet\\Mailpit constructor expects Valet\\CommandLine, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\CommandLine\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/MailpitTest.php
-
-		-
-			message: '#^Parameter \#4 \$files of class Valet\\Mailpit constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/MailpitTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\MailpitTest\:\:\$commandLine \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/MailpitTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\MailpitTest\:\:\$config \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/MailpitTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\MailpitTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/MailpitTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\MailpitTest\:\:\$packageManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/MailpitTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\MailpitTest\:\:\$serviceManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\ServiceManager\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/MailpitTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\MailpitTest\:\:\$siteProxy \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\SiteProxy\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/MailpitTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\MailpitTest\:\:\$siteSecure \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\SiteSecure\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/MailpitTest.php
-
-		-
 			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\:\:shouldReceive\(\)\.$#'
 			identifier: method.notFound
 			count: 5
@@ -2449,18 +2203,6 @@ parameters:
 			path: tests/Unit/MysqlTest.php
 
 		-
-			message: '#^Parameter \#1 \$pm of class Valet\\Mysql constructor expects Valet\\Contracts\\PackageManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\PackageManager\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/MysqlTest.php
-
-		-
-			message: '#^Parameter \#1 \$pm of class Valet\\Mysql constructor expects Valet\\Contracts\\PackageManager, Mockery\\MockInterface given\.$#'
-			identifier: argument.type
-			count: 2
-			path: tests/Unit/MysqlTest.php
-
-		-
 			message: '#^Parameter \#1 \$pm of class Valet\\Mysql constructor expects Valet\\Contracts\\PackageManager, PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager given\.$#'
 			identifier: argument.type
 			count: 5
@@ -2473,21 +2215,9 @@ parameters:
 			path: tests/Unit/MysqlTest.php
 
 		-
-			message: '#^Parameter \#2 \$sm of class Valet\\Mysql constructor expects Valet\\Contracts\\ServiceManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\ServiceManager\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/MysqlTest.php
-
-		-
 			message: '#^Parameter \#2 \$sm of class Valet\\Mysql constructor expects Valet\\Contracts\\ServiceManager, PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\ServiceManager given\.$#'
 			identifier: argument.type
 			count: 7
-			path: tests/Unit/MysqlTest.php
-
-		-
-			message: '#^Parameter \#3 \$cli of class Valet\\Mysql constructor expects Valet\\CommandLine, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\CommandLine\) given\.$#'
-			identifier: argument.type
-			count: 1
 			path: tests/Unit/MysqlTest.php
 
 		-
@@ -2497,57 +2227,15 @@ parameters:
 			path: tests/Unit/MysqlTest.php
 
 		-
-			message: '#^Parameter \#4 \$files of class Valet\\Mysql constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/MysqlTest.php
-
-		-
 			message: '#^Parameter \#4 \$files of class Valet\\Mysql constructor expects Valet\\Filesystem, PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem given\.$#'
 			identifier: argument.type
 			count: 7
 			path: tests/Unit/MysqlTest.php
 
 		-
-			message: '#^Parameter \#5 \$configuration of class Valet\\Mysql constructor expects Valet\\Configuration, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Configuration\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/MysqlTest.php
-
-		-
 			message: '#^Parameter \#5 \$configuration of class Valet\\Mysql constructor expects Valet\\Configuration, PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration given\.$#'
 			identifier: argument.type
 			count: 7
-			path: tests/Unit/MysqlTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\MysqlTest\:\:\$commandLine \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/MysqlTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\MysqlTest\:\:\$config \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/MysqlTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\MysqlTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/MysqlTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\MysqlTest\:\:\$packageManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/MysqlTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\MysqlTest\:\:\$serviceManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\ServiceManager\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
 			path: tests/Unit/MysqlTest.php
 
 		-
@@ -2599,78 +2287,6 @@ parameters:
 			path: tests/Unit/NginxTest.php
 
 		-
-			message: '#^Parameter \#1 \$pm of class Valet\\Nginx constructor expects Valet\\Contracts\\PackageManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\PackageManager\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/NginxTest.php
-
-		-
-			message: '#^Parameter \#2 \$sm of class Valet\\Nginx constructor expects Valet\\Contracts\\ServiceManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\ServiceManager\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/NginxTest.php
-
-		-
-			message: '#^Parameter \#3 \$cli of class Valet\\Nginx constructor expects Valet\\CommandLine, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\CommandLine\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/NginxTest.php
-
-		-
-			message: '#^Parameter \#4 \$files of class Valet\\Nginx constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/NginxTest.php
-
-		-
-			message: '#^Parameter \#5 \$configuration of class Valet\\Nginx constructor expects Valet\\Configuration, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Configuration\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/NginxTest.php
-
-		-
-			message: '#^Parameter \#6 \$siteSecure of class Valet\\Nginx constructor expects Valet\\SiteSecure, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\SiteSecure\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/NginxTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\NginxTest\:\:\$commandLine \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/NginxTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\NginxTest\:\:\$config \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/NginxTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\NginxTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/NginxTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\NginxTest\:\:\$packageManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/NginxTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\NginxTest\:\:\$serviceManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\ServiceManager\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/NginxTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\NginxTest\:\:\$siteSecure \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\SiteSecure\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/NginxTest.php
-
-		-
 			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\:\:shouldReceive\(\)\.$#'
 			identifier: method.notFound
 			count: 1
@@ -2695,50 +2311,8 @@ parameters:
 			path: tests/Unit/NgrokTest.php
 
 		-
-			message: '#^Parameter \#1 \$cli of class Valet\\Ngrok constructor expects Valet\\CommandLine, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\CommandLine\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/NgrokTest.php
-
-		-
-			message: '#^Parameter \#2 \$filesystem of class Valet\\Ngrok constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/NgrokTest.php
-
-		-
-			message: '#^Parameter \#3 \$request of class Httpful\\Response constructor expects Httpful\\Request, Mockery\\MockInterface given\.$#'
-			identifier: argument.type
-			count: 2
-			path: tests/Unit/NgrokTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\NgrokTest\:\:\$commandLine \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/NgrokTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\NgrokTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/NgrokTest.php
-
-		-
-			message: '#^Parameter \#1 \$cli of class Valet\\PackageManagers\\PackageKit constructor expects Valet\\CommandLine, Mockery\\MockInterface given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/PackageKitTest.php
-
-		-
 			message: '#^Call to an undefined method Valet\\CommandLine\:\:shouldReceive\(\)\.$#'
 			identifier: method.notFound
-			count: 1
-			path: tests/Unit/PacmanTest.php
-
-		-
-			message: '#^Parameter \#1 \$cli of class Valet\\PackageManagers\\Pacman constructor expects Valet\\CommandLine, Mockery\\MockInterface given\.$#'
-			identifier: argument.type
 			count: 1
 			path: tests/Unit/PacmanTest.php
 
@@ -2845,112 +2419,10 @@ parameters:
 			path: tests/Unit/PhpFpmTest.php
 
 		-
-			message: '#^Parameter \#1 \$config of class Valet\\PhpFpm constructor expects Valet\\Configuration, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Configuration\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/PhpFpmTest.php
-
-		-
-			message: '#^Parameter \#2 \$pm of class Valet\\PhpFpm constructor expects Valet\\Contracts\\PackageManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\PackageManager\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/PhpFpmTest.php
-
-		-
-			message: '#^Parameter \#3 \$sm of class Valet\\PhpFpm constructor expects Valet\\Contracts\\ServiceManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\ServiceManager\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/PhpFpmTest.php
-
-		-
-			message: '#^Parameter \#4 \$cli of class Valet\\PhpFpm constructor expects Valet\\CommandLine, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\CommandLine\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/PhpFpmTest.php
-
-		-
-			message: '#^Parameter \#5 \$files of class Valet\\PhpFpm constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/PhpFpmTest.php
-
-		-
-			message: '#^Parameter \#6 \$site of class Valet\\PhpFpm constructor expects Valet\\Site, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Site\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/PhpFpmTest.php
-
-		-
-			message: '#^Parameter \#7 \$nginx of class Valet\\PhpFpm constructor expects Valet\\Nginx, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Nginx\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/PhpFpmTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\PhpFpmTest\:\:\$commandLine \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/PhpFpmTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\PhpFpmTest\:\:\$config \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/PhpFpmTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\PhpFpmTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/PhpFpmTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\PhpFpmTest\:\:\$nginx \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Nginx\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/PhpFpmTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\PhpFpmTest\:\:\$packageManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/PhpFpmTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\PhpFpmTest\:\:\$serviceManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\ServiceManager\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/PhpFpmTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\PhpFpmTest\:\:\$site \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Site\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/PhpFpmTest.php
-
-		-
 			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
 			identifier: method.alreadyNarrowedType
 			count: 1
 			path: tests/Unit/RequirementsTest.php
-
-		-
-			message: '#^Parameter \#1 \$cli of class Valet\\Requirements constructor expects Valet\\CommandLine, Mockery\\MockInterface given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/RequirementsTest.php
-
-		-
-			message: '#^Parameter \#1 \$files of class Valet\\ResolvedDns constructor expects Valet\\Filesystem, Mockery\\MockInterface given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/ResolvedDnsTest.php
-
-		-
-			message: '#^Parameter \#2 \$cli of class Valet\\ResolvedDns constructor expects Valet\\CommandLine, Mockery\\MockInterface given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/ResolvedDnsTest.php
 
 		-
 			message: '#^Property Valet\\Tests\\Unit\\ResolvedDnsTest\:\:\$commands type has no value type specified in iterable type array\.$#'
@@ -2971,36 +2443,6 @@ parameters:
 			path: tests/Unit/SeLinuxTest.php
 
 		-
-			message: '#^Parameter \#1 \$cli of class Valet\\SeLinux constructor expects Valet\\CommandLine, Mockery\\MockInterface given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/SeLinuxTest.php
-
-		-
-			message: '#^Parameter \#3 \$configuration of class Valet\\SeLinux constructor expects Valet\\Configuration, Mockery\\MockInterface given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/SeLinuxTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\SeLinuxTest\:\:\$cli \(Mockery\\MockInterface&Valet\\CommandLine\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/SeLinuxTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\SeLinuxTest\:\:\$config \(Mockery\\MockInterface&Valet\\Configuration\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/SeLinuxTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\SeLinuxTest\:\:\$pm \(Mockery\\MockInterface&Valet\\Contracts\\PackageManager\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/SeLinuxTest.php
-
-		-
 			message: '#^Call to an undefined method object\:\:start\(\)\.$#'
 			identifier: method.notFound
 			count: 1
@@ -3009,18 +2451,6 @@ parameters:
 		-
 			message: '#^Method Valet\\Tests\\Unit\\ServiceManagerSecurityTest\:\:invalidServiceNames\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
-			count: 1
-			path: tests/Unit/ServiceManagerSecurityTest.php
-
-		-
-			message: '#^Parameter \#1 \$cli of class Valet\\ServiceManagers\\Systemd constructor expects Valet\\CommandLine, Mockery\\MockInterface given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/ServiceManagerSecurityTest.php
-
-		-
-			message: '#^Parameter \#2 \$files of class Valet\\ServiceManagers\\Systemd constructor expects Valet\\Filesystem, Mockery\\MockInterface given\.$#'
-			identifier: argument.type
 			count: 1
 			path: tests/Unit/ServiceManagerSecurityTest.php
 
@@ -3055,66 +2485,6 @@ parameters:
 			path: tests/Unit/SiteIsolateTest.php
 
 		-
-			message: '#^Parameter \#1 \$pm of class Valet\\SiteIsolate constructor expects Valet\\Contracts\\PackageManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\PackageManager\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/SiteIsolateTest.php
-
-		-
-			message: '#^Parameter \#2 \$config of class Valet\\SiteIsolate constructor expects Valet\\Configuration, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Configuration\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/SiteIsolateTest.php
-
-		-
-			message: '#^Parameter \#3 \$filesystem of class Valet\\SiteIsolate constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/SiteIsolateTest.php
-
-		-
-			message: '#^Parameter \#4 \$siteSecure of class Valet\\SiteIsolate constructor expects Valet\\SiteSecure, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\SiteSecure\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/SiteIsolateTest.php
-
-		-
-			message: '#^Parameter \#5 \$site of class Valet\\SiteIsolate constructor expects Valet\\Site, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Site\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/SiteIsolateTest.php
-
-		-
-			message: '#^Property Unit\\SiteIsolateTest\:\:\$config \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/SiteIsolateTest.php
-
-		-
-			message: '#^Property Unit\\SiteIsolateTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/SiteIsolateTest.php
-
-		-
-			message: '#^Property Unit\\SiteIsolateTest\:\:\$packageManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/SiteIsolateTest.php
-
-		-
-			message: '#^Property Unit\\SiteIsolateTest\:\:\$site \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Site\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/SiteIsolateTest.php
-
-		-
-			message: '#^Property Unit\\SiteIsolateTest\:\:\$siteSecure \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\SiteSecure\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/SiteIsolateTest.php
-
-		-
 			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\:\:shouldReceive\(\)\.$#'
 			identifier: method.notFound
 			count: 4
@@ -3145,96 +2515,6 @@ parameters:
 			path: tests/Unit/SiteLinkTest.php
 
 		-
-			message: '#^Parameter \#1 \$filesystem of class Valet\\SiteLink constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/SiteLinkTest.php
-
-		-
-			message: '#^Parameter \#2 \$config of class Valet\\SiteLink constructor expects Valet\\Configuration, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Configuration\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/SiteLinkTest.php
-
-		-
-			message: '#^Parameter \#3 \$siteSecure of class Valet\\SiteLink constructor expects Valet\\SiteSecure, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\SiteSecure\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/SiteLinkTest.php
-
-		-
-			message: '#^Property Unit\\SiteLinkTest\:\:\$config \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/SiteLinkTest.php
-
-		-
-			message: '#^Property Unit\\SiteLinkTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/SiteLinkTest.php
-
-		-
-			message: '#^Property Unit\\SiteLinkTest\:\:\$siteSecure \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\SiteSecure\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/SiteLinkTest.php
-
-		-
-			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\:\:shouldReceive\(\)\.$#'
-			identifier: method.notFound
-			count: 2
-			path: tests/Unit/SiteProxyTest.php
-
-		-
-			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\:\:shouldReceive\(\)\.$#'
-			identifier: method.notFound
-			count: 5
-			path: tests/Unit/SiteProxyTest.php
-
-		-
-			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\SiteSecure\:\:shouldReceive\(\)\.$#'
-			identifier: method.notFound
-			count: 2
-			path: tests/Unit/SiteProxyTest.php
-
-		-
-			message: '#^Parameter \#1 \$filesystem of class Valet\\SiteProxy constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/SiteProxyTest.php
-
-		-
-			message: '#^Parameter \#2 \$config of class Valet\\SiteProxy constructor expects Valet\\Configuration, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Configuration\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/SiteProxyTest.php
-
-		-
-			message: '#^Parameter \#3 \$siteSecure of class Valet\\SiteProxy constructor expects Valet\\SiteSecure, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\SiteSecure\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/SiteProxyTest.php
-
-		-
-			message: '#^Property Unit\\SiteProxyTest\:\:\$config \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/SiteProxyTest.php
-
-		-
-			message: '#^Property Unit\\SiteProxyTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/SiteProxyTest.php
-
-		-
-			message: '#^Property Unit\\SiteProxyTest\:\:\$siteSecure \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\SiteSecure\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/SiteProxyTest.php
-
-		-
 			message: '#^Call to an undefined method Mockery\\MockInterface\|Valet\\CommandLine\:\:shouldReceive\(\)\.$#'
 			identifier: method.notFound
 			count: 9
@@ -3255,24 +2535,6 @@ parameters:
 		-
 			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
 			identifier: method.alreadyNarrowedType
-			count: 1
-			path: tests/Unit/SiteSecureTest.php
-
-		-
-			message: '#^Parameter \#1 \$filesystem of class Valet\\SiteSecure constructor expects Valet\\Filesystem, Mockery\\MockInterface given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/SiteSecureTest.php
-
-		-
-			message: '#^Parameter \#2 \$cli of class Valet\\SiteSecure constructor expects Valet\\CommandLine, Mockery\\MockInterface given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/SiteSecureTest.php
-
-		-
-			message: '#^Parameter \#3 \$config of class Valet\\SiteSecure constructor expects Valet\\Configuration, Mockery\\MockInterface given\.$#'
-			identifier: argument.type
 			count: 1
 			path: tests/Unit/SiteSecureTest.php
 
@@ -3301,42 +2563,6 @@ parameters:
 			path: tests/Unit/SiteTest.php
 
 		-
-			message: '#^Parameter \#1 \$config of class Valet\\Site constructor expects Valet\\Configuration, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Configuration\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/SiteTest.php
-
-		-
-			message: '#^Parameter \#2 \$cli of class Valet\\Site constructor expects Valet\\CommandLine, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\CommandLine\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/SiteTest.php
-
-		-
-			message: '#^Parameter \#3 \$files of class Valet\\Site constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/SiteTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\SiteTest\:\:\$commandLine \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/SiteTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\SiteTest\:\:\$config \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/SiteTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\SiteTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/SiteTest.php
-
-		-
 			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager\:\:shouldReceive\(\)\.$#'
 			identifier: method.notFound
 			count: 7
@@ -3346,42 +2572,6 @@ parameters:
 			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\ServiceManager\:\:shouldReceive\(\)\.$#'
 			identifier: method.notFound
 			count: 4
-			path: tests/Unit/ValetRedisTest.php
-
-		-
-			message: '#^Parameter \#1 \$pm of class Valet\\ValetRedis constructor expects Valet\\Contracts\\PackageManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\PackageManager\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/ValetRedisTest.php
-
-		-
-			message: '#^Parameter \#2 \$sm of class Valet\\ValetRedis constructor expects Valet\\Contracts\\ServiceManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\ServiceManager\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/ValetRedisTest.php
-
-		-
-			message: '#^Parameter \#3 \$cli of class Valet\\ValetRedis constructor expects Valet\\CommandLine, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\CommandLine\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/ValetRedisTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\ValetRedisTest\:\:\$commandLine \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/ValetRedisTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\ValetRedisTest\:\:\$packageManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/ValetRedisTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\ValetRedisTest\:\:\$serviceManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\ServiceManager\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
 			path: tests/Unit/ValetRedisTest.php
 
 		-
@@ -3405,36 +2595,6 @@ parameters:
 		-
 			message: '#^Method Valet\\Tests\\Unit\\ValetTest\:\:versionDataProvider\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
-			count: 1
-			path: tests/Unit/ValetTest.php
-
-		-
-			message: '#^Parameter \#1 \$cli of class Valet\\Valet constructor expects Valet\\CommandLine, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\CommandLine\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/ValetTest.php
-
-		-
-			message: '#^Parameter \#2 \$files of class Valet\\Valet constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Unit/ValetTest.php
-
-		-
-			message: '#^Parameter \#3 \$request of class Httpful\\Response constructor expects Httpful\\Request, Mockery\\MockInterface given\.$#'
-			identifier: argument.type
-			count: 2
-			path: tests/Unit/ValetTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\ValetTest\:\:\$commandLine \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: tests/Unit/ValetTest.php
-
-		-
-			message: '#^Property Valet\\Tests\\Unit\\ValetTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
-			identifier: assign.propertyType
 			count: 1
 			path: tests/Unit/ValetTest.php
 
