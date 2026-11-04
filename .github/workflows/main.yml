@@ -6,6 +6,7 @@ jobs:
   resolved_dns:
     name: Systemd DNS delegation (Ubuntu VM)
     runs-on: ubuntu-26.04
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v2
       - name: Set up PHP
@@ -26,6 +27,7 @@ jobs:
   test:
     name: Build & Test
     runs-on: ubuntu-26.04
+    timeout-minutes: 15
     strategy:
       matrix:
         php:
@@ -49,6 +51,7 @@ jobs:
   cs_fixer:
     name: CS Fixer
     runs-on: ubuntu-26.04
+    timeout-minutes: 15
     strategy:
       matrix:
         php:

@@ -14,16 +14,48 @@ on:
     - cron: '17 4 * * 1'
   workflow_dispatch:
 
-# A new push to the same pull request supersedes the running matrix.
-concurrency:
-  group: vm-${{ github.event.pull_request.number || github.run_id }}
-  cancel-in-progress: true
-
 jobs:
+  changes:
+    name: Check for changes to test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      run: ${{ steps.check.outputs.run }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: check
+        env:
+          ACTION: ${{ github.event.action }}
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.event.after }}
+        run: |
+          # The paths filter above sees the whole pull request, so every push
+          # to it would start the matrix. For new commits on an open pull
+          # request, only test what those commits changed.
+          if [ "$GITHUB_EVENT_NAME" != pull_request ] || [ "$ACTION" != synchronize ] \
+              || ! git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+            echo run=true >> "$GITHUB_OUTPUT"
+          elif git diff --name-only "$BEFORE" "$AFTER" \
+              | grep -qE '^(cli/|valet$|composer\.(json|lock)$|tests/vm/|\.github/workflows/vm\.yml$)'; then
+            echo run=true >> "$GITHUB_OUTPUT"
+          else
+            echo "No changes to Valet or the harness since the last push; skipping the VM matrix."
+            echo run=false >> "$GITHUB_OUTPUT"
+          fi
+
   vm:
     name: ${{ matrix.distro }} / ${{ matrix.scenario }}
+    needs: changes
+    if: needs.changes.outputs.run == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 90
+    # A newer push that runs the matrix supersedes the running job. Pushes that
+    # skip the matrix never get here, so they cannot cancel a run.
+    concurrency:
+      group: vm-${{ github.event.pull_request.number || github.run_id }}-${{ matrix.distro }}-${{ matrix.scenario }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false
       matrix:
