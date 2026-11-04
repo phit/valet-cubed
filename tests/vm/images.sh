@@ -14,8 +14,8 @@ LEGACY_SPEC="genesisweb/valet-linux-plus:dev-master#42d1a94df3fa28bc85d4a26545e3
 # Last release of the valet-dns watcher layout.
 LEGACY_WATCHER_SPEC="genesisweb/valet-linux-plus:1.5.8"
 
-COMPOSER_VERSION="2.10.2"
-COMPOSER_SHA256="5ee7125f8a30a34d246cefdc0bc85b8a783b28f2aec968994118512350d28027"
+COMPOSER_VERSION="2.11.1"
+COMPOSER_SHA256="6f1b891e1d4927d62740276c540fb490e47689e19e102c49e8da849794882f8c"
 
 DISTROS="ubuntu-26.04 ubuntu-24.04 debian-13 fedora-44 almalinux-10 arch opensuse-leap-16.0 alt-p11 solus"
 
