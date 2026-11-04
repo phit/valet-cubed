@@ -85,12 +85,16 @@ final class Fingerprints
      * Parse /etc/dnsmasq.d/valet. Returns the domain and whether the public
      * upstreams were included, or null if the file was modified.
      *
+     * The domain is empty when a release installed dnsmasq before writing its
+     * configuration (1.5.x on a fresh machine): "address=/./127.0.0.1" then
+     * sends every name to 127.0.0.1.
+     *
      * @return array{domain: string, publicUpstreams: bool}|null
      */
     public static function valetConfig(?string $content): ?array
     {
         if ($content === null || !preg_match(
-            '/\Aaddress=\/\.([A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?)\/127\.0\.0\.1\n(server=1\.1\.1\.1\nserver=8\.8\.8\.8\n)?\z/',
+            '/\Aaddress=\/\.((?:[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?)?)\/127\.0\.0\.1\n(server=1\.1\.1\.1\nserver=8\.8\.8\.8\n)?\z/',
             $content,
             $matches
         )) {

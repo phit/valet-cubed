@@ -185,6 +185,18 @@ class LegacyDnsMigrationTest extends TestCase
         $this->assertSame($before, $this->tree());
     }
 
+    public function testRemovesTheCatchAllWrittenWithoutADomain(): void
+    {
+        $this->installWatcher();
+        $this->put('/etc/dnsmasq.d/valet', "address=/./127.0.0.1\n");
+
+        $plan = $this->plan();
+        $this->assertStringContainsString('resolves every name', implode("\n", $plan->evidence));
+        $this->assertContains('/etc/dnsmasq.d/valet', array_column($plan->steps, 'path'));
+        $this->assertSame('completed', $this->migrator()->apply($plan, ['example.com'])['status']);
+        $this->assertFileDoesNotExist($this->root . '/etc/dnsmasq.d/valet');
+    }
+
     public function testMixedUpgradeWithDanglingResolvConfRestoresTheBackup(): void
     {
         $this->installTwoPointX();
@@ -523,6 +535,7 @@ class LegacyDnsMigrationTest extends TestCase
         $this->assertSame(['domain' => 'test', 'publicUpstreams' => true], \Valet\LegacyDns\Fingerprints::valetConfig("address=/.test/127.0.0.1\nserver=1.1.1.1\nserver=8.8.8.8\n"));
         $this->assertSame(['domain' => 'dev.local', 'publicUpstreams' => false], \Valet\LegacyDns\Fingerprints::valetConfig("address=/.dev.local/127.0.0.1\n"));
         $this->assertNull(\Valet\LegacyDns\Fingerprints::valetConfig("address=/.test/127.0.0.1\nserver=9.9.9.9\n"));
+        $this->assertSame(['domain' => '', 'publicUpstreams' => false], \Valet\LegacyDns\Fingerprints::valetConfig("address=/./127.0.0.1\n"));
     }
 
     private function installTwoPointX(): void

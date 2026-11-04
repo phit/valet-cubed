@@ -125,9 +125,9 @@ class Planner
         $valet = Fingerprints::valetConfig($this->content(I::DNSMASQ_VALET));
         if ($valet !== null) {
             $this->marker(sprintf(
-                '%s resolves .%s to 127.0.0.1%s',
+                '%s resolves %s to 127.0.0.1%s',
                 I::DNSMASQ_VALET,
-                $valet['domain'],
+                $valet['domain'] === '' ? 'every name (written without a configured domain)' : '.' . $valet['domain'],
                 $valet['publicUpstreams'] ? ' and forces 1.1.1.1 and 8.8.8.8 as upstream DNS' : ''
             ));
             $wildcard = $wildcard || $valet['publicUpstreams'];
