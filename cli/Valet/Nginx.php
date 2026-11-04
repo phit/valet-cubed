@@ -39,6 +39,7 @@ class Nginx
     public const NGINX_CONF = '/etc/nginx/nginx.conf';
     public const SITES_AVAILABLE_CONF = '/etc/nginx/sites-available/valet.conf';
     public const SITES_ENABLED_CONF = '/etc/nginx/sites-enabled/valet.conf';
+    public const SERVICE_OVERRIDE = '/etc/systemd/system/nginx.service.d/valet-linux-plus.conf';
 
     /**
      * Create a new Nginx instance.
@@ -73,6 +74,7 @@ class Nginx
         $this->files->ensureDirExists('/etc/nginx/sites-enabled');
 
         $this->stop();
+        $this->installServiceOverride();
         $this->installConfiguration();
         $this->installServer();
         $this->installNginxDirectory();
@@ -121,6 +123,10 @@ class Nginx
     public function uninstall(): void
     {
         $this->stop();
+        if ($this->files->exists(self::SERVICE_OVERRIDE)) {
+            $this->files->unlink(self::SERVICE_OVERRIDE);
+            $this->cli->run('systemctl daemon-reload', null, RunAs::Root);
+        }
         $this->files->restore(self::NGINX_CONF);
         $this->files->restore('/etc/nginx/fastcgi_params');
         $this->files->unlink(self::SITES_ENABLED_CONF);
@@ -244,6 +250,19 @@ class Nginx
                 'VALET_PID'       => $pidPath,
             ], $contents)
         );
+    }
+
+    private function installServiceOverride(): void
+    {
+        // openSUSE's unit mounts /home read-only for nginx, but Valet serves
+        // sites from, and logs to, the user's home directory.
+        $protectHome = trim($this->cli->run('systemctl show nginx.service -p ProtectHome --value 2>/dev/null'));
+        if (!in_array($protectHome, ['yes', 'read-only', 'tmpfs'], true)) {
+            return;
+        }
+        $this->files->ensureDirExists(dirname(self::SERVICE_OVERRIDE));
+        $this->files->put(self::SERVICE_OVERRIDE, "# Valet Linux+ serves sites from the home directory.\n[Service]\nProtectHome=no\n");
+        $this->cli->run('systemctl daemon-reload', null, RunAs::Root);
     }
 
     /**

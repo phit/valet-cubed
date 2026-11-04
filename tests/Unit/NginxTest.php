@@ -11,6 +11,7 @@ use Valet\Contracts\ServiceManager;
 use Valet\Filesystem;
 use Valet\Nginx;
 use Valet\PhpFpm;
+use Valet\RunAs;
 use Valet\SiteSecure;
 use Valet\Tests\TestCase;
 
@@ -52,6 +53,12 @@ class NginxTest extends TestCase
      */
     public function itWillInstallSuccessfully(): void
     {
+        $this->commandLine
+            ->shouldReceive('run')
+            ->with('systemctl show nginx.service -p ProtectHome --value 2>/dev/null')
+            ->once()
+            ->andReturn("no\n");
+
         $this->packageManager
             ->shouldReceive('ensureInstalled')
             ->once()
@@ -279,6 +286,12 @@ class NginxTest extends TestCase
             ->once();
 
         $this->filesystem
+            ->shouldReceive('exists')
+            ->with(Nginx::SERVICE_OVERRIDE)
+            ->once()
+            ->andReturnFalse();
+
+        $this->filesystem
             ->shouldReceive('restore')
             ->with('/etc/nginx/nginx.conf')
             ->once();
@@ -310,6 +323,42 @@ class NginxTest extends TestCase
             ->once();
 
         $this->nginx->uninstall();
+    }
+
+    /**
+     * @test
+     */
+    public function itWillLiftHomeProtectionFromTheNginxUnit(): void
+    {
+        $this->commandLine->shouldReceive('run')
+            ->with('systemctl show nginx.service -p ProtectHome --value 2>/dev/null')
+            ->once()
+            ->andReturn("read-only\n");
+        $this->filesystem->shouldReceive('ensureDirExists')->with('/etc/systemd/system/nginx.service.d')->once();
+        $this->filesystem->shouldReceive('put')
+            ->with(Nginx::SERVICE_OVERRIDE, Mockery::pattern('/^\[Service\]\nProtectHome=no$/m'))
+            ->once();
+        $this->commandLine->shouldReceive('run')->with('systemctl daemon-reload', null, RunAs::Root)->once();
+
+        (fn () => $this->installServiceOverride())->call($this->nginx);
+        $this->assertTrue(true);
+    }
+
+    /**
+     * @test
+     */
+    public function itWillRemoveTheUnitOverrideOnUninstall(): void
+    {
+        $this->serviceManager->shouldReceive('stop')->with('nginx');
+        $this->filesystem->shouldReceive('exists')->with(Nginx::SERVICE_OVERRIDE)->once()->andReturnTrue();
+        $this->filesystem->shouldReceive('unlink')->with(Nginx::SERVICE_OVERRIDE)->once();
+        $this->commandLine->shouldReceive('run')->with('systemctl daemon-reload', null, RunAs::Root)->once();
+        $this->filesystem->shouldReceive('restore');
+        $this->filesystem->shouldReceive('unlink');
+        $this->filesystem->shouldReceive('exists')->with('/etc/nginx/sites-available/default')->andReturnFalse();
+
+        $this->nginx->uninstall();
+        $this->assertTrue(true);
     }
 
     /**
