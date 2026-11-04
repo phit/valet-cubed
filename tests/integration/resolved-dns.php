@@ -16,7 +16,15 @@ if (file_exists(ResolvedDns::UNIT) || file_exists(ResolvedDns::DELEGATE)) {
 }
 
 $dns = new ResolvedDns(new Filesystem(), new CommandLine());
-$upstreamBefore = shell_exec('resolvectl dns');
+
+// Global and per-link servers only; newer resolvectl also lists dns-delegate
+// entries, which include Valet's own delegation.
+$upstreamServers = function (): string {
+    $lines = explode("\n", (string) shell_exec('resolvectl dns'));
+
+    return implode("\n", preg_grep('/^(Global|Link \d+)/', $lines));
+};
+$upstreamBefore = $upstreamServers();
 
 try {
     if (!$dns->activate('valet-ci.test')) {
@@ -36,8 +44,9 @@ try {
         throw new RuntimeException('The new wildcard domain did not resolve.');
     }
 
-    if ($upstreamBefore !== shell_exec('resolvectl dns')) {
-        throw new RuntimeException('Existing system DNS server settings changed.');
+    $upstreamAfter = $upstreamServers();
+    if ($upstreamBefore !== $upstreamAfter) {
+        throw new RuntimeException("Existing system DNS server settings changed.\nBefore:\n{$upstreamBefore}\nAfter:\n{$upstreamAfter}");
     }
 } finally {
     $dns->deactivate();
