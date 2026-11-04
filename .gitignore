@@ -9,3 +9,4 @@ error.log
 .php-cs-fixer.cache
 .phpunit.result.cache
 tests/vm/.work/
+.phpunit.cache/

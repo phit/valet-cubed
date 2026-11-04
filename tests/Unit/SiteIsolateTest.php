@@ -3,6 +3,7 @@
 namespace Unit;
 
 use Mockery;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Valet\Configuration;
 use Valet\Contracts\PackageManager;
@@ -45,9 +46,7 @@ class SiteIsolateTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillIsolateDirectory(): void
     {
         $phpFpm = Mockery::mock(PhpFpm::class);
@@ -157,9 +156,7 @@ class SiteIsolateTest extends TestCase
         $this->assertTrue($return);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillUnIsolateDirectory(): void
     {
         $phpFpm = Mockery::mock(PhpFpm::class);
@@ -232,9 +229,7 @@ class SiteIsolateTest extends TestCase
         $this->siteIsolate->unIsolateDirectory('site');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillListIsolatedDirectories(): void
     {
         $nginx = Mockery::mock(Nginx::class);
@@ -298,9 +293,7 @@ class SiteIsolateTest extends TestCase
         ], $response->all());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillGetIsolatedPhpVersion(): void
     {
         $site = 'site.test';
@@ -320,9 +313,7 @@ class SiteIsolateTest extends TestCase
         $this->assertSame('7.2', $version);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillReturnNullWhenVersionNotFound(): void
     {
         $site = 'site.test';

@@ -4,6 +4,7 @@ namespace Unit;
 
 use Mockery;
 use Mockery\MockInterface;
+use PHPUnit\Framework\Attributes\Test;
 use Valet\CommandLine;
 use Valet\Configuration;
 use Valet\Contracts\PackageManager;
@@ -47,9 +48,7 @@ class SiteSecureTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillSecureNewDomain(): void
     {
         $phpFpm = Mockery::mock(PhpFpm::class);
@@ -251,9 +250,7 @@ class SiteSecureTest extends TestCase
         $this->siteSecure->secure('site.test');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillUnsecureSite(): void
     {
         $this->filesystem
@@ -290,9 +287,7 @@ class SiteSecureTest extends TestCase
         $this->siteSecure->unsecure('site.test');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillListSecuredSites(): void
     {
         $this->filesystem
@@ -315,9 +310,7 @@ class SiteSecureTest extends TestCase
         $this->assertSame(['site.test', 'site2.test'], $sites->toArray());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillRegenerateSecuredSites(): void
     {
         $phpFpm = Mockery::mock(PhpFpm::class);

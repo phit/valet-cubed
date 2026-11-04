@@ -3,6 +3,7 @@
 namespace Valet\Tests\Unit;
 
 use Mockery;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Valet\CommandLine;
 use Valet\Configuration;
 use Valet\Contracts\ServiceManager;
@@ -27,9 +28,7 @@ class DnfTest extends TestCase
         $mysql->stop();
     }
 
-    /**
-     * @dataProvider redisProvider
-     */
+    #[DataProvider('redisProvider')]
     public function testUsesValkeyWhereNothingProvidesRedis(array $installed, string $provides, string $expected): void
     {
         $cli = Mockery::mock(CommandLine::class);
@@ -45,7 +44,7 @@ class DnfTest extends TestCase
         $this->assertSame($expected, $manager->packageName('redis'));
     }
 
-    public function redisProvider(): array
+    public static function redisProvider(): array
     {
         return [
             'fedora' => [[], "redis-0:7.2.11-1.fc44.x86_64\n", 'redis'],

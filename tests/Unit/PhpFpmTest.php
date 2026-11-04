@@ -4,6 +4,8 @@ namespace Valet\Tests\Unit;
 
 use ConsoleComponents\Writer;
 use Mockery;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Valet\CommandLine;
 use Valet\Configuration;
@@ -56,7 +58,7 @@ class PhpFpmTest extends TestCase
         );
     }
 
-    public function versionProvider(): array
+    public static function versionProvider(): array
     {
         return [
             [
@@ -122,10 +124,8 @@ class PhpFpmTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider versionProvider
-     */
+    #[Test]
+    #[DataProvider('versionAndSocketProvider')]
     public function itWillInstallSuccessfully(
         string $version,
         string $expectedVersion,
@@ -200,10 +200,8 @@ class PhpFpmTest extends TestCase
         $this->phpFpm->install($version);
     }
 
-    /**
-     * @test
-     * @dataProvider versionProvider
-     */
+    #[Test]
+    #[DataProvider('versionPairProvider')]
     public function itWillUninstallSuccessfully(string $version, string $expectedVersion): void
     {
         $this->filesystem
@@ -237,10 +235,8 @@ class PhpFpmTest extends TestCase
         $this->phpFpm->uninstall($version);
     }
 
-    /**
-     * @test
-     * @dataProvider versionProvider
-     */
+    #[Test]
+    #[DataProvider('versionProvider')]
     public function itWillSwitchVersionSuccessfully(
         string $version,
         string $expectedVersion,
@@ -409,10 +405,8 @@ class PhpFpmTest extends TestCase
         $this->phpFpm->switchVersion($version, true);
     }
 
-    /**
-     * @test
-     * @dataProvider versionProvider
-     */
+    #[Test]
+    #[DataProvider('versionPairProvider')]
     public function itWillRestartSuccessfully(string $version, string $expectedVersion): void
     {
         $fpmName = 'php' . $expectedVersion . '-fpm';
@@ -430,10 +424,8 @@ class PhpFpmTest extends TestCase
         $this->phpFpm->restart($expectedVersion);
     }
 
-    /**
-     * @test
-     * @dataProvider versionProvider
-     */
+    #[Test]
+    #[DataProvider('versionPairProvider')]
     public function itWillStopSuccessfully(string $version, string $expectedVersion): void
     {
         $fpmName = 'php' . $expectedVersion . '-fpm';
@@ -451,10 +443,8 @@ class PhpFpmTest extends TestCase
         $this->phpFpm->stop($expectedVersion);
     }
 
-    /**
-     * @test
-     * @dataProvider versionProvider
-     */
+    #[Test]
+    #[DataProvider('versionPairProvider')]
     public function itWillGetStatusSuccessfully(string $version, string $expectedVersion): void
     {
         $fpmName = 'php' . $expectedVersion . '-fpm';
@@ -472,7 +462,7 @@ class PhpFpmTest extends TestCase
         $this->phpFpm->status($expectedVersion);
     }
 
-    public function socketFileVersionProvider(): array
+    public static function socketFileVersionProvider(): array
     {
         return [
             [
@@ -490,10 +480,8 @@ class PhpFpmTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider socketFileVersionProvider
-     */
+    #[Test]
+    #[DataProvider('socketFileVersionProvider')]
     public function itWillGetSocketFileName(string $version, string $expectedSocket): void
     {
         $socketFile = $this->phpFpm->socketFileName($version);
@@ -501,10 +489,8 @@ class PhpFpmTest extends TestCase
         $this->assertSame($expectedSocket, $socketFile);
     }
 
-    /**
-     * @test
-     * @dataProvider versionProvider
-     */
+    #[Test]
+    #[DataProvider('versionPairProvider')]
     public function itWillNormalizePhpVersion(string $phpVersion, string $expectedVersion): void
     {
         $normalizedVersion = $this->phpFpm->normalizePhpVersion($phpVersion);
@@ -512,7 +498,7 @@ class PhpFpmTest extends TestCase
         $this->assertSame($expectedVersion, $normalizedVersion);
     }
 
-    public function invalidVersionProvider(): array
+    public static function invalidVersionProvider(): array
     {
         return [
             [
@@ -535,10 +521,8 @@ class PhpFpmTest extends TestCase
         $this->assertSame('8.10', $this->phpFpm->normalizePhpVersion('php8.10'));
     }
 
-    /**
-     * @test
-     * @dataProvider invalidVersionProvider
-     */
+    #[Test]
+    #[DataProvider('invalidVersionProvider')]
     public function itWillReturnBlankStringWhenInvalidStringGiven(string $version): void
     {
         $normalizedVersion = $this->phpFpm->normalizePhpVersion($version);
@@ -546,7 +530,31 @@ class PhpFpmTest extends TestCase
         $this->assertSame('', $normalizedVersion);
     }
 
-    public function executableVersionProvider(): array
+    /**
+     * The requested and normalized version from versionProvider.
+     */
+    public static function versionPairProvider(): array
+    {
+        return array_map(fn (array $row) => array_slice($row, 0, 2), self::versionProvider());
+    }
+
+    /**
+     * The requested and normalized version, and the socket file, from versionProvider.
+     */
+    public static function versionAndSocketProvider(): array
+    {
+        return array_map(fn (array $row) => array_slice($row, 0, 3), self::versionProvider());
+    }
+
+    /**
+     * The versions from executableVersionProvider.
+     */
+    public static function executableVersionOnlyProvider(): array
+    {
+        return array_map(fn (array $row) => array_slice($row, 0, 1), self::executableVersionProvider());
+    }
+
+    public static function executableVersionProvider(): array
     {
         return [
             [
@@ -560,10 +568,8 @@ class PhpFpmTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider executableVersionProvider
-     */
+    #[Test]
+    #[DataProvider('executableVersionOnlyProvider')]
     public function itWillGetExecutablePath(string $version): void
     {
         $devTools = Mockery::mock(DevTools::class);
@@ -579,9 +585,7 @@ class PhpFpmTest extends TestCase
         $this->assertSame('/usr/bin/php' . $version, $binFile);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itFallsBackToConfiguredBinaryWhenDefaultPhpIsIgnored(): void
     {
         $devTools = Mockery::mock(DevTools::class);
@@ -605,9 +609,7 @@ class PhpFpmTest extends TestCase
         $this->assertSame('/usr/bin/php8.4', $this->phpFpm->getPhpExecutablePath());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itFallsBackToUsrBinPhpWhenNoConfiguredBinaryExists(): void
     {
         $devTools = Mockery::mock(DevTools::class);
@@ -628,9 +630,7 @@ class PhpFpmTest extends TestCase
         $this->assertSame('/usr/bin/php', $this->phpFpm->getPhpExecutablePath());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itFallsBackToUsrBinPhpVersionWhenVersionedLookupFails(): void
     {
         $devTools = Mockery::mock(DevTools::class);
@@ -649,10 +649,8 @@ class PhpFpmTest extends TestCase
         $this->assertSame('/usr/bin/php8.2', $this->phpFpm->getPhpExecutablePath('8.2'));
     }
 
-    /**
-     * @test
-     * @dataProvider executableVersionProvider
-     */
+    #[Test]
+    #[DataProvider('executableVersionProvider')]
     public function itWillGetFpmSocketFile(string $version, string $expectedSocketFile): void
     {
         $socketFile = $this->phpFpm->fpmSocketFile($version);
@@ -660,7 +658,7 @@ class PhpFpmTest extends TestCase
         $this->assertSame(VALET_HOME_PATH . '/' . $expectedSocketFile, $socketFile);
     }
 
-    public function versionDataProvider(): array
+    public static function versionDataProvider(): array
     {
         return [
             [
@@ -672,10 +670,8 @@ class PhpFpmTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider versionDataProvider
-     */
+    #[Test]
+    #[DataProvider('versionDataProvider')]
     public function itWillValidateVersion(string $version): void
     {
         $isValid = $this->phpFpm->validateVersion($version);
@@ -683,7 +679,7 @@ class PhpFpmTest extends TestCase
         $this->assertTrue($isValid);
     }
 
-    public function deprecatedVersionDataProvider(): array
+    public static function deprecatedVersionDataProvider(): array
     {
         return [
             [
@@ -710,10 +706,8 @@ class PhpFpmTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider deprecatedVersionDataProvider
-     */
+    #[Test]
+    #[DataProvider('deprecatedVersionDataProvider')]
     public function itWillValidateDeprecatedVersion(string $version): void
     {
         $isValid = $this->phpFpm->validateVersion($version);

@@ -2,6 +2,8 @@
 
 namespace Valet\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Valet\Configuration;
 use Valet\Filesystem;
@@ -23,9 +25,7 @@ class ConfigurationTest extends TestCase
         $this->configuration = new Configuration($this->filesystem);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillReturnDefaultsWithoutAConfigurationFile(): void
     {
         $this->filesystem->shouldReceive('exists')->with(VALET_HOME_PATH . '/config.json')->andReturnFalse();
@@ -34,9 +34,7 @@ class ConfigurationTest extends TestCase
         $this->assertSame('8.4', $this->configuration->get('php_version', '8.4'));
     }
 
-    /**
-     * @test
-    */
+    #[Test]
     public function itWillInstallConfigurationSuccessfully(): void
     {
         $this->filesystem
@@ -106,9 +104,7 @@ class ConfigurationTest extends TestCase
         $this->configuration->install();
     }
 
-    /**
-     * @test
-    */
+    #[Test]
     public function itWillNotOverrideWhenAlreadyInstalled(): void
     {
         $this->filesystem
@@ -171,9 +167,7 @@ class ConfigurationTest extends TestCase
         $this->configuration->install();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itPreservesConfigurationOnUninstall(): void
     {
         $this->filesystem
@@ -183,9 +177,7 @@ class ConfigurationTest extends TestCase
         $this->configuration->uninstall();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillAddPathToConfig(): void
     {
         $defaultConfig = $this->defaultConfig();
@@ -209,9 +201,7 @@ class ConfigurationTest extends TestCase
         $this->configuration->addPath('new_path');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillRemovePathFromConfig(): void
     {
         $defaultConfig = $this->defaultConfig();
@@ -235,9 +225,7 @@ class ConfigurationTest extends TestCase
         $this->configuration->removePath('new_path');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillRemoveBrokenPathsFromConfig(): void
     {
         $defaultConfig = $this->defaultConfig();
@@ -273,7 +261,7 @@ class ConfigurationTest extends TestCase
         $this->configuration->prune();
     }
 
-    public function configDataProvider(): array
+    public static function configDataProvider(): array
     {
         return [
             [
@@ -299,10 +287,8 @@ class ConfigurationTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider configDataProvider
-     */
+    #[Test]
+    #[DataProvider('configDataProvider')]
     public function itWillGetValueFromConfig(string $configKey, mixed $defaultValue, mixed $expectedValue): void
     {
         $defaultConfig = $this->defaultConfig();
@@ -318,7 +304,7 @@ class ConfigurationTest extends TestCase
         $this->assertSame($expectedValue, $value);
     }
 
-    public function updateConfigDataProvider(): array
+    public static function updateConfigDataProvider(): array
     {
         return [
             [
@@ -336,10 +322,8 @@ class ConfigurationTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider updateConfigDataProvider
-     */
+    #[Test]
+    #[DataProvider('updateConfigDataProvider')]
     public function itWillSetValueForConfig(string $configKey, mixed $updateValue): void
     {
         $defaultConfig = $this->defaultConfig();
@@ -367,7 +351,7 @@ class ConfigurationTest extends TestCase
         $this->assertSame($updatedConfig, $value);
     }
 
-    public function domainDataProvider(): array
+    public static function domainDataProvider(): array
     {
         return [
             [
@@ -385,10 +369,8 @@ class ConfigurationTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider domainDataProvider
-     */
+    #[Test]
+    #[DataProvider('domainDataProvider')]
     public function itWillParseDomain(string $siteName, string $expectedDomain): void
     {
         $defaultConfig = $this->defaultConfig();

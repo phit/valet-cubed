@@ -3,6 +3,7 @@
 namespace Unit;
 
 use Mockery;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Valet\Configuration;
 use Valet\Filesystem;
@@ -32,9 +33,7 @@ class SiteProxyTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillCreateProxy(): void
     {
         $this->config
@@ -57,9 +56,7 @@ class SiteProxyTest extends TestCase
         $this->siteProxy->proxyCreate('site', 'http://localhost:8000', true);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillLoadProxies(): void
     {
         $this->config

@@ -3,6 +3,7 @@
 namespace Valet\Tests\Unit;
 
 use Mockery;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Valet\CommandLine;
 use Valet\Contracts\PackageManager;
@@ -32,9 +33,7 @@ class ValetRedisTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillInstallSuccessfully(): void
     {
         $this->packageManager
@@ -56,9 +55,7 @@ class ValetRedisTest extends TestCase
         $this->redis->install();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillValidateIfPackageIsInstalled(): void
     {
         $this->packageManager
@@ -77,9 +74,7 @@ class ValetRedisTest extends TestCase
         $this->assertTrue($isInstalled);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillRestartServiceSuccessfully(): void
     {
         $this->packageManager
@@ -96,9 +91,7 @@ class ValetRedisTest extends TestCase
         $this->redis->restart();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillStopServiceSuccessfully(): void
     {
         $this->packageManager
@@ -115,9 +108,7 @@ class ValetRedisTest extends TestCase
         $this->redis->stop();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillUninstallServiceSuccessfully(): void
     {
         $this->packageManager

@@ -3,6 +3,7 @@
 namespace Valet\Tests\Unit;
 
 use Mockery;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Valet\CommandLine;
 use Valet\Configuration;
@@ -54,9 +55,7 @@ class MailpitTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillInstallSuccessfully(): void
     {
         $this->commandLine
@@ -125,9 +124,7 @@ class MailpitTest extends TestCase
         $this->mailpit->install();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillStartServiceSuccessfully(): void
     {
         $this->serviceManager
@@ -138,9 +135,7 @@ class MailpitTest extends TestCase
         $this->mailpit->start();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillRestartServiceSuccessfully(): void
     {
         $this->serviceManager
@@ -151,9 +146,7 @@ class MailpitTest extends TestCase
         $this->mailpit->restart();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillStopServiceSuccessfully(): void
     {
         $this->serviceManager
@@ -164,9 +157,7 @@ class MailpitTest extends TestCase
         $this->mailpit->stop();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillPrintStatus(): void
     {
         $this->serviceManager
@@ -177,9 +168,7 @@ class MailpitTest extends TestCase
         $this->mailpit->status();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillUninstallServiceSuccessfully(): void
     {
         $this->serviceManager

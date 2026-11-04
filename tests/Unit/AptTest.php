@@ -3,13 +3,15 @@
 namespace Valet\Tests\Unit;
 
 use Mockery;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Valet\CommandLine;
 use Valet\PackageManagers\Apt;
 use Valet\Tests\TestCase;
 
 class AptTest extends TestCase
 {
-    public function candidateProvider(): array
+    public static function candidateProvider(): array
     {
         return [
             'available' => ["mysql-server:\n  Installed: (none)\n  Candidate: 8.0.45-0ubuntu0.24.04.1\n", true],
@@ -18,10 +20,8 @@ class AptTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider candidateProvider
-     */
+    #[Test]
+    #[DataProvider('candidateProvider')]
     public function itWillDetectWhetherThePackageIsAvailable(string $policy, bool $expected): void
     {
         $cli = Mockery::mock(CommandLine::class);

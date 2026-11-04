@@ -3,6 +3,7 @@
 namespace Valet\Tests\Unit;
 
 use Mockery;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Valet\CommandLine;
 use Valet\Configuration;
@@ -48,9 +49,7 @@ class NginxTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillInstallSuccessfully(): void
     {
         $this->filesystem->shouldReceive('exists')->with(Nginx::FORMER_SERVICE_OVERRIDE)->once()->andReturnFalse();
@@ -218,9 +217,7 @@ class NginxTest extends TestCase
         $this->nginx->install();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillUpdatePort(): void
     {
         $this->filesystem
@@ -237,9 +234,7 @@ class NginxTest extends TestCase
         $this->nginx->updatePort('88');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillRestartService(): void
     {
         $this->serviceManager
@@ -250,9 +245,7 @@ class NginxTest extends TestCase
         $this->nginx->restart();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillStopService(): void
     {
         $this->serviceManager
@@ -263,9 +256,7 @@ class NginxTest extends TestCase
         $this->nginx->stop();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillPrintStatusOfService(): void
     {
         $this->serviceManager
@@ -276,9 +267,7 @@ class NginxTest extends TestCase
         $this->nginx->status();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillUninstall(): void
     {
         $this->serviceManager
@@ -331,9 +320,7 @@ class NginxTest extends TestCase
         $this->nginx->uninstall();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillLiftHomeProtectionFromTheNginxUnit(): void
     {
         $this->filesystem->shouldReceive('exists')->with(Nginx::FORMER_SERVICE_OVERRIDE)->once()->andReturnFalse();
@@ -351,9 +338,7 @@ class NginxTest extends TestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillRemoveTheOverrideWrittenBeforeTheRename(): void
     {
         $this->filesystem->shouldReceive('exists')->with(Nginx::FORMER_SERVICE_OVERRIDE)->once()->andReturnTrue();
@@ -369,9 +354,7 @@ class NginxTest extends TestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillRemoveTheUnitOverrideOnUninstall(): void
     {
         $this->serviceManager->shouldReceive('stop')->with('nginx');
@@ -388,9 +371,7 @@ class NginxTest extends TestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillListConfiguredSites(): void
     {
         $this->filesystem
@@ -404,9 +385,7 @@ class NginxTest extends TestCase
         $this->assertSame(['site1', 'site2', 'site3'], $output->all());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillInstallServerByGivenPhpVersion(): void
     {
         $phpFpm = Mockery::mock(PhpFpm::class);

@@ -4,6 +4,7 @@ namespace Valet\Tests\Unit;
 
 use DomainException;
 use Mockery;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Valet\CommandLine;
 use Valet\Filesystem;
 use Valet\RunAs;
@@ -22,9 +23,7 @@ class ServiceManagerSecurityTest extends TestCase
         (new Systemd($cli, Mockery::mock(Filesystem::class)))->start('mysql');
     }
 
-    /**
-     * @dataProvider invalidServiceNames
-     */
+    #[DataProvider('invalidServiceNames')]
     public function testRejectsInvalidServiceNamesBeforeRunningCommands(string $manager, string $service): void
     {
         $cli = Mockery::mock(CommandLine::class);
@@ -36,7 +35,7 @@ class ServiceManagerSecurityTest extends TestCase
         $instance->start($service);
     }
 
-    public function invalidServiceNames(): array
+    public static function invalidServiceNames(): array
     {
         $cases = [];
         foreach ([Systemd::class, LinuxService::class] as $manager) {

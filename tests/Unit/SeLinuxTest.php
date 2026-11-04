@@ -6,6 +6,7 @@ use ConsoleComponents\Writer;
 use DomainException;
 use Mockery;
 use Mockery\MockInterface;
+use PHPUnit\Framework\Attributes\Test;
 use Valet\CommandLine;
 use Valet\Configuration;
 use Valet\Contracts\PackageManager;
@@ -31,9 +32,7 @@ class SeLinuxTest extends TestCase
         $this->seLinux = new SeLinux($this->cli, $this->pm, $this->config);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillDoNothingUnlessEnforcing(): void
     {
         $this->cli->shouldReceive('run')->with('sestatus 2>/dev/null')->once()
@@ -44,9 +43,7 @@ class SeLinuxTest extends TestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillMakeTheWebServerDomainPermissiveAndRecordIt(): void
     {
         $this->cli->shouldReceive('run')->with('sestatus 2>/dev/null')->andReturn(self::ENFORCING);
@@ -59,9 +56,7 @@ class SeLinuxTest extends TestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillNotClaimAnExistingPermissiveDomain(): void
     {
         $this->cli->shouldReceive('run')->with('sestatus 2>/dev/null')->andReturn(self::ENFORCING);
@@ -74,9 +69,7 @@ class SeLinuxTest extends TestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillInstallSemanageWhenMissing(): void
     {
         $this->cli->shouldReceive('run')->with('sestatus 2>/dev/null')->andReturn(self::ENFORCING);
@@ -93,9 +86,7 @@ class SeLinuxTest extends TestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillFailWhenSemanageFails(): void
     {
         $this->cli->shouldReceive('run')->with('sestatus 2>/dev/null')->andReturn(self::ENFORCING);
@@ -113,9 +104,7 @@ class SeLinuxTest extends TestCase
         $this->seLinux->install();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillOnlyUndoWhatInstallChanged(): void
     {
         $this->config->shouldReceive('get')->with('selinux_permissive_httpd')->andReturn(true);

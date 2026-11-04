@@ -3,6 +3,7 @@
 namespace Valet\Tests\Unit;
 
 use Mockery;
+use PHPUnit\Framework\Attributes\Test;
 use Valet\CommandLine;
 use Valet\PackageManagers\Pacman;
 use Valet\Tests\TestCase;
@@ -22,9 +23,7 @@ class PacmanTest extends TestCase
         return new Pacman($cli);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillUseTheOfficialPackagesForTheRepositoryVersion(): void
     {
         $pacman = $this->pacman('8.5.12');
@@ -37,9 +36,7 @@ class PacmanTest extends TestCase
         $this->assertSame('php', $pacman->getPhpExtensionName('8.5', 'mysql'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillUseAurNamesForOtherVersions(): void
     {
         $pacman = $this->pacman('8.5.12');
@@ -48,9 +45,7 @@ class PacmanTest extends TestCase
         $this->assertSame('php84-gd', $pacman->getPhpExtensionName('8.4', 'gd'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillEnableShippedModulesThatAreNotLoaded(): void
     {
         $written = null;

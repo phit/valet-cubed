@@ -4,6 +4,8 @@ namespace Valet\Tests\Unit;
 
 use ConsoleComponents\Writer;
 use Mockery;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Valet\CommandLine;
 use Valet\Configuration;
@@ -70,7 +72,7 @@ class MysqlTest extends TestCase
         );
     }
 
-    public function packageDataProvider(): array
+    public static function packageDataProvider(): array
     {
         return [
             'mysql' => [
@@ -106,10 +108,8 @@ class MysqlTest extends TestCase
         $this->assertFileDoesNotExist($clientConfig);
     }
 
-    /**
-     * @test
-     * @dataProvider packageDataProvider
-     */
+    #[Test]
+    #[DataProvider('packageDataProvider')]
     public function itWillInstallSuccessfully(bool $useMariaDB, string $packageName, string $packageServerName): void
     {
         Writer::fake();
@@ -191,9 +191,7 @@ class MysqlTest extends TestCase
         $this->mysql->install($useMariaDB);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillInstallMariaDbWhenAptOffersNoMysqlServer(): void
     {
         Writer::fake();
@@ -219,9 +217,7 @@ class MysqlTest extends TestCase
         (new Mysql($apt, $this->serviceManager, $this->commandLine, $this->filesystem, $this->config))->install();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillInstallMysqlWhenAptOffersIt(): void
     {
         Writer::fake();
@@ -245,9 +241,7 @@ class MysqlTest extends TestCase
         (new Mysql($apt, $this->serviceManager, $this->commandLine, $this->filesystem, $this->config))->install();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillNotOverrideWhenInstalled()
     {
         $this->packageManager
@@ -292,9 +286,7 @@ class MysqlTest extends TestCase
         $mysql->install();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillNotOverrideWhenMariaDbInstalled()
     {
         $this->packageManager
@@ -351,9 +343,7 @@ class MysqlTest extends TestCase
         $mysql->install(true);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillStopService(): void
     {
         $this->packageManager
@@ -391,9 +381,7 @@ class MysqlTest extends TestCase
         $mysql->stop();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillRestartService(): void
     {
         $this->packageManager
@@ -431,9 +419,7 @@ class MysqlTest extends TestCase
         $mysql->restart();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillUninstallService(): void
     {
         $this->packageManager

@@ -3,6 +3,7 @@
 namespace Unit;
 
 use Mockery;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Valet\Configuration;
 use Valet\Filesystem;
@@ -34,9 +35,7 @@ class SiteLinkTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillLinkSite(): void
     {
         $this->filesystem
@@ -59,9 +58,7 @@ class SiteLinkTest extends TestCase
         $this->assertEquals(VALET_HOME_PATH . '/Sites/path', $host);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillUnlinkSite(): void
     {
         $this->filesystem
@@ -80,9 +77,7 @@ class SiteLinkTest extends TestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillNotUnlinkWhenSiteNotLinked(): void
     {
         $this->filesystem
@@ -99,9 +94,7 @@ class SiteLinkTest extends TestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillLoadLinks(): void
     {
         $this->filesystem

@@ -3,15 +3,14 @@
 namespace Valet\Tests\Unit;
 
 use Mockery;
+use PHPUnit\Framework\Attributes\Test;
 use Valet\CommandLine;
 use Valet\Requirements;
 use Valet\Tests\TestCase;
 
 class RequirementsTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillPassForAHomeOutsideRoot(): void
     {
         $commandLine = Mockery::mock(CommandLine::class);

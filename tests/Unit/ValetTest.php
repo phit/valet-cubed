@@ -7,6 +7,9 @@ use Httpful\Httpful;
 use Httpful\Mime;
 use Httpful\Response;
 use Mockery;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Valet\CommandLine;
 use Valet\Configuration;
@@ -17,9 +20,7 @@ use Valet\Valet;
 
 use function Valet\swap;
 
-/**
- * @covers \Valet\Valet
- */
+#[CoversClass(Valet::class)]
 class ValetTest extends TestCase
 {
     private CommandLine|MockObject $commandLine;
@@ -39,9 +40,7 @@ class ValetTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillRequireTheWhichCommand(): void
     {
         $this->commandLine
@@ -60,9 +59,7 @@ class ValetTest extends TestCase
         $this->valet->environmentSetup();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillLinkValetBinFileToSystemPath(): void
     {
         $this->commandLine
@@ -75,9 +72,7 @@ class ValetTest extends TestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillLinkPhpBinFileToSystemPath(): void
     {
         $config = Mockery::mock(Configuration::class);
@@ -103,9 +98,7 @@ class ValetTest extends TestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillUninstallSuccessfully(): void
     {
         $this->filesystem
@@ -123,9 +116,7 @@ class ValetTest extends TestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillLoadExtensionsFromHomeDir(): void
     {
         $this->filesystem
@@ -157,7 +148,7 @@ class ValetTest extends TestCase
         ], $extensions);
     }
 
-    public function versionDataProvider(): array
+    public static function versionDataProvider(): array
     {
         return [
             [
@@ -171,10 +162,8 @@ class ValetTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider versionDataProvider
-     */
+    #[Test]
+    #[DataProvider('versionDataProvider')]
     public function itWillCompareLatestVersion(string $version, bool $expectedResponse): void
     {
 
@@ -202,9 +191,7 @@ Content-Length: 477
         $this->assertSame($expectedResponse, $isLatest);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillGetLatestVersion(): void
     {
 

@@ -2,6 +2,7 @@
 
 namespace Valet\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Valet\CommandLine;
 use Valet\RunAs;
 use Valet\Tests\TestCase;
@@ -10,7 +11,7 @@ use function Valet\user;
 
 class CommandLineTest extends TestCase
 {
-    public function prefixProvider(): array
+    public static function prefixProvider(): array
     {
         return [
             'root needs no sudo' => [true, RunAs::Root, ''],
@@ -22,9 +23,7 @@ class CommandLineTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider prefixProvider
-     */
+    #[DataProvider('prefixProvider')]
     public function testPrefixDependsOnTheCurrentUser(bool $root, RunAs $as, string $expected): void
     {
         $this->assertSame($expected, (new CommandLine($root))->prefix($as));

@@ -4,6 +4,7 @@ namespace Valet\Tests\Unit;
 
 use ConsoleComponents\Writer;
 use Mockery;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Valet\CommandLine;
@@ -49,9 +50,7 @@ class HostsTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillInstallSuccessfully(): void
     {
         $this->expectHostDiscovery('test');
@@ -82,9 +81,7 @@ class HostsTest extends TestCase
         $this->hosts->updateDomain('test');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillUninstallSuccessfully(): void
     {
         Writer::fake();
@@ -119,9 +116,7 @@ class HostsTest extends TestCase
         $this->assertStringContainsString('Valet host entries have been removed', $output->fetch());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillStopSuccessfully(): void
     {
         $this->filesystem
@@ -149,9 +144,7 @@ class HostsTest extends TestCase
         $this->hosts->stop();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillRestartSuccessfully(): void
     {
         $this->configuration
@@ -165,9 +158,7 @@ class HostsTest extends TestCase
         $this->hosts->restart();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillUpdateDomainSuccessfully(): void
     {
         $this->expectHostDiscovery('local');
@@ -175,9 +166,7 @@ class HostsTest extends TestCase
         $this->hosts->updateDomain('local');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillRemoveHostsBlockWhenNoHostsAreServed(): void
     {
         $this->configuration

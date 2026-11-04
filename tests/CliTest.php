@@ -4,6 +4,8 @@ namespace Valet\Tests;
 
 use ConsoleComponents\Writer;
 use Mockery;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Valet\Configuration;
 use Valet\Facades\Configuration as ConfigurationFacade;
@@ -30,9 +32,7 @@ class CliTest extends TestCase
         swap(Hosts::class, $hosts);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillReadDomainFromConfig(): void
     {
         Writer::fake();
@@ -49,9 +49,7 @@ class CliTest extends TestCase
         $this->assertStringContainsString('Your current Valet domain is [test]', $output->fetch());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillSetDomainInConfig(): void
     {
         Writer::fake();
@@ -86,9 +84,7 @@ class CliTest extends TestCase
         $this->assertStringContainsString('Your Valet domain has been updated to [localhost]', $output->fetch());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillReadNginxPortFromConfig(): void
     {
         Writer::fake();
@@ -105,7 +101,7 @@ class CliTest extends TestCase
         $this->assertStringContainsString('Current Nginx port (HTTPS): 443', $content);
     }
 
-    public function nginxPortDataProvider(): array
+    public static function nginxPortDataProvider(): array
     {
         return [
             [8443, true, 'https_port', 'Your Nginx HTTPS port has been updated to [8443]'],
@@ -113,10 +109,8 @@ class CliTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider nginxPortDataProvider
-     */
+    #[Test]
+    #[DataProvider('nginxPortDataProvider')]
     public function itWillUpdateNginxPortSuccessfully(
         int $port,
         bool $isHttps,
@@ -156,9 +150,7 @@ class CliTest extends TestCase
         $this->assertStringContainsString($expectedOutput, $output->fetch());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillValidateWhichCommand(): void
     {
         Writer::fake();
@@ -173,7 +165,7 @@ class CliTest extends TestCase
         $this->assertStringContainsString('This site is served by [Valet\Drivers\BasicValetDriver]', $output->fetch());
     }
 
-    public function parkedDirectoryProvider(): array
+    public static function parkedDirectoryProvider(): array
     {
         return [
             ['/test/directory', '/test/directory'],
@@ -181,10 +173,8 @@ class CliTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider parkedDirectoryProvider
-     */
+    #[Test]
+    #[DataProvider('parkedDirectoryProvider')]
     public function itWillParkDirectoryToConfig(?string $directory, string $expectedDirectory): void
     {
         Writer::fake();
@@ -207,7 +197,7 @@ class CliTest extends TestCase
         );
     }
 
-    public function directoryProvider(): array
+    public static function directoryProvider(): array
     {
         return [
             [null, 'No paths have been registered.'],
@@ -215,10 +205,8 @@ class CliTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider directoryProvider
-     */
+    #[Test]
+    #[DataProvider('directoryProvider')]
     public function itWillReadParkedDirectories(?string $path, string $expectedMessage): void
     {
         Writer::fake();
@@ -240,10 +228,8 @@ class CliTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     * @dataProvider parkedDirectoryProvider
-     */
+    #[Test]
+    #[DataProvider('parkedDirectoryProvider')]
     public function itWillForgetParkedDirectory(?string $directory, string $expectedDirectory): void
     {
         Writer::fake();
@@ -266,7 +252,7 @@ class CliTest extends TestCase
         );
     }
 
-    public function nginxProxyDataProvider(): array
+    public static function nginxProxyDataProvider(): array
     {
         return [
             [
@@ -293,10 +279,8 @@ class CliTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider nginxProxyDataProvider
-     */
+    #[Test]
+    #[DataProvider('nginxProxyDataProvider')]
     public function itWillCreateNginxProxy(
         string $domain,
         string $host,
@@ -328,7 +312,7 @@ class CliTest extends TestCase
         );
     }
 
-    public function invalidProxyDataProvider(): array
+    public static function invalidProxyDataProvider(): array
     {
         return [
             [
@@ -352,10 +336,8 @@ class CliTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider invalidProxyDataProvider
-     */
+    #[Test]
+    #[DataProvider('invalidProxyDataProvider')]
     public function itWillFailToProxyDomainWhenValidParametersNotAvailable(
         array $overrides,
         string $expectedMessage
@@ -386,7 +368,7 @@ class CliTest extends TestCase
         );
     }
 
-    public function nginxUnproxyDataProvider(): array
+    public static function nginxUnproxyDataProvider(): array
     {
         return [
             [
@@ -402,10 +384,8 @@ class CliTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider nginxUnproxyDataProvider
-     */
+    #[Test]
+    #[DataProvider('nginxUnproxyDataProvider')]
     public function itWillRemoveNginxProxy(string $domain, string $expectedDomain, string $expectedMessage): void
     {
         Writer::fake();
@@ -432,7 +412,7 @@ class CliTest extends TestCase
         );
     }
 
-    public function invalidUnproxyDataProvider(): array
+    public static function invalidUnproxyDataProvider(): array
     {
         return [
             [
@@ -444,10 +424,8 @@ class CliTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider invalidUnproxyDataProvider
-     */
+    #[Test]
+    #[DataProvider('invalidUnproxyDataProvider')]
     public function itWillFailToUnproxyDomainWhenValidParametersNotAvailable(
         array $overrides,
         string $expectedMessage
@@ -477,9 +455,7 @@ class CliTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillListProxies(): void
     {
         Writer::fake();
@@ -517,9 +493,7 @@ class CliTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillLinkCwdToNginx(): void
     {
         Writer::fake();
@@ -549,9 +523,7 @@ class CliTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillUnlinkCwdToNginx(): void
     {
         Writer::fake();
@@ -577,9 +549,7 @@ class CliTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillListLinks(): void
     {
         Writer::fake();
@@ -608,7 +578,7 @@ class CliTest extends TestCase
         );
     }
 
-    public function secureNginxDomainProvider(): array
+    public static function secureNginxDomainProvider(): array
     {
         return [
             [
@@ -620,10 +590,8 @@ class CliTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider secureNginxDomainProvider
-     */
+    #[Test]
+    #[DataProvider('secureNginxDomainProvider')]
     public function itWillSecureNginxDomain(array $overrides, string $expectedMessage): void
     {
         Writer::fake();
@@ -652,7 +620,7 @@ class CliTest extends TestCase
         );
     }
 
-    public function unsecureNginxDomainProvider(): array
+    public static function unsecureNginxDomainProvider(): array
     {
         return [
             [
@@ -664,10 +632,8 @@ class CliTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider unsecureNginxDomainProvider
-     */
+    #[Test]
+    #[DataProvider('unsecureNginxDomainProvider')]
     public function itWillUnsecureNginxDomain(array $overrides, string $expectedMessage): void
     {
         Writer::fake();
@@ -696,7 +662,7 @@ class CliTest extends TestCase
         );
     }
 
-    public function securedNginxDomainProvider(): array
+    public static function securedNginxDomainProvider(): array
     {
         return [
             [
@@ -721,10 +687,8 @@ class CliTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider securedNginxDomainProvider
-     */
+    #[Test]
+    #[DataProvider('securedNginxDomainProvider')]
     public function itWillListSecuredNginxDomains(array $overrides, string $expectedMessage): void
     {
         Writer::fake();
@@ -752,9 +716,7 @@ class CliTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillChangePhpVersion(): void
     {
         Writer::fake();
@@ -778,9 +740,7 @@ class CliTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillHandleInvalidPhpVersion(): void
     {
         Writer::fake();
@@ -812,9 +772,7 @@ class CliTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillListDatabases(): void
     {
         Writer::fake();
@@ -841,7 +799,7 @@ class CliTest extends TestCase
         );
     }
 
-    public function databaseNamesProvider(): array
+    public static function databaseNamesProvider(): array
     {
         return [
             [
@@ -855,10 +813,8 @@ class CliTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider databaseNamesProvider
-     */
+    #[Test]
+    #[DataProvider('databaseNamesProvider')]
     public function itWillCreateDatabase(?string $databaseName, string $expectedDatabaseName): void
     {
         Writer::fake();
@@ -881,10 +837,8 @@ class CliTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     * @dataProvider databaseNamesProvider
-     */
+    #[Test]
+    #[DataProvider('databaseNamesProvider')]
     public function itWillDropDatabase(?string $databaseName, string $expectedDatabaseName): void
     {
         Writer::fake();
@@ -907,10 +861,8 @@ class CliTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     * @dataProvider databaseNamesProvider
-     */
+    #[Test]
+    #[DataProvider('databaseNamesProvider')]
     public function itWillResetDatabase(?string $databaseName, string $expectedDatabaseName): void
     {
         Writer::fake();
@@ -934,9 +886,7 @@ class CliTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillImportDatabase(): void
     {
         Writer::fake();
@@ -969,9 +919,7 @@ class CliTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillExportDatabase(): void
     {
         Writer::fake();
@@ -998,7 +946,7 @@ class CliTest extends TestCase
         );
     }
 
-    public function isolateDirectoryDataProvider(): array
+    public static function isolateDirectoryDataProvider(): array
     {
         return [
             [
@@ -1016,10 +964,8 @@ class CliTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider isolateDirectoryDataProvider
-     */
+    #[Test]
+    #[DataProvider('isolateDirectoryDataProvider')]
     public function itWillIsolatePhpVersion(
         string $phpVersion,
         ?string $siteName,
@@ -1060,9 +1006,7 @@ class CliTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillFailWhenRequireArgumentIsNotAvailable(): void
     {
         Writer::fake();
@@ -1085,7 +1029,7 @@ class CliTest extends TestCase
         );
     }
 
-    public function unIsolateDirectoryDataProvider(): array
+    public static function unIsolateDirectoryDataProvider(): array
     {
         return [
             [
@@ -1099,10 +1043,8 @@ class CliTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider unIsolateDirectoryDataProvider
-     */
+    #[Test]
+    #[DataProvider('unIsolateDirectoryDataProvider')]
     public function itWillUnIsolateDirectory(?string $domainName, string $expectedDomainName): void
     {
         Writer::fake();
@@ -1129,9 +1071,7 @@ class CliTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillListIsolatedDirectories(): void
     {
         Writer::fake();
@@ -1167,9 +1107,7 @@ class CliTest extends TestCase
         $this->assertStringContainsString('second.test   | ✕   | 8.1', $content);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillStoreNgrokAuthToken(): void
     {
         Writer::fake();
@@ -1190,9 +1128,7 @@ class CliTest extends TestCase
         $this->assertStringContainsString('Ngrok authentication token set', $content);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillThrowErrorWhenTokenNotProvided(): void
     {
         Writer::fake();

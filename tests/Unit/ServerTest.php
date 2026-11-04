@@ -2,6 +2,7 @@
 
 namespace Valet\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Valet\Server;
 
@@ -32,25 +33,19 @@ class ServerTest extends TestCase
         parent::tearDown();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_allows_a_file_inside_the_root(): void
     {
         $this->assertTrue(Server::isWithin($this->root.'/public/style.css', $this->root));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_allows_the_root_itself(): void
     {
         $this->assertTrue(Server::isWithin($this->root, $this->root));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_rejects_a_path_that_escapes_the_root_via_traversal(): void
     {
         $escaping = $this->root.'/public/../../'.basename($this->root).'-secret.txt';
@@ -59,9 +54,7 @@ class ServerTest extends TestCase
         $this->assertFalse(Server::isWithin($escaping, $this->root));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_rejects_a_decoded_encoded_traversal(): void
     {
         // Mirrors server.php: the request URI is rawurldecode()'d before use.
@@ -70,17 +63,13 @@ class ServerTest extends TestCase
         $this->assertFalse(Server::isWithin($this->root.'/public'.$uri, $this->root));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_rejects_a_nonexistent_path(): void
     {
         $this->assertFalse(Server::isWithin($this->root.'/public/missing.css', $this->root));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_does_not_treat_a_sibling_prefix_dir_as_inside(): void
     {
         // "<root>-sibling" shares the string prefix but is not within "<root>".
@@ -96,9 +85,7 @@ class ServerTest extends TestCase
         }
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_extracts_the_valet_site_from_an_ip_address_uri(): void
     {
         // Mirrors the LAN/IP-access flow: REQUEST_URI is "domain.test/auth/login"
@@ -113,9 +100,7 @@ class ServerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_returns_null_when_the_ip_address_uri_has_no_matching_tld(): void
     {
         $this->assertNull(Server::valetSiteFromIpAddressUri('my-site.dev/auth', 'test'));

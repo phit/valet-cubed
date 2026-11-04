@@ -4,6 +4,7 @@ namespace Valet\Tests\Unit;
 
 use ConsoleComponents\Writer;
 use Mockery;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Valet\CommandLine;
@@ -38,9 +39,7 @@ class DevToolsTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillGetBinForGivenServiceUsingWhichCommand(): void
     {
         $service = 'service_name';
@@ -58,9 +57,7 @@ class DevToolsTest extends TestCase
         $this->assertSame('/path/to/bin/service_name', $binPath);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillGetBinForGivenServiceUsingLocateCommand(): void
     {
         $service = 'service_name';
@@ -86,9 +83,7 @@ class DevToolsTest extends TestCase
         $this->assertSame('/path/to/bin/service_name', $binPath);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillGetBinForGivenServiceAndExcludeGivenServiceByWhichCommand(): void
     {
         $service = 'service_name';
@@ -115,9 +110,7 @@ class DevToolsTest extends TestCase
         $this->assertSame('/second-path/bin/service_name', $binPath);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillGetBinForGivenServiceAndExcludeGivenServiceByLocateCommand(): void
     {
         $service = 'service_name';
@@ -144,9 +137,7 @@ class DevToolsTest extends TestCase
         $this->assertSame('/second-path/bin/service_name', $binPath);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillRunServiceWhenAvailable(): void
     {
         $service = 'service_name';
@@ -167,9 +158,7 @@ class DevToolsTest extends TestCase
         $this->devTools->run('/path/to/folder', $service);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillShowOutputWhenServiceNotAvailableToRun(): void
     {
         Writer::fake();

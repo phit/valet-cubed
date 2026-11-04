@@ -8,6 +8,7 @@ use Httpful\Httpful;
 use Httpful\Mime;
 use Httpful\Response;
 use Mockery;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Valet\CommandLine;
@@ -38,9 +39,7 @@ class NgrokTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillInstallSuccessfully(): void
     {
         Writer::fake();
@@ -99,9 +98,7 @@ class NgrokTest extends TestCase
         $this->assertStringContainsString('Installing', $content);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillNotOverrideWhenAlreadyInstalled(): void
     {
         Writer::fake();
@@ -138,9 +135,7 @@ class NgrokTest extends TestCase
         $this->assertStringNotContainsString('Installing', $content);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillFetchCurrentTunnelUrl(): void
     {
         $request = Mockery::mock(Request::class);
@@ -167,9 +162,7 @@ Content-Length: 477
         $this->assertSame('https://33e2-2405-201-2024-a899-720-a588-f13d-82fe.ngrok-free.app', $output);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillSetNgrokAuthToken(): void
     {
         $this->commandLine

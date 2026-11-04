@@ -3,6 +3,7 @@
 namespace Valet\Tests\Unit;
 
 use Mockery;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Valet\CommandLine;
 use Valet\Configuration;
@@ -36,9 +37,7 @@ class SiteTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillPruneLinks(): void
     {
         $this->filesystem
@@ -56,9 +55,7 @@ class SiteTest extends TestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillGetSiteUrl(): void
     {
         $this->config
@@ -108,9 +105,7 @@ class SiteTest extends TestCase
         $this->assertSame('test.test', $output);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itWillGetPhpRcVersion(): void
     {
         // servedSites
