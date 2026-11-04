@@ -120,7 +120,8 @@ class Dnf implements PackageManager
 
     public function getPhpExtensionName(string $version, string $extension): string
     {
-        return $this->getPhpExtensionPrefix($version) . $extension;
+        // Fedora, RHEL and Remi package the MySQL driver as mysqlnd.
+        return $this->getPhpExtensionPrefix($version) . ($extension === 'mysql' ? 'mysqlnd' : $extension);
     }
 
     /**
