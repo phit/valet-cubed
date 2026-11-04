@@ -18,6 +18,7 @@ class ResolvedDnsTest extends TestCase
     private string $resolverStatus = 'active';
     private ?string $failure = null;
     private string $probeAnswer = '127.0.0.1';
+    private int $staleProbes = 0;
     private ResolvedDns $dns;
 
     public function setUp(): void
@@ -45,7 +46,7 @@ class ResolvedDnsTest extends TestCase
                 $onError(1, 'failed');
             }
             if (str_starts_with($command, 'resolvectl query --type=A --cache=no ')) {
-                return $this->probeAnswer;
+                return $this->staleProbes-- > 0 ? 'resolve call failed: No appropriate name servers or networks' : $this->probeAnswer;
             }
             return match ($command) {
                 'systemctl --version 2>/dev/null' => $this->version,
@@ -54,7 +55,7 @@ class ResolvedDnsTest extends TestCase
                 default => '',
             };
         });
-        $this->dns = new ResolvedDns($filesystem, $cli);
+        $this->dns = new ResolvedDns($filesystem, $cli, fn () => null);
     }
 
     public function testActivatesOnlyTheConfiguredDomainAndCleansUpItsOwnFiles(): void
@@ -127,6 +128,14 @@ class ResolvedDnsTest extends TestCase
         $this->probeAnswer = '';
         $this->assertFalse($this->dns->activate('test'));
         $this->assertSame([], $this->files);
+    }
+
+    public function testWaitsForResolvedToApplyTheDelegationAfterAReload(): void
+    {
+        // resolved applies a reload asynchronously; the first queries can miss.
+        $this->staleProbes = 3;
+        $this->assertTrue($this->dns->activate('test'));
+        $this->assertArrayHasKey(ResolvedDns::DELEGATE, $this->files);
     }
 
     public function testLeavesResponderRunningIfResolverCannotReloadDuringCleanup(): void

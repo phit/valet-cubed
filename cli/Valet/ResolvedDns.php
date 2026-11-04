@@ -14,8 +14,19 @@ class ResolvedDns
     private const MARKER = '# Managed by Valet Linux+';
     private const SERVICE = 'valet-linux-plus-dns.service';
 
-    public function __construct(private Filesystem $files, private CommandLine $cli)
+    /**
+     * @var callable(int): void
+     */
+    private $sleep;
+
+    /**
+     * @param (callable(int): void)|null $sleep Receives microseconds; injectable for tests
+     */
+    public function __construct(private Filesystem $files, private CommandLine $cli, ?callable $sleep = null)
     {
+        $this->sleep = $sleep ?? static function (int $microseconds): void {
+            usleep($microseconds);
+        };
     }
 
     public function available(): bool
@@ -79,9 +90,7 @@ class ResolvedDns
                 }
                 $this->command('systemctl reload systemd-resolved.service');
             }
-            $probe = 'valet-check-' . bin2hex(random_bytes(8)) . '.' . $domain;
-            $answer = $this->command('resolvectl query --type=A --cache=no ' . escapeshellarg($probe));
-            if (!preg_match('/(?<![0-9.])127\.0\.0\.1(?![0-9.])/', $answer)) {
+            if (!$this->delegationAnswers($domain)) {
                 throw new RuntimeException('The delegated resolver did not return the local address.');
             }
         } catch (\Throwable $exception) {
@@ -107,6 +116,24 @@ class ResolvedDns
             $this->files->unlink(self::UNIT);
             $this->cli->run('systemctl daemon-reload');
         }
+    }
+
+    /**
+     * Probe the delegation. resolved applies a reload asynchronously, so the
+     * first queries after a reload can still miss the new delegation.
+     */
+    private function delegationAnswers(string $domain): bool
+    {
+        for ($attempt = 1; $attempt <= 20; $attempt++) {
+            $probe = 'valet-check-' . bin2hex(random_bytes(8)) . '.' . $domain;
+            $answer = $this->cli->run('resolvectl query --type=A --cache=no ' . escapeshellarg($probe) . ' 2>&1');
+            if (preg_match('/(?<![0-9.])127\.0\.0\.1(?![0-9.])/', $answer)) {
+                return true;
+            }
+            ($this->sleep)(250000);
+        }
+
+        return false;
     }
 
     private function owned(string $path): bool
