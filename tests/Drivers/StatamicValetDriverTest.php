@@ -6,28 +6,28 @@ use Valet\Drivers\Specific\StatamicValetDriver;
 
 class StatamicValetDriverTest extends BaseDriverTestCase
 {
-    public function test_it_serves_statamic_projects()
+    public function test_it_serves_statamic_projects(): void
     {
         $driver = new StatamicValetDriver();
 
         $this->assertTrue($driver->serves($this->projectDir('statamic'), 'my-site', '/'));
     }
 
-    public function test_it_doesnt_serve_non_statamic_projects_with_public_directory()
+    public function test_it_doesnt_serve_non_statamic_projects_with_public_directory(): void
     {
         $driver = new StatamicValetDriver();
 
         $this->assertFalse($driver->serves($this->projectDir('public-with-index-non-laravel'), 'my-site', '/'));
     }
 
-    public function test_it_doesnt_serve_laravel_projects()
+    public function test_it_doesnt_serve_laravel_projects(): void
     {
         $driver = new StatamicValetDriver();
 
         $this->assertFalse($driver->serves($this->projectDir('laravel'), 'my-site', '/'));
     }
 
-    public function test_it_gets_front_controller()
+    public function test_it_gets_front_controller(): void
     {
         $driver = new StatamicValetDriver();
 
@@ -35,7 +35,7 @@ class StatamicValetDriverTest extends BaseDriverTestCase
         $this->assertEquals($projectPath.'/public/index.php', $driver->frontControllerPath($projectPath, 'my-site', '/'));
     }
 
-    public function test_it_serves_statically_cached_pages()
+    public function test_it_serves_statically_cached_pages(): void
     {
         $driver = new StatamicValetDriver();
 

@@ -6,21 +6,21 @@ use Valet\Drivers\BasicWithPublicValetDriver;
 
 class BasicWithPublicValetDriverTest extends BaseDriverTestCase
 {
-    public function test_it_serves_anything_with_public()
+    public function test_it_serves_anything_with_public(): void
     {
         $driver = new BasicWithPublicValetDriver();
 
         $this->assertTrue($driver->serves($this->projectDir('public-with-index-non-laravel'), 'my-site', '/'));
     }
 
-    public function test_it_doesnt_serve_from_not_public()
+    public function test_it_doesnt_serve_from_not_public(): void
     {
         $driver = new BasicWithPublicValetDriver();
 
         $this->assertFalse($driver->serves($this->projectDir('basic-no-public'), 'my-site', '/'));
     }
 
-    public function test_it_serves_php_files_from_public()
+    public function test_it_serves_php_files_from_public(): void
     {
         $projectPath = $this->projectDir('public-with-index-non-laravel');
         $driver = new BasicWithPublicValetDriver();
@@ -31,7 +31,7 @@ class BasicWithPublicValetDriverTest extends BaseDriverTestCase
         );
     }
 
-    public function test_it_doesnt_serve_php_files_from_root()
+    public function test_it_doesnt_serve_php_files_from_root(): void
     {
         $projectPath = $this->projectDir('public-with-index-non-laravel');
         $driver = new BasicWithPublicValetDriver();
@@ -42,7 +42,7 @@ class BasicWithPublicValetDriverTest extends BaseDriverTestCase
         );
     }
 
-    public function test_it_serves_directory_with_index_php()
+    public function test_it_serves_directory_with_index_php(): void
     {
         $projectPath = $this->projectDir('public-with-index-non-laravel');
         $driver = new BasicWithPublicValetDriver();
@@ -53,7 +53,7 @@ class BasicWithPublicValetDriverTest extends BaseDriverTestCase
         );
     }
 
-    public function test_it_route_to_public_index_if_404()
+    public function test_it_route_to_public_index_if_404(): void
     {
         $projectPath = $this->projectDir('public-with-index-non-laravel');
         $driver = new BasicWithPublicValetDriver();
@@ -64,7 +64,7 @@ class BasicWithPublicValetDriverTest extends BaseDriverTestCase
         );
     }
 
-    public function test_it_serves_directory_with_index_html()
+    public function test_it_serves_directory_with_index_html(): void
     {
         $projectPath = $this->projectDir('public-with-index-non-laravel');
         $driver = new BasicWithPublicValetDriver();
@@ -75,7 +75,7 @@ class BasicWithPublicValetDriverTest extends BaseDriverTestCase
         );
     }
 
-    public function test_it_serves_static_files()
+    public function test_it_serves_static_files(): void
     {
         $projectPath = $this->projectDir('public-with-index-non-laravel');
         $driver = new BasicWithPublicValetDriver();

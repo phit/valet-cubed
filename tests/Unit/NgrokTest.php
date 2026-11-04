@@ -8,8 +8,8 @@ use Httpful\Httpful;
 use Httpful\Mime;
 use Httpful\Response;
 use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Valet\CommandLine;
 use Valet\Filesystem;
@@ -22,8 +22,8 @@ use function Valet\user;
 
 class NgrokTest extends TestCase
 {
-    private CommandLine|MockObject $commandLine;
-    private Filesystem|MockObject $filesystem;
+    private CommandLine&MockInterface $commandLine;
+    private Filesystem&MockInterface $filesystem;
     private Ngrok $ngrok;
 
     public function setUp(): void

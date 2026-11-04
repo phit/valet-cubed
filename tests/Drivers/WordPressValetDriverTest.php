@@ -6,21 +6,21 @@ use Valet\Drivers\Specific\WordPressValetDriver;
 
 class WordPressValetDriverTest extends BaseDriverTestCase
 {
-    public function test_it_serves_wordpress_projects()
+    public function test_it_serves_wordpress_projects(): void
     {
         $driver = new WordPressValetDriver();
 
         $this->assertTrue($driver->serves($this->projectDir('wordpress'), 'my-site', '/'));
     }
 
-    public function test_it_doesnt_serve_non_wordpress_projects()
+    public function test_it_doesnt_serve_non_wordpress_projects(): void
     {
         $driver = new WordPressValetDriver();
 
         $this->assertFalse($driver->serves($this->projectDir('public-with-index-non-laravel'), 'my-site', '/'));
     }
 
-    public function test_it_gets_front_controller()
+    public function test_it_gets_front_controller(): void
     {
         $driver = new WordPressValetDriver();
 

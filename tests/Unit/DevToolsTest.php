@@ -4,8 +4,8 @@ namespace Valet\Tests\Unit;
 
 use ConsoleComponents\Writer;
 use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Valet\CommandLine;
 use Valet\Contracts\PackageManager;
@@ -16,10 +16,10 @@ use Valet\Tests\TestCase;
 
 class DevToolsTest extends TestCase
 {
-    private PackageManager|MockObject $packageManager;
-    private ServiceManager|MockObject $serviceManager;
-    private CommandLine|MockObject $commandLine;
-    private Filesystem|MockObject $filesystem;
+    private PackageManager&MockInterface $packageManager;
+    private ServiceManager&MockInterface $serviceManager;
+    private CommandLine&MockInterface $commandLine;
+    private Filesystem&MockInterface $filesystem;
     private DevTools $devTools;
 
     public function setUp(): void

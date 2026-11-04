@@ -8,7 +8,7 @@ use Valet\Drivers\ValetDriver;
 
 class ValetDriverTest extends BaseDriverTestCase
 {
-    public function test_it_gets_drivers_in_given_path()
+    public function test_it_gets_drivers_in_given_path(): void
     {
         $output = ValetDriver::driversIn(__DIR__.'/../files/Drivers');
 
@@ -17,14 +17,14 @@ class ValetDriverTest extends BaseDriverTestCase
         $this->assertContains('Test2ValetDriver', $output);
     }
 
-    public function test_it_assigns_drivers_to_given_project()
+    public function test_it_assigns_drivers_to_given_project(): void
     {
         $assignedDriver = ValetDriver::assign($this->projectDir('bedrock'), 'my-site', '/');
 
         $this->assertEquals(BedrockValetDriver::class, get_class($assignedDriver));
     }
 
-    public function test_it_prioritizes_non_basic_matches()
+    public function test_it_prioritizes_non_basic_matches(): void
     {
         $assignedDriver = ValetDriver::assign($this->projectDir('laravel'), 'my-site', '/');
 
@@ -32,7 +32,7 @@ class ValetDriverTest extends BaseDriverTestCase
         $this->assertNotEquals('Valet\Drivers\BasicValetDriver', get_class($assignedDriver));
     }
 
-    public function test_it_prioritizes_statamic()
+    public function test_it_prioritizes_statamic(): void
     {
         $assignedDriver = ValetDriver::assign($this->projectDir('statamic'), 'my-site', '/');
         $this->assertEquals('Valet\Drivers\Specific\StatamicValetDriver', get_class($assignedDriver));
@@ -41,7 +41,7 @@ class ValetDriverTest extends BaseDriverTestCase
         $this->assertEquals('Valet\Drivers\LaravelValetDriver', get_class($assignedDriver));
     }
 
-    public function test_it_checks_composer_dependencies()
+    public function test_it_checks_composer_dependencies(): void
     {
         $driver = new BasicValetDriver();
         $this->assertTrue($driver->composerRequires(__DIR__.'/../files/sites/has-composer', 'tightenco/collect'));

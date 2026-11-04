@@ -7,10 +7,10 @@ use Httpful\Httpful;
 use Httpful\Mime;
 use Httpful\Response;
 use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
 use Valet\CommandLine;
 use Valet\Configuration;
 use Valet\Filesystem;
@@ -23,8 +23,8 @@ use function Valet\swap;
 #[CoversClass(Valet::class)]
 class ValetTest extends TestCase
 {
-    private CommandLine|MockObject $commandLine;
-    private Filesystem|MockObject $filesystem;
+    private CommandLine&MockInterface $commandLine;
+    private Filesystem&MockInterface $filesystem;
     private Valet $valet;
 
     public function setUp(): void

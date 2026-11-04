@@ -3,8 +3,8 @@
 namespace Unit;
 
 use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
 use Valet\Configuration;
 use Valet\Filesystem;
 use Valet\SiteLink;
@@ -15,9 +15,9 @@ use function Valet\user;
 
 class SiteLinkTest extends TestCase
 {
-    private Configuration|MockObject $config;
-    private Filesystem|MockObject $filesystem;
-    private SiteSecure|MockObject $siteSecure;
+    private Configuration&MockInterface $config;
+    private Filesystem&MockInterface $filesystem;
+    private SiteSecure&MockInterface $siteSecure;
     private SiteLink $siteLink;
 
     public function setUp(): void

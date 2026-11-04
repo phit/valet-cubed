@@ -20,9 +20,9 @@ use function Valet\user;
 
 class SiteSecureTest extends TestCase
 {
-    private Filesystem|MockInterface $filesystem;
-    private CommandLine|MockInterface $commandLine;
-    private Configuration|MockInterface $config;
+    private Filesystem&MockInterface $filesystem;
+    private CommandLine&MockInterface $commandLine;
+    private Configuration&MockInterface $config;
     private PackageManager $pm;
     private SiteSecure $siteSecure;
 

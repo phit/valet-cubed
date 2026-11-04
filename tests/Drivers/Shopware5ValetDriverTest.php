@@ -6,14 +6,14 @@ use Valet\Drivers\Specific\Shopware5ValetDriver;
 
 class Shopware5ValetDriverTest extends BaseDriverTestCase
 {
-    public function test_it_serves_shopware5_projects()
+    public function test_it_serves_shopware5_projects(): void
     {
         $driver = new Shopware5ValetDriver();
 
         $this->assertTrue($driver->serves($this->projectDir('shopware5'), 'my-site', '/'));
     }
 
-    public function test_it_doesnt_serve_non_shopware5_projects()
+    public function test_it_doesnt_serve_non_shopware5_projects(): void
     {
         $driver = new Shopware5ValetDriver();
 
@@ -21,7 +21,7 @@ class Shopware5ValetDriverTest extends BaseDriverTestCase
         $this->assertFalse($driver->serves($this->projectDir('symfony'), 'my-site', '/'));
     }
 
-    public function test_it_serves_files_but_not_directories_as_static()
+    public function test_it_serves_files_but_not_directories_as_static(): void
     {
         $driver = new Shopware5ValetDriver();
         $path = $this->projectDir('shopware5');
@@ -31,7 +31,7 @@ class Shopware5ValetDriverTest extends BaseDriverTestCase
         $this->assertFalse($driver->isStaticFile($path, 'my-site', '/detail/index/sArticle/1'));
     }
 
-    public function test_it_gets_the_shop_front_controller()
+    public function test_it_gets_the_shop_front_controller(): void
     {
         $driver = new Shopware5ValetDriver();
         $path = $this->projectDir('shopware5');
@@ -40,7 +40,7 @@ class Shopware5ValetDriverTest extends BaseDriverTestCase
         $this->assertSame($path.'/shopware.php', $driver->frontControllerPath($path, 'my-site', '/backend/'));
     }
 
-    public function test_it_routes_the_installer_and_updater_to_their_own_front_controllers()
+    public function test_it_routes_the_installer_and_updater_to_their_own_front_controllers(): void
     {
         $driver = new Shopware5ValetDriver();
         $path = $this->projectDir('shopware5');

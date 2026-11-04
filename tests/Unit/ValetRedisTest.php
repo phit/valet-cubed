@@ -3,8 +3,8 @@
 namespace Valet\Tests\Unit;
 
 use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
 use Valet\CommandLine;
 use Valet\Contracts\PackageManager;
 use Valet\Contracts\ServiceManager;
@@ -13,9 +13,9 @@ use Valet\ValetRedis;
 
 class ValetRedisTest extends TestCase
 {
-    private PackageManager|MockObject $packageManager;
-    private ServiceManager|MockObject $serviceManager;
-    private CommandLine|MockObject $commandLine;
+    private PackageManager&MockInterface $packageManager;
+    private ServiceManager&MockInterface $serviceManager;
+    private CommandLine&MockInterface $commandLine;
     private ValetRedis $redis;
 
     public function setUp(): void

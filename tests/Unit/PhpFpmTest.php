@@ -4,9 +4,9 @@ namespace Valet\Tests\Unit;
 
 use ConsoleComponents\Writer;
 use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
 use Valet\CommandLine;
 use Valet\Configuration;
 use Valet\Contracts\PackageManager;
@@ -24,13 +24,13 @@ use function Valet\user;
 
 class PhpFpmTest extends TestCase
 {
-    private PackageManager|MockObject $packageManager;
-    private ServiceManager|MockObject $serviceManager;
-    private CommandLine|MockObject $commandLine;
-    private Filesystem|MockObject $filesystem;
-    private Configuration|MockObject $config;
-    private Site|MockObject $site;
-    private Nginx|MockObject $nginx;
+    private PackageManager&MockInterface $packageManager;
+    private ServiceManager&MockInterface $serviceManager;
+    private CommandLine&MockInterface $commandLine;
+    private Filesystem&MockInterface $filesystem;
+    private Configuration&MockInterface $config;
+    private Site&MockInterface $site;
+    private Nginx&MockInterface $nginx;
     private PhpFpm $phpFpm;
 
     public function setUp(): void

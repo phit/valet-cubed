@@ -6,21 +6,21 @@ use Valet\Drivers\Specific\CraftValetDriver;
 
 class CraftValetDriverTest extends BaseDriverTestCase
 {
-    public function test_it_serves_craft_projects()
+    public function test_it_serves_craft_projects(): void
     {
         $driver = new CraftValetDriver();
 
         $this->assertTrue($driver->serves($this->projectDir('craft'), 'my-site', '/'));
     }
 
-    public function test_it_doesnt_serve_non_craft_projects()
+    public function test_it_doesnt_serve_non_craft_projects(): void
     {
         $driver = new CraftValetDriver();
 
         $this->assertFalse($driver->serves($this->projectDir('public-with-index-non-laravel'), 'my-site', '/'));
     }
 
-    public function test_it_gets_front_controller()
+    public function test_it_gets_front_controller(): void
     {
         $driver = new CraftValetDriver();
 

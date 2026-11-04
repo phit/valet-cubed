@@ -6,21 +6,21 @@ use Valet\Drivers\Specific\JigsawValetDriver;
 
 class JigsawValetDriverTest extends BaseDriverTestCase
 {
-    public function test_it_serves_jigsaw_projects()
+    public function test_it_serves_jigsaw_projects(): void
     {
         $driver = new JigsawValetDriver();
 
         $this->assertTrue($driver->serves($this->projectDir('jigsaw'), 'my-site', '/'));
     }
 
-    public function test_it_doesnt_serve_non_jigsaw_projects_with_public_directory()
+    public function test_it_doesnt_serve_non_jigsaw_projects_with_public_directory(): void
     {
         $driver = new JigsawValetDriver();
 
         $this->assertFalse($driver->serves($this->projectDir('public-with-index-non-laravel'), 'my-site', '/'));
     }
 
-    public function test_it_mutates_uri()
+    public function test_it_mutates_uri(): void
     {
         $driver = new JigsawValetDriver();
 

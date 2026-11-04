@@ -3,8 +3,8 @@
 namespace Valet\Tests\Unit;
 
 use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
 use Valet\CommandLine;
 use Valet\Configuration;
 use Valet\Filesystem;
@@ -17,9 +17,9 @@ use function Valet\user;
 
 class SiteTest extends TestCase
 {
-    private Configuration|MockObject $config;
-    private CommandLine|MockObject $commandLine;
-    private Filesystem|MockObject $filesystem;
+    private Configuration&MockInterface $config;
+    private CommandLine&MockInterface $commandLine;
+    private Filesystem&MockInterface $filesystem;
     private Site $site;
 
     public function setUp(): void

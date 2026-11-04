@@ -6,21 +6,21 @@ use Valet\Drivers\Specific\Magento2ValetDriver;
 
 class Magento2ValetDriverTest extends BaseDriverTestCase
 {
-    public function test_it_serves_magento2_projects()
+    public function test_it_serves_magento2_projects(): void
     {
         $driver = new Magento2ValetDriver();
 
         $this->assertTrue($driver->serves($this->projectDir('magento2'), 'my-site', '/'));
     }
 
-    public function test_it_doesnt_serve_non_magento2_projects_with_public_directory()
+    public function test_it_doesnt_serve_non_magento2_projects_with_public_directory(): void
     {
         $driver = new Magento2ValetDriver();
 
         $this->assertFalse($driver->serves($this->projectDir('public-with-index-non-laravel'), 'my-site', '/'));
     }
 
-    public function test_it_gets_front_controller()
+    public function test_it_gets_front_controller(): void
     {
         $driver = new Magento2ValetDriver();
 

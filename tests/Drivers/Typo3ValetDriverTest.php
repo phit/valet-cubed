@@ -6,21 +6,21 @@ use Valet\Drivers\Specific\Typo3ValetDriver;
 
 class Typo3ValetDriverTest extends BaseDriverTestCase
 {
-    public function test_it_serves_typo3_projects()
+    public function test_it_serves_typo3_projects(): void
     {
         $driver = new Typo3ValetDriver();
 
         $this->assertTrue($driver->serves($this->projectDir('typo3'), 'my-site', '/'));
     }
 
-    public function test_it_doesnt_serve_non_typo3_projects()
+    public function test_it_doesnt_serve_non_typo3_projects(): void
     {
         $driver = new Typo3ValetDriver();
 
         $this->assertFalse($driver->serves($this->projectDir('public-with-index-non-laravel'), 'my-site', '/'));
     }
 
-    public function test_it_gets_front_controller()
+    public function test_it_gets_front_controller(): void
     {
         $driver = new Typo3ValetDriver();
 

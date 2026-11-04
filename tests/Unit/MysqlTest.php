@@ -4,9 +4,9 @@ namespace Valet\Tests\Unit;
 
 use ConsoleComponents\Writer;
 use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
 use Valet\CommandLine;
 use Valet\Configuration;
 use Valet\Contracts\PackageManager;
@@ -22,11 +22,11 @@ use function Valet\swap;
 
 class MysqlTest extends TestCase
 {
-    private PackageManager|MockObject $packageManager;
-    private ServiceManager|MockObject $serviceManager;
-    private CommandLine|MockObject $commandLine;
-    private Filesystem|MockObject $filesystem;
-    private Configuration|MockObject $config;
+    private PackageManager&MockInterface $packageManager;
+    private ServiceManager&MockInterface $serviceManager;
+    private CommandLine&MockInterface $commandLine;
+    private Filesystem&MockInterface $filesystem;
+    private Configuration&MockInterface $config;
     private Mysql $mysql;
 
     public function setUp(): void
@@ -242,7 +242,7 @@ class MysqlTest extends TestCase
     }
 
     #[Test]
-    public function itWillNotOverrideWhenInstalled()
+    public function itWillNotOverrideWhenInstalled(): void
     {
         $this->packageManager
             ->shouldReceive('packageName')
@@ -287,7 +287,7 @@ class MysqlTest extends TestCase
     }
 
     #[Test]
-    public function itWillNotOverrideWhenMariaDbInstalled()
+    public function itWillNotOverrideWhenMariaDbInstalled(): void
     {
         $this->packageManager
             ->shouldReceive('packageName')

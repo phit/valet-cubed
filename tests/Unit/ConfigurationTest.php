@@ -2,9 +2,9 @@
 
 namespace Valet\Tests\Unit;
 
+use Mockery\MockInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
 use Valet\Configuration;
 use Valet\Filesystem;
 use Valet\Tests\TestCase;
@@ -13,7 +13,7 @@ use function Valet\user;
 
 class ConfigurationTest extends TestCase
 {
-    private Filesystem|MockObject $filesystem;
+    private Filesystem&MockInterface $filesystem;
     private Configuration $configuration;
 
     public function setUp(): void

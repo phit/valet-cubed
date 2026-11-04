@@ -3,8 +3,8 @@
 namespace Unit;
 
 use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
 use Valet\Configuration;
 use Valet\Contracts\PackageManager;
 use Valet\DevTools;
@@ -20,11 +20,11 @@ use function Valet\swap;
 
 class SiteIsolateTest extends TestCase
 {
-    private PackageManager|MockObject $packageManager;
-    private Configuration|MockObject $config;
-    private Filesystem|MockObject $filesystem;
-    private SiteSecure|MockObject $siteSecure;
-    private Site|MockObject $site;
+    private PackageManager&MockInterface $packageManager;
+    private Configuration&MockInterface $config;
+    private Filesystem&MockInterface $filesystem;
+    private SiteSecure&MockInterface $siteSecure;
+    private Site&MockInterface $site;
     private SiteIsolate $siteIsolate;
 
     public function setUp(): void

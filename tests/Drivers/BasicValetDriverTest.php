@@ -6,7 +6,7 @@ use Valet\Drivers\BasicValetDriver;
 
 class BasicValetDriverTest extends BaseDriverTestCase
 {
-    public function test_it_serves_anything()
+    public function test_it_serves_anything(): void
     {
         $driver = new BasicValetDriver();
 
@@ -15,7 +15,7 @@ class BasicValetDriverTest extends BaseDriverTestCase
         }
     }
 
-    public function test_it_serves_php_files_from_root()
+    public function test_it_serves_php_files_from_root(): void
     {
         $projectPath = $this->projectDir('basic-no-public');
         $driver = new BasicValetDriver();
@@ -26,7 +26,7 @@ class BasicValetDriverTest extends BaseDriverTestCase
         );
     }
 
-    public function test_it_serves_directory_with_index_php()
+    public function test_it_serves_directory_with_index_php(): void
     {
         $projectPath = $this->projectDir('basic-no-public');
         $driver = new BasicValetDriver();
@@ -37,7 +37,7 @@ class BasicValetDriverTest extends BaseDriverTestCase
         );
     }
 
-    public function test_it_routes_to_index_if_404()
+    public function test_it_routes_to_index_if_404(): void
     {
         $projectPath = $this->projectDir('basic-no-public');
         $driver = new BasicValetDriver();
@@ -48,7 +48,7 @@ class BasicValetDriverTest extends BaseDriverTestCase
         );
     }
 
-    public function test_it_serves_directory_with_index_html()
+    public function test_it_serves_directory_with_index_html(): void
     {
         $projectPath = $this->projectDir('basic-no-public');
         $driver = new BasicValetDriver();
@@ -59,7 +59,7 @@ class BasicValetDriverTest extends BaseDriverTestCase
         );
     }
 
-    public function test_it_serves_static_files()
+    public function test_it_serves_static_files(): void
     {
         $projectPath = $this->projectDir('basic-no-public');
         $driver = new BasicValetDriver();

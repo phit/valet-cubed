@@ -4,8 +4,8 @@ namespace Valet\Tests\Unit;
 
 use ConsoleComponents\Writer;
 use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Valet\CommandLine;
 use Valet\Configuration;
@@ -19,13 +19,13 @@ use Valet\Tests\TestCase;
 
 class HostsTest extends TestCase
 {
-    private PackageManager|MockObject $packageManager;
-    private ServiceManager|MockObject $serviceManager;
-    private CommandLine|MockObject $commandLine;
-    private Filesystem|MockObject $filesystem;
-    private Configuration|MockObject $configuration;
+    private PackageManager&MockInterface $packageManager;
+    private ServiceManager&MockInterface $serviceManager;
+    private CommandLine&MockInterface $commandLine;
+    private Filesystem&MockInterface $filesystem;
+    private Configuration&MockInterface $configuration;
     private Hosts $hosts;
-    private ResolvedDns|MockObject $resolvedDns;
+    private ResolvedDns&MockInterface $resolvedDns;
 
     public function setUp(): void
     {

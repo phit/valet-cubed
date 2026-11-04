@@ -6,21 +6,21 @@ use Valet\Drivers\Specific\BedrockValetDriver;
 
 class BedrockValetDriverTest extends BaseDriverTestCase
 {
-    public function test_it_serves_bedrock_projects()
+    public function test_it_serves_bedrock_projects(): void
     {
         $driver = new BedrockValetDriver();
 
         $this->assertTrue($driver->serves($this->projectDir('bedrock'), 'my-site', '/'));
     }
 
-    public function test_it_doesnt_serve_non_bedrock_projects()
+    public function test_it_doesnt_serve_non_bedrock_projects(): void
     {
         $driver = new BedrockValetDriver();
 
         $this->assertFalse($driver->serves($this->projectDir('public-with-index-non-laravel'), 'my-site', '/'));
     }
 
-    public function test_it_gets_front_controller()
+    public function test_it_gets_front_controller(): void
     {
         $driver = new BedrockValetDriver();
 
