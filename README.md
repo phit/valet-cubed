@@ -1,4 +1,9 @@
-<p align="center"><img width="500" src="art/logo.png"></p>
+<p align="center">
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="art/logo-dark.svg">
+<img width="500" src="art/logo.svg" alt="Valet Cubed">
+</picture>
+</p>
 
 <p align="center">
 <a href="https://packagist.org/packages/phit/valet-cubed"><img src="https://poser.pugx.org/phit/valet-cubed/downloads.svg" alt="Total Downloads"></a>
