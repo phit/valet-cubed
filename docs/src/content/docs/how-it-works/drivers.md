@@ -12,7 +12,7 @@ Valet tries drivers in this order and uses the first that recognises the site:
 1. A `LocalValetDriver.php` in the site's directory.
 2. Your custom drivers in `~/.config/valet/Drivers`.
 3. Statamic, then Laravel.
-4. Bedrock, CakePHP, Concrete CMS, Contao, Craft CMS, Drupal, Jigsaw, Joomla, Katana, Kirby, Magento 2, Neos, Nette, Radicle, Sculpin, Statamic v1 and v2, Symfony, TYPO3 and WordPress.
+4. Bedrock, CakePHP, Concrete CMS, Contao, Craft CMS, Drupal, Jigsaw, Joomla, Katana, Kirby, Magento 2, Neos, Nette, Radicle, Sculpin, Shopware 5, Statamic v1 and v2, Symfony, TYPO3 and WordPress.
 5. A generic driver for sites with a `public` directory, then a generic driver that serves any directory.
 
 ## Writing a custom driver
