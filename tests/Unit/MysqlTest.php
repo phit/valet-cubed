@@ -144,7 +144,7 @@ class MysqlTest extends TestCase
         $this->packageManager
             ->shouldReceive('packageName')
             ->with('mariadb')
-            ->times(3)
+            ->twice()
             ->andReturn('mariadb-server');
 
         $this->serviceManager
@@ -168,7 +168,13 @@ class MysqlTest extends TestCase
             ->shouldReceive('run')
             ->with(Mockery::pattern('/^mysql < /'), Mockery::type('callable'), RunAs::Root)
             ->once()
-            ->andReturn('');
+            ->andReturnUsing(function (string $command) {
+                $sql = file_get_contents(trim(substr($command, strlen('mysql < ')), "'"));
+                // MySQL 8.4 no longer loads mysql_native_password.
+                $this->assertStringContainsString("CREATE USER 'valet'@'localhost' IDENTIFIED BY ''", $sql);
+
+                return '';
+            });
 
         $this->config
             ->shouldReceive('get')

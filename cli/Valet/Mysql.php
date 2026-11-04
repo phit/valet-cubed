@@ -442,9 +442,10 @@ class Mysql
         if ($file === false) {
             throw new \RuntimeException('Unable to create temporary MySQL script.');
         }
-        $authentication = $this->isMariaDB() ? 'IDENTIFIED BY' : 'IDENTIFIED WITH mysql_native_password BY';
+        // The server's default authentication: MySQL 8.4 no longer loads
+        // mysql_native_password, and PHP supports caching_sha2_password.
         $sql = "SET SESSION sql_mode = 'NO_BACKSLASH_ESCAPES';\nCREATE USER '" . self::DATABASE_USER
-            . "'@'localhost' " . $authentication . " '" . str_replace("'", "''", $password) . "';\n"
+            . "'@'localhost' IDENTIFIED BY '" . str_replace("'", "''", $password) . "';\n"
             . "GRANT ALL PRIVILEGES ON *.* TO '" . self::DATABASE_USER . "'@'localhost' WITH GRANT OPTION;\nFLUSH PRIVILEGES;\n";
         try {
             if (file_put_contents($file, $sql) === false) {
