@@ -3,7 +3,7 @@
 set -e
 
 SOURCE="${BASH_SOURCE[0]}"
-SUDO_COMMANDS="uninstall install start restart stop unsecure secure use isolate unisolate proxy unproxy park forget link unlink"
+SUDO_COMMANDS="dns:migrate dns:rollback uninstall install start restart stop unsecure secure use isolate unisolate proxy unproxy park forget link unlink"
 DEPENDENCY_COMMANDS="uninstall install start restart stop unsecure secure use isolate unisolate proxy unproxy"
 HOME_PATH=$HOME
 

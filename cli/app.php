@@ -7,6 +7,7 @@
 use ConsoleComponents\Writer;
 use Illuminate\Container\Container;
 use Silly\Application;
+use Symfony\Component\Console\Output\OutputInterface;
 use Valet\Drivers\ValetDriver;
 use Valet\Facades\Configuration;
 use Valet\Facades\DevTools;
@@ -25,6 +26,8 @@ use Valet\Facades\SiteProxy;
 use Valet\Facades\SiteSecure;
 use Valet\Facades\Valet;
 use Valet\Facades\ValetRedis;
+use Valet\LegacyDns\Commands as LegacyDns;
+use Valet\LegacyDns\System as LegacyDnsSystem;
 
 /**
  * Load correct autoloader depending on install location.
@@ -51,14 +54,25 @@ $app = new Application('ValetLinux+', $version);
 Valet::environmentSetup();
 Valet::migrateConfig();
 
+$legacyDns = function (): LegacyDns {
+    $domain = is_dir(VALET_HOME_PATH) ? Configuration::get('domain') : null;
+
+    return new LegacyDns(
+        new LegacyDnsSystem(),
+        is_string($domain) ? $domain : null,
+        fn (string $domain) => Hosts::updateDomain($domain)
+    );
+};
+
 /**
  * Install valet required services
  */
-$app->command('install [--ignore-selinux] [--mariadb]', function ($ignoreSELinux, $mariadb) {
+$app->command('install [--ignore-selinux] [--mariadb]', function ($ignoreSELinux, $mariadb) use ($legacyDns) {
     Writer::info('Installing valet services');
 
     passthru(dirname(__FILE__) . '/scripts/update.sh'); // Clean up cruft
     Requirements::setIgnoreSELinux($ignoreSELinux)->check();
+    $legacyDns()->warnIfLegacy('valet install');
     Configuration::install();
     Nginx::install();
     PhpFpm::install();
@@ -82,6 +96,36 @@ $app->command('install [--ignore-selinux] [--mariadb]', function ($ignoreSELinux
     }
 })->descriptions('Install the Valet services', [
     '--ignore-selinux' => 'Skip SELinux checks',
+]);
+
+/**
+ * Migrate DNS changes made by older Valet Linux+ releases.
+ */
+$app->command(
+    'dns:migrate [--dry-run] [--json] [--yes] [--resolved=] [--dnsmasq=] [--verify-host=]*',
+    function ($dryRun, $json, $yes, $resolved, $dnsmasq, $verifyHost, OutputInterface $output) use ($legacyDns) {
+        $choices = array_filter(['resolved' => $resolved, 'dnsmasq' => $dnsmasq], 'is_string');
+
+        return $legacyDns()->migrate($output, (bool) $dryRun, (bool) $json, (bool) $yes, $choices, array_values($verifyHost));
+    }
+)->descriptions('Preview or apply the migration away from legacy Valet DNS changes', [
+    '--dry-run' => 'Show the evidence and planned changes without changing anything',
+    '--json' => 'Print the plan as JSON',
+    '--yes' => 'Apply without asking for confirmation',
+    '--resolved' => 'restore|leave: whether to re-enable systemd-resolved',
+    '--dnsmasq' => 'disable|keep: what to do with the system dnsmasq service',
+    '--verify-host' => 'Additional host names that must still resolve afterwards (for example LAN names)',
+]);
+
+/**
+ * Roll back a DNS migration.
+ */
+$app->command('dns:rollback [id] [--yes] [--list]', function ($id, $yes, $list, OutputInterface $output) use ($legacyDns) {
+    return $legacyDns()->rollback($output, $id, (bool) $yes, (bool) $list);
+})->descriptions('Restore the DNS configuration recorded by a migration', [
+    'id' => 'Migration id; defaults to the latest',
+    '--yes' => 'Roll back without asking for confirmation',
+    '--list' => 'List recorded migrations',
 ]);
 
 /**
@@ -238,7 +282,8 @@ if (is_dir(VALET_HOME_PATH)) {
     /**
      * Uninstall Valet entirely.
      */
-    $app->command('uninstall', function () {
+    $app->command('uninstall', function () use ($legacyDns) {
+        $legacyDns()->warnIfLegacy('valet uninstall');
         Nginx::uninstall();
         PhpFpm::uninstall();
         Hosts::uninstall();
