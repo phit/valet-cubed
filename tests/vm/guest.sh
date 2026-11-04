@@ -228,6 +228,10 @@ verify_restored() {
         } > "$OUT/http-$PHASE.log"
         check "Valet site serves over HTTP" false
     fi
+    check "Valet site serves over HTTPS with a trusted certificate" bash -c "curl -sS --max-time 10 https://tls.test/ | grep -qx valet-ok"
+    # Applications calling other local sites use PHP's curl, which must trust
+    # Valet's certificate authority too.
+    check "PHP's curl trusts the Valet certificate" as_valet "php -r '\$c = curl_init(\"https://tls.test/\"); curl_setopt(\$c, CURLOPT_RETURNTRANSFER, true); \$r = curl_exec(\$c); echo curl_error(\$c); exit(\$r === \"valet-ok\" ? 0 : 1);'"
     check "database accepts the credentials Valet saved" database_login
     if [[ "$(getenforce 2>/dev/null)" == Enforcing ]]; then
         check "only nginx and PHP-FPM run permissive under SELinux" bash -c "semanage permissive -l -n | grep -qx '\s*httpd_t\s*'"
@@ -626,6 +630,9 @@ install_checkout() {
     valet_install > "$OUT/install.log" 2>&1
     echo "install exit status: $?" | tee -a "$OUT/install.log"
     as_valet "cd ~/sites && valet park" >> "$OUT/install.log" 2>&1
+    # A second site served over HTTPS; app.test stays plain HTTP.
+    as_valet "mkdir -p ~/sites/tls && echo '<?php echo \"valet-ok\";' > ~/sites/tls/index.php && valet secure tls" \
+        >> "$OUT/install.log" 2>&1
 }
 
 after_reboot() {

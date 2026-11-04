@@ -124,7 +124,7 @@ class Apt implements PackageManager
      */
     public function getCaCertificatesPath(): string
     {
-        return '/usr/share/ca-certificates';
+        return '/usr/local/share/ca-certificates';
     }
 
     public function getPhpFpmServiceName(string $version): string

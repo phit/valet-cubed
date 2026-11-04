@@ -129,7 +129,7 @@ class PackageKit implements PackageManager
      */
     public function getCaCertificatesPath(): string
     {
-        return $this->suse() ? '/etc/pki/trust/anchors' : '/usr/share/pki/ca-trust-source';
+        return $this->suse() ? '/etc/pki/trust/anchors' : '/etc/pki/ca-trust/source/anchors';
     }
 
     public function getPhpFpmServiceName(string $version): string

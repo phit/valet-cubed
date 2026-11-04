@@ -112,7 +112,7 @@ class Dnf implements PackageManager
      */
     public function getCaCertificatesPath(): string
     {
-        return '/usr/share/pki/ca-trust-source';
+        return '/etc/pki/ca-trust/source/anchors';
     }
 
     public function getPhpFpmServiceName(string $version): string
