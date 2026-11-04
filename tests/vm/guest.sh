@@ -223,11 +223,10 @@ verify_restored() {
             journalctl -u nginx --no-pager -b -n 20 2>&1
             ausearch -m AVC -ts boot -c nginx 2>/dev/null | tail -10
         } > "$OUT/http-$PHASE.log"
-        if [[ "$(getenforce 2>/dev/null)" == Enforcing ]]; then
-            note "site not served (nginx $(systemctl is-active nginx 2>&1)) while SELinux is enforcing, which Valet only supports with --ignore-selinux; DNS for the site name passed; see http-$PHASE.log"
-        else
-            check "Valet site serves over HTTP" false
-        fi
+        check "Valet site serves over HTTP" false
+    fi
+    if [[ "$(getenforce 2>/dev/null)" == Enforcing ]]; then
+        check "only nginx and PHP-FPM run permissive under SELinux" bash -c "semanage permissive -l -n | grep -qx '\s*httpd_t\s*'"
     fi
     if [[ -f /etc/systemd/dns-delegate.d/valet-linux-plus.dns-delegate ]]; then
         check "wildcard subdomain resolves through delegation" resolves_to sub.app.test 127.0.0.1
@@ -527,7 +526,7 @@ valet_install() {
     # New MySQL: password "root", then link php (default). Existing MariaDB:
     # user root, empty password (socket auth as root), no retry, link php.
     # Debian ships no mysql-server; Valet falls back to MariaDB there.
-    as_valet "printf 'root\\n\\nno\\nyes\\n' | valet install --ignore-selinux"
+    as_valet "printf 'root\\n\\nno\\nyes\\n' | valet install"
 }
 
 install_checkout() {

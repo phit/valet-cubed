@@ -19,6 +19,7 @@ use Valet\Facades\Nginx;
 use Valet\Facades\Ngrok;
 use Valet\Facades\PhpFpm;
 use Valet\Facades\Requirements;
+use Valet\Facades\SeLinux;
 use Valet\Facades\Site;
 use Valet\Facades\SiteIsolate;
 use Valet\Facades\SiteLink;
@@ -71,9 +72,12 @@ $app->command('install [--ignore-selinux] [--mariadb]', function ($ignoreSELinux
     Writer::info('Installing valet services');
 
     passthru(dirname(__FILE__) . '/scripts/update.sh'); // Clean up cruft
-    Requirements::setIgnoreSELinux($ignoreSELinux)->check();
+    Requirements::check();
     $legacyDns()->warnIfLegacy('valet install');
     Configuration::install();
+    if (!$ignoreSELinux) {
+        SeLinux::install();
+    }
     Nginx::install();
     PhpFpm::install();
     Mailpit::install();
@@ -95,7 +99,7 @@ $app->command('install [--ignore-selinux] [--mariadb]', function ($ignoreSELinux
         Writer::info('Valet executable php helper is linked to /usr/local/bin/php.');
     }
 })->descriptions('Install the Valet services', [
-    '--ignore-selinux' => 'Skip SELinux checks',
+    '--ignore-selinux' => 'Leave SELinux alone (otherwise nginx and PHP-FPM run permissive while SELinux enforces)',
 ]);
 
 /**
@@ -288,6 +292,7 @@ if (is_dir(VALET_HOME_PATH)) {
         PhpFpm::uninstall();
         Hosts::uninstall();
         Mailpit::uninstall();
+        SeLinux::uninstall();
         Configuration::uninstall();
         Valet::uninstall();
 
