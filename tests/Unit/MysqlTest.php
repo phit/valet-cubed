@@ -143,7 +143,7 @@ class MysqlTest extends TestCase
         $this->packageManager
             ->shouldReceive('packageName')
             ->with('mariadb')
-            ->twice()
+            ->times(3)
             ->andReturn('mariadb-server');
 
         $this->serviceManager
@@ -151,6 +151,11 @@ class MysqlTest extends TestCase
             ->with($packageName)
             ->once()
             ->andReturnFalse();
+
+        $this->serviceManager
+            ->shouldReceive('restart')
+            ->with($packageName)
+            ->once();
 
         $this->commandLine
             ->shouldReceive('run')
@@ -192,6 +197,7 @@ class MysqlTest extends TestCase
         $apt->shouldReceive('installOrFail')->with('mariadb-server')->once();
         $apt->shouldNotReceive('installOrFail')->with('mysql-server');
         $this->serviceManager->shouldReceive('enable')->with('mariadb')->once();
+        $this->serviceManager->shouldReceive('restart')->with('mariadb')->once();
         $this->commandLine->shouldReceive('run')->andReturn('');
         $this->config->shouldReceive('get')->with('mysql', [])->andReturn([]);
         $this->config->shouldReceive('set')->with('mysql', ['user' => 'valet', 'password' => ''])->once();
@@ -217,6 +223,7 @@ class MysqlTest extends TestCase
         $apt->shouldReceive('ensureInstalled');
         $apt->shouldReceive('installOrFail')->with('mysql-server')->once();
         $this->serviceManager->shouldReceive('enable')->with('mysql')->once();
+        $this->serviceManager->shouldReceive('restart')->with('mysql')->once();
         $this->commandLine->shouldReceive('run')->andReturn('');
         $this->config->shouldReceive('get')->andReturn([]);
         $this->config->shouldReceive('set');

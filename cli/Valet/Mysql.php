@@ -87,6 +87,9 @@ class Mysql
                 $this->stop();
                 $this->configureDataDirectory();
                 $this->restart();
+            } else {
+                // Fedora and RHEL do not start services on install.
+                $this->restart();
             }
 
             /** @var ?string $password */
