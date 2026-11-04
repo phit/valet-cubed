@@ -75,7 +75,7 @@ The command is still `valet`, and your configuration in `~/.config/valet` is kep
 
 ## Official Documentation
 
-Documentation for Valet Cubed can be found on the [Valet Cubed website](https://phit.github.io/valet-cubed/).
+Documentation for Valet Cubed can be found on the [Valet Cubed website](https://valetcubed.com/).
 
 ## License
 

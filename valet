@@ -24,7 +24,7 @@ function check_dependencies() {
     if [[ $msg != '' ]]; then
         printf "%sYou have missing Valet dependencies:\n" "${RED}"
         printf "%s" "$msg"
-        printf "\nPlease refer to https://phit.github.io/valet-cubed/ on how to install them.%s\n" "${NC}"
+        printf "\nPlease refer to https://valetcubed.com/ on how to install them.%s\n" "${NC}"
         exit 1
     fi
 }

@@ -1,7 +1,7 @@
 {
     "name": "phit/valet-cubed",
     "description": "Advanced local development experience for Linux. A fork of a fork of a fork of Laravel Valet.",
-    "homepage": "https://phit.github.io/valet-cubed/",
+    "homepage": "https://valetcubed.com/",
     "keywords": [
         "laravel",
         "valet",
