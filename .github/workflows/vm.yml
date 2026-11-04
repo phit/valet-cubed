@@ -2,6 +2,16 @@ name: Legacy DNS migration VMs
 
 on:
   pull_request:
+    paths:
+      - 'cli/**'
+      - 'valet'
+      - 'composer.json'
+      - 'composer.lock'
+      - 'tests/vm/**'
+      - '.github/workflows/vm.yml'
+  schedule:
+    # Weekly, to notice replaced images and package changes in the distributions.
+    - cron: '17 4 * * 1'
   workflow_dispatch:
 
 jobs:
@@ -11,10 +21,31 @@ jobs:
     timeout-minutes: 90
     strategy:
       fail-fast: false
-      max-parallel: 12
+      max-parallel: 10
       matrix:
-        distro: [ubuntu-26.04, ubuntu-24.04, debian-13, fedora-44, almalinux-10, arch, opensuse-leap-16.0, alt-p11, solus]
-        scenario: [legacy, legacy-watcher, legacy-user-dnsmasq, legacy-uninstalled, fresh]
+        include:
+          # Upgrade from the original release, migrate, roll back, migrate again.
+          - { distro: ubuntu-26.04, scenario: legacy }
+          - { distro: ubuntu-24.04, scenario: legacy }
+          - { distro: debian-13, scenario: legacy }
+          - { distro: fedora-44, scenario: legacy }
+          - { distro: almalinux-10, scenario: legacy }
+          - { distro: arch, scenario: legacy }
+          - { distro: opensuse-leap-16.0, scenario: legacy }
+          # Older layouts and edge cases need one distribution each.
+          - { distro: ubuntu-26.04, scenario: legacy-watcher }
+          - { distro: ubuntu-26.04, scenario: legacy-user-dnsmasq }
+          - { distro: ubuntu-26.04, scenario: legacy-uninstalled }
+          # A fresh install must leave DNS alone everywhere. ALT has no
+          # original installer, so this is its only scenario.
+          - { distro: ubuntu-26.04, scenario: fresh }
+          - { distro: ubuntu-24.04, scenario: fresh }
+          - { distro: debian-13, scenario: fresh }
+          - { distro: fedora-44, scenario: fresh }
+          - { distro: almalinux-10, scenario: fresh }
+          - { distro: arch, scenario: fresh }
+          - { distro: opensuse-leap-16.0, scenario: fresh }
+          - { distro: alt-p11, scenario: fresh }
     steps:
       - uses: actions/checkout@v4
       - name: Enable KVM
@@ -38,13 +69,16 @@ jobs:
         if: always()
         run: |
           result=tests/vm/.work/${{ matrix.distro }}-${{ matrix.scenario }}/artifacts/result.tsv
-          if [ -f "$result" ]; then
-            awk -F'\t' '{printf "| %s | %s | %s | %s |\n", $1, $2, $3, $4}' "$result" >> "$GITHUB_STEP_SUMMARY"
-            ! grep -qP '\t(fail|running)\t' "$result"
-          else
+          if [ ! -f "$result" ]; then
             echo "| ${{ matrix.distro }} | ${{ matrix.scenario }} | fail | no result |" >> "$GITHUB_STEP_SUMMARY"
             exit 1
           fi
+          awk -F'\t' '{printf "| %s | %s | %s | %s |\n", $1, $2, $3, $4}' "$result" >> "$GITHUB_STEP_SUMMARY"
+          # A gap (image gone, platform cannot reach the scenario) is reported, not hidden.
+          if grep -qP '\tgap\t' "$result"; then
+            echo "::warning title=VM gap::$(cut -f4 "$result")"
+          fi
+          ! grep -qP '\t(fail|running)\t' "$result"
       - name: Upload logs and state diffs
         if: always()
         uses: actions/upload-artifact@v4
