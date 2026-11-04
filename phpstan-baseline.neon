@@ -1,0 +1,3445 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Method Valet\\Configuration\:\:read\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/Configuration.php
+
+		-
+			message: '#^Method Valet\\Configuration\:\:updateKey\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/Configuration.php
+
+		-
+			message: '#^Method Valet\\Configuration\:\:updateKey\(\) should return array but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: cli/Valet/Configuration.php
+
+		-
+			message: '#^Parameter \#1 \$config of method Valet\\Configuration\:\:write\(\) expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: cli/Valet/Configuration.php
+
+		-
+			message: '#^Parameter \#1 \$path of method Valet\\Filesystem\:\:isDir\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/Configuration.php
+
+		-
+			message: '#^Parameter \#3 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/Configuration.php
+
+		-
+			message: '#^Part \$domain \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: cli/Valet/Configuration.php
+
+		-
+			message: '#^Unable to resolve the template type TKey in call to function collect$#'
+			identifier: argument.templateType
+			count: 3
+			path: cli/Valet/Configuration.php
+
+		-
+			message: '#^Unable to resolve the template type TValue in call to function collect$#'
+			identifier: argument.templateType
+			count: 3
+			path: cli/Valet/Configuration.php
+
+		-
+			message: '#^PHPDoc tag @var with type array\<string\> is not subtype of native type list\<array\{string, int\<0, max\>\}\|string\>\|false\.$#'
+			identifier: varTag.nativeType
+			count: 1
+			path: cli/Valet/DevTools.php
+
+		-
+			message: '#^Parameter \#1 \$string of function trim expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/DevTools.php
+
+		-
+			message: '#^Binary operation "\." between ''Location\: '' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/Drivers/Specific/BedrockValetDriver.php
+
+		-
+			message: '#^Method Valet\\Drivers\\Specific\\BedrockValetDriver\:\:forceTrailingSlash\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: cli/Valet/Drivers/Specific/BedrockValetDriver.php
+
+		-
+			message: '#^Parameter \#1 \$string of function substr expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/Drivers/Specific/BedrockValetDriver.php
+
+		-
+			message: '#^Binary operation "\." between mixed and ''/'' results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/Drivers/Specific/CraftValetDriver.php
+
+		-
+			message: '#^Binary operation "\." between mixed and ''/craft'' results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/Drivers/Specific/CraftValetDriver.php
+
+		-
+			message: '#^Method Valet\\Drivers\\Specific\\DrupalValetDriver\:\:addSubdirectory\(\) should return string but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: cli/Valet/Drivers/Specific/DrupalValetDriver.php
+
+		-
+			message: '#^Method Valet\\Drivers\\Specific\\DrupalValetDriver\:\:possibleSubdirectories\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/Drivers/Specific/DrupalValetDriver.php
+
+		-
+			message: '#^Offset ''extension'' might not exist on array\{dirname\?\: string, basename\: string, extension\?\: string, filename\: string\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: cli/Valet/Drivers/Specific/DrupalValetDriver.php
+
+		-
+			message: '#^Part \$sitePath \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: cli/Valet/Drivers/Specific/DrupalValetDriver.php
+
+		-
+			message: '#^Variable \$indexPath might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: cli/Valet/Drivers/Specific/KirbyValetDriver.php
+
+		-
+			message: '#^Parameter \#1 \$haystack of function strpos expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 2
+			path: cli/Valet/Drivers/Specific/Magento2ValetDriver.php
+
+		-
+			message: '#^Parameter \#3 \$subject of function preg_replace expects array\<float\|int\|string\>\|string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/Drivers/Specific/Magento2ValetDriver.php
+
+		-
+			message: '#^Cannot access offset ''path'' on array\{scheme\?\: string, host\?\: string, port\?\: int\<0, 65535\>, user\?\: string, pass\?\: string, path\?\: string, query\?\: string, fragment\?\: string\}\|false\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: cli/Valet/Drivers/Specific/StatamicV2ValetDriver.php
+
+		-
+			message: '#^Method Valet\\Drivers\\Specific\\StatamicV2ValetDriver\:\:getLocales\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/Drivers/Specific/StatamicV2ValetDriver.php
+
+		-
+			message: '#^Parameter \#1 \$url of function parse_url expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/Drivers/Specific/StatamicV2ValetDriver.php
+
+		-
+			message: '#^Variable \$indexPath might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: cli/Valet/Drivers/Specific/StatamicV2ValetDriver.php
+
+		-
+			message: '#^Cannot access offset ''path'' on array\{scheme\?\: string, host\?\: string, port\?\: int\<0, 65535\>, user\?\: string, pass\?\: string, path\?\: string, query\?\: string, fragment\?\: string\}\|false\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: cli/Valet/Drivers/Specific/StatamicValetDriver.php
+
+		-
+			message: '#^Method Valet\\Drivers\\Specific\\StatamicValetDriver\:\:frontControllerPath\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: cli/Valet/Drivers/Specific/StatamicValetDriver.php
+
+		-
+			message: '#^Method Valet\\Drivers\\Specific\\StatamicValetDriver\:\:getStaticPath\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: cli/Valet/Drivers/Specific/StatamicValetDriver.php
+
+		-
+			message: '#^Parameter \#1 \$url of function parse_url expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/Drivers/Specific/StatamicValetDriver.php
+
+		-
+			message: '#^Parameter \#1 \$uri of method Valet\\Drivers\\Specific\\Typo3ValetDriver\:\:isAccessAuthorized\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/Drivers/Specific/Typo3ValetDriver.php
+
+		-
+			message: '#^Property Valet\\Drivers\\Specific\\Typo3ValetDriver\:\:\$documentRoot has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: cli/Valet/Drivers/Specific/Typo3ValetDriver.php
+
+		-
+			message: '#^Property Valet\\Drivers\\Specific\\Typo3ValetDriver\:\:\$forbiddenUriPatterns has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: cli/Valet/Drivers/Specific/Typo3ValetDriver.php
+
+		-
+			message: '#^Binary operation "\." between ''Location\: '' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/Drivers/Specific/WordPressValetDriver.php
+
+		-
+			message: '#^Method Valet\\Drivers\\Specific\\WordPressValetDriver\:\:forceTrailingSlash\(\) should return string\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: cli/Valet/Drivers/Specific/WordPressValetDriver.php
+
+		-
+			message: '#^Parameter \#1 \$string of function substr expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/Drivers/Specific/WordPressValetDriver.php
+
+		-
+			message: '#^Parameter \#3 \$uri of method Valet\\Drivers\\BasicValetDriver\:\:frontControllerPath\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/Drivers/Specific/WordPressValetDriver.php
+
+		-
+			message: '#^Cannot access offset ''require'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: cli/Valet/Drivers/ValetDriver.php
+
+		-
+			message: '#^Cannot access offset 0 on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: cli/Valet/Drivers/ValetDriver.php
+
+		-
+			message: '#^Cannot access offset string on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: cli/Valet/Drivers/ValetDriver.php
+
+		-
+			message: '#^Instantiated class LocalValetDriver not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: cli/Valet/Drivers/ValetDriver.php
+
+		-
+			message: '#^Method Valet\\Drivers\\ValetDriver\:\:customDrivers\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/Drivers/ValetDriver.php
+
+		-
+			message: '#^Method Valet\\Drivers\\ValetDriver\:\:driversIn\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/Drivers/ValetDriver.php
+
+		-
+			message: '#^Method Valet\\Drivers\\ValetDriver\:\:specificDrivers\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/Drivers/ValetDriver.php
+
+		-
+			message: '#^Parameter \#1 \$json of function json_decode expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/Drivers/ValetDriver.php
+
+		-
+			message: '#^Parameter \#1 \$path of function basename expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/Drivers/ValetDriver.php
+
+		-
+			message: '#^Class Valet\\Facades\\DevTools has PHPDoc tag @method for method getBin\(\) parameter \#2 \$ignoredServices with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/Facades/DevTools.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function call_user_func_array expects callable\(\)\: mixed, array\{mixed, string\} given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/Facades/Facade.php
+
+		-
+			message: '#^Class Valet\\Facades\\Mysql has PHPDoc tag @method for method exportDatabase\(\) return type with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/Facades/Mysql.php
+
+		-
+			message: '#^Class Valet\\Facades\\Mysql has PHPDoc tag @method for method getDatabases\(\) return type with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/Facades/Mysql.php
+
+		-
+			message: '#^PHPDoc tag @method for method Valet\\Facades\\Nginx\:\:configuredSites\(\) return type contains generic class Illuminate\\Support\\Collection but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: cli/Valet/Facades/Nginx.php
+
+		-
+			message: '#^PHPDoc tag @method for method Valet\\Facades\\SiteIsolate\:\:isolatedDirectories\(\) return type contains generic class Illuminate\\Support\\Collection but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: cli/Valet/Facades/SiteIsolate.php
+
+		-
+			message: '#^PHPDoc tag @method for method Valet\\Facades\\SiteLink\:\:links\(\) return type contains generic class Illuminate\\Support\\Collection but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: cli/Valet/Facades/SiteLink.php
+
+		-
+			message: '#^PHPDoc tag @method for method Valet\\Facades\\SiteProxy\:\:proxies\(\) return type contains generic class Illuminate\\Support\\Collection but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: cli/Valet/Facades/SiteProxy.php
+
+		-
+			message: '#^Class Valet\\Facades\\Valet has PHPDoc tag @method for method extensions\(\) return type with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/Facades/Valet.php
+
+		-
+			message: '#^Instanceof between array\|string and Traversable will always evaluate to false\.$#'
+			identifier: instanceof.alwaysFalse
+			count: 1
+			path: cli/Valet/Filesystem.php
+
+		-
+			message: '#^Method Valet\\Filesystem\:\:get\(\) should return string but returns string\|false\.$#'
+			identifier: return.type
+			count: 1
+			path: cli/Valet/Filesystem.php
+
+		-
+			message: '#^Method Valet\\Filesystem\:\:put\(\) should return string but returns int\<0, max\>\|false\.$#'
+			identifier: return.type
+			count: 1
+			path: cli/Valet/Filesystem.php
+
+		-
+			message: '#^Method Valet\\Filesystem\:\:readLink\(\) should return string but returns string\|false\.$#'
+			identifier: return.type
+			count: 1
+			path: cli/Valet/Filesystem.php
+
+		-
+			message: '#^Method Valet\\Filesystem\:\:realpath\(\) should return string but returns string\|false\.$#'
+			identifier: return.type
+			count: 1
+			path: cli/Valet/Filesystem.php
+
+		-
+			message: '#^Method Valet\\Filesystem\:\:scandir\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/Filesystem.php
+
+		-
+			message: '#^Method Valet\\Filesystem\:\:toIterator\(\) return type has no value type specified in iterable type Traversable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/Filesystem.php
+
+		-
+			message: '#^Parameter \#1 \$filename of function is_link expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/Filesystem.php
+
+		-
+			message: '#^Parameter \#1 \$path of function readlink expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/Filesystem.php
+
+		-
+			message: '#^Parameter \#1 \$newDomain of method Valet\\Hosts\:\:updateDomain\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/Hosts.php
+
+		-
+			message: '#^Parameter \#3 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/LegacyDns/Commands.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between non\-falsy\-string and '''' will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: cli/Valet/LegacyDns/Fingerprints.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: cli/Valet/LegacyDns/Journal.php
+
+		-
+			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 2
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Binary operation "\." between ''\.'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Binary operation "\." between ''Migration '' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Binary operation "\." between ''Rolling back…'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Binary operation "\." between ''Undo failed\: '' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Binary operation "\." between ''Unknown migration…'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Binary operation "\." between ''Valet resolution…'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Binary operation "\." between ''systemctl '' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Cannot access an offset on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 3
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Cannot access offset ''active'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Cannot access offset ''enabled'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Cannot access offset ''files'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Cannot access offset ''load'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Cannot access offset ''op'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Cannot access offset ''state'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 4
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Cannot access offset ''step'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 3
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Cannot access offset ''undo'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Cannot access offset ''units'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Cannot access offset mixed on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 11
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 28
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_key_last expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_reverse expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Parameter \#1 \$array of function end expects array\|object, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Parameter \#1 \$before of method Valet\\LegacyDns\\Verifier\:\:compare\(\) expects array\<string, list\<string\>\|null\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Parameter \#1 \$entries of method Valet\\LegacyDns\\Migrator\:\:restoreUnits\(\) expects list\<array\<string, mixed\>\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Parameter \#1 \$message of method Valet\\LegacyDns\\Migrator\:\:say\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Parameter \#2 \$snapshot of method Valet\\LegacyDns\\Migrator\:\:restoreSnapshot\(\) expects array\<string, mixed\>\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Parameter \#3 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/LegacyDns/Migrator.php
+
+		-
+			message: '#^Binary operation "\." between ''Clear the immutable…'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/LegacyDns/Plan.php
+
+		-
+			message: '#^Binary operation "\." between ''Remove '' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/LegacyDns/Plan.php
+
+		-
+			message: '#^Binary operation "\." between ''Remove empty…'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/LegacyDns/Plan.php
+
+		-
+			message: '#^Binary operation "\." between ''Rewrite '' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/LegacyDns/Plan.php
+
+		-
+			message: '#^Binary operation "\." between ''Run '' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/LegacyDns/Plan.php
+
+		-
+			message: '#^Binary operation "\." between ''and '' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/LegacyDns/Plan.php
+
+		-
+			message: '#^Binary operation "\." between non\-falsy\-string and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/LegacyDns/Plan.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: cli/Valet/LegacyDns/Plan.php
+
+		-
+			message: '#^Parameter \#1 \$string of function ucfirst expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/LegacyDns/Plan.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 4
+			path: cli/Valet/LegacyDns/Plan.php
+
+		-
+			message: '#^Parameter \#3 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: cli/Valet/LegacyDns/Plan.php
+
+		-
+			message: '#^Parameter \#4 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/LegacyDns/Plan.php
+
+		-
+			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 3
+			path: cli/Valet/LegacyDns/Planner.php
+
+		-
+			message: '#^Binary operation "\." between ''/etc/NetworkManager…'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/LegacyDns/Planner.php
+
+		-
+			message: '#^Binary operation "\." between ''/etc/dnsmasq\.d/'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/LegacyDns/Planner.php
+
+		-
+			message: '#^Binary operation "\." between ''/opt/valet\-linux/'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/LegacyDns/Planner.php
+
+		-
+			message: '#^Cannot access offset ''/etc/NetworkManager/conf\.d'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: cli/Valet/LegacyDns/Planner.php
+
+		-
+			message: '#^Cannot access offset ''/etc/dnsmasq\.d'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: cli/Valet/LegacyDns/Planner.php
+
+		-
+			message: '#^Cannot access offset ''/etc/dnsmasq\.d/network\-manager'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: cli/Valet/LegacyDns/Planner.php
+
+		-
+			message: '#^Cannot access offset ''/opt/valet\-linux'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: cli/Valet/LegacyDns/Planner.php
+
+		-
+			message: '#^Cannot access offset string on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 3
+			path: cli/Valet/LegacyDns/Planner.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 12
+			path: cli/Valet/LegacyDns/Planner.php
+
+		-
+			message: '#^Method Valet\\LegacyDns\\Planner\:\:content\(\) should return string\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: cli/Valet/LegacyDns/Planner.php
+
+		-
+			message: '#^Method Valet\\LegacyDns\\Planner\:\:describeNode\(\) should return string but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: cli/Valet/LegacyDns/Planner.php
+
+		-
+			message: '#^Method Valet\\LegacyDns\\Planner\:\:node\(\) should return array\<string, mixed\>\|null but returns array\<mixed, mixed\>\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: cli/Valet/LegacyDns/Planner.php
+
+		-
+			message: '#^Method Valet\\LegacyDns\\Planner\:\:unit\(\) should return array\{load\: string, active\: string, enabled\: string, preset\: string\} but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: cli/Valet/LegacyDns/Planner.php
+
+		-
+			message: '#^Parameter \#1 \$content of static method Valet\\LegacyDns\\Fingerprints\:\:matches\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 6
+			path: cli/Valet/LegacyDns/Planner.php
+
+		-
+			message: '#^Parameter \#1 \$content of static method Valet\\LegacyDns\\Fingerprints\:\:valetConfig\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/LegacyDns/Planner.php
+
+		-
+			message: '#^Parameter \#2 \$array of function implode expects array\<string\>, list\<mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/LegacyDns/Planner.php
+
+		-
+			message: '#^Parameter \#2 \$content of method Valet\\LegacyDns\\Planner\:\:pristine\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/LegacyDns/Planner.php
+
+		-
+			message: '#^Parameter \#2 \$subject of function preg_match expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/LegacyDns/Planner.php
+
+		-
+			message: '#^Property Valet\\LegacyDns\\Planner\:\:\$dnsmasqConf \(string\|null\) does not accept mixed\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: cli/Valet/LegacyDns/Planner.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between non\-empty\-string and '''' will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: cli/Valet/LegacyDns/Verifier.php
+
+		-
+			message: '#^Binary operation "\." between ''mailhog\.'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/Mailpit.php
+
+		-
+			message: '#^Part \$domain \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: cli/Valet/Mailpit.php
+
+		-
+			message: '#^Cannot call method fetchAll\(\) on PDOStatement\|true\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: cli/Valet/Mysql.php
+
+		-
+			message: '#^Method Valet\\Mysql\:\:exportDatabase\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/Mysql.php
+
+		-
+			message: '#^Method Valet\\Mysql\:\:getCredentials\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/Mysql.php
+
+		-
+			message: '#^Method Valet\\Mysql\:\:getDatabases\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/Mysql.php
+
+		-
+			message: '#^Method Valet\\Mysql\:\:getSystemDatabases\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/Mysql.php
+
+		-
+			message: '#^PHPDoc tag @return with type array\<string, string\> is incompatible with native type string\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: cli/Valet/Mysql.php
+
+		-
+			message: '#^Binary operation "\." between literal\-string&non\-falsy\-string and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/Nginx.php
+
+		-
+			message: '#^Method Valet\\Nginx\:\:configuredSites\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: cli/Valet/Nginx.php
+
+		-
+			message: '#^Parameter \#1 \$oldDomain of method Valet\\SiteSecure\:\:reSecureForNewDomain\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/Nginx.php
+
+		-
+			message: '#^Parameter \#2 \$domain of method Valet\\SiteSecure\:\:reSecureForNewDomain\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/Nginx.php
+
+		-
+			message: '#^Method Valet\\Ngrok\:\:currentTunnelUrl\(\) should return string\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: cli/Valet/Ngrok.php
+
+		-
+			message: '#^Constant Valet\\PackageManagers\\AltLinux\:\:PHP_FPM_PATTERN_BY_VERSION type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/PackageManagers/AltLinux.php
+
+		-
+			message: '#^Method Valet\\PackageManagers\\AltLinux\:\:packages\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/PackageManagers/AltLinux.php
+
+		-
+			message: '#^Constant Valet\\PackageManagers\\Apt\:\:PHP_FPM_PATTERN_BY_VERSION type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/PackageManagers/Apt.php
+
+		-
+			message: '#^Method Valet\\PackageManagers\\Apt\:\:packages\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/PackageManagers/Apt.php
+
+		-
+			message: '#^Offset string does not exist on array\{\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: cli/Valet/PackageManagers/Apt.php
+
+		-
+			message: '#^Offset string on array\{\} in empty\(\) does not exist\.$#'
+			identifier: empty.offset
+			count: 1
+			path: cli/Valet/PackageManagers/Apt.php
+
+		-
+			message: '#^Constant Valet\\PackageManagers\\Dnf\:\:PHP_FPM_PATTERN_BY_VERSION type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/PackageManagers/Dnf.php
+
+		-
+			message: '#^Property Valet\\PackageManagers\\Dnf\:\:\$phpConventionCache type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/PackageManagers/Dnf.php
+
+		-
+			message: '#^Constant Valet\\PackageManagers\\Eopkg\:\:PHP_FPM_PATTERN_BY_VERSION type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/PackageManagers/Eopkg.php
+
+		-
+			message: '#^Method Valet\\PackageManagers\\Eopkg\:\:packages\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/PackageManagers/Eopkg.php
+
+		-
+			message: '#^Offset string does not exist on array\{\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: cli/Valet/PackageManagers/Eopkg.php
+
+		-
+			message: '#^Offset string on array\{\} in empty\(\) does not exist\.$#'
+			identifier: empty.offset
+			count: 1
+			path: cli/Valet/PackageManagers/Eopkg.php
+
+		-
+			message: '#^Constant Valet\\PackageManagers\\PackageKit\:\:PHP_FPM_PATTERN_BY_VERSION type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/PackageManagers/PackageKit.php
+
+		-
+			message: '#^Method Valet\\PackageManagers\\PackageKit\:\:packages\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/PackageManagers/PackageKit.php
+
+		-
+			message: '#^Offset string does not exist on array\{\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: cli/Valet/PackageManagers/PackageKit.php
+
+		-
+			message: '#^Offset string on array\{\} in empty\(\) does not exist\.$#'
+			identifier: empty.offset
+			count: 1
+			path: cli/Valet/PackageManagers/PackageKit.php
+
+		-
+			message: '#^Method Valet\\PackageManagers\\Pacman\:\:packages\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/PackageManagers/Pacman.php
+
+		-
+			message: '#^Parameter \#2 \$replace of function str_replace expects array\<string\>\|string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/PackageManagers/Pacman.php
+
+		-
+			message: '#^Constant Valet\\PackageManagers\\Yum\:\:PHP_FPM_PATTERN_BY_VERSION type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/PackageManagers/Yum.php
+
+		-
+			message: '#^Offset string does not exist on array\{\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: cli/Valet/PackageManagers/Yum.php
+
+		-
+			message: '#^Offset string on array\{\} in empty\(\) does not exist\.$#'
+			identifier: empty.offset
+			count: 1
+			path: cli/Valet/PackageManagers/Yum.php
+
+		-
+			message: '#^Binary operation "\." between literal\-string&non\-falsy\-string and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 3
+			path: cli/Valet/PhpFpm.php
+
+		-
+			message: '#^Method Valet\\PhpFpm\:\:getCurrentVersion\(\) should return string but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: cli/Valet/PhpFpm.php
+
+		-
+			message: '#^Method Valet\\PhpFpm\:\:validateIsolationVersion\(\) is unused\.$#'
+			identifier: method.unused
+			count: 1
+			path: cli/Valet/PhpFpm.php
+
+		-
+			message: '#^Negated boolean expression is always false\.$#'
+			identifier: booleanNot.alwaysFalse
+			count: 1
+			path: cli/Valet/PhpFpm.php
+
+		-
+			message: '#^Offset ''COMPACT'' might not exist on array\{0\: non\-falsy\-string, MAJOR_VERSION\: numeric\-string, 1\: numeric\-string, DOTTED\: '''', 2\?\: ''''\|numeric\-string, COMPACT\?\: numeric\-string, 3\?\: numeric\-string\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: cli/Valet/PhpFpm.php
+
+		-
+			message: '#^Offset ''DOTTED'' might not exist on array\{0\: non\-falsy\-string, MAJOR_VERSION\: numeric\-string, 1\: numeric\-string, DOTTED\?\: ''''\|numeric\-string, 2\?\: ''''\|numeric\-string, COMPACT\?\: numeric\-string, 3\?\: numeric\-string\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: cli/Valet/PhpFpm.php
+
+		-
+			message: '#^Parameter \#1 \$version of method Valet\\PhpFpm\:\:serviceName\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: cli/Valet/PhpFpm.php
+
+		-
+			message: '#^Parameter \#2 \$contents of method Valet\\Filesystem\:\:put\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/PhpFpm.php
+
+		-
+			message: '#^Variable \$confDir in PHPDoc tag @var does not exist\.$#'
+			identifier: varTag.variableNotFound
+			count: 1
+			path: cli/Valet/PhpFpm.php
+
+		-
+			message: '#^Method Valet\\Server\:\:allowWildcardDnsDomains\(\) should return string but returns string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: cli/Valet/Server.php
+
+		-
+			message: '#^Method Valet\\Server\:\:hostIsIpAddress\(\) should return bool but returns int\|false\.$#'
+			identifier: return.type
+			count: 1
+			path: cli/Valet/Server.php
+
+		-
+			message: '#^Method Valet\\Server\:\:show404\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: cli/Valet/Server.php
+
+		-
+			message: '#^Method Valet\\Server\:\:showDirectoryListing\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: cli/Valet/Server.php
+
+		-
+			message: '#^Parameter \#1 \$array of function usort expects list\<string\>, list\<string\>\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/Server.php
+
+		-
+			message: '#^Parameter \#1 \$haystack of function strpos expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/Server.php
+
+		-
+			message: '#^Parameter \#2 \$string of function explode expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/Server.php
+
+		-
+			message: '#^Property Valet\\Server\:\:\$config type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/Server.php
+
+		-
+			message: '#^Binary operation "\." between ''service '' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/ServiceManagers/LinuxService.php
+
+		-
+			message: '#^Method Valet\\ServiceManagers\\LinuxService\:\:getRealService\(\) should return string but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: cli/Valet/ServiceManagers/LinuxService.php
+
+		-
+			message: '#^Parameter \#1 \$value of function collect expects Illuminate\\Contracts\\Support\\Arrayable\<\(int\|string\), mixed\>\|iterable\<\(int\|string\), mixed\>\|null, non\-empty\-string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/ServiceManagers/LinuxService.php
+
+		-
+			message: '#^Unable to resolve the template type TKey in call to function collect$#'
+			identifier: argument.templateType
+			count: 1
+			path: cli/Valet/ServiceManagers/LinuxService.php
+
+		-
+			message: '#^Unable to resolve the template type TValue in call to function collect$#'
+			identifier: argument.templateType
+			count: 1
+			path: cli/Valet/ServiceManagers/LinuxService.php
+
+		-
+			message: '#^Binary operation "\." between ''\.'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/Site.php
+
+		-
+			message: '#^Binary operation "\." between non\-falsy\-string and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/Site.php
+
+		-
+			message: '#^Method Valet\\SiteIsolate\:\:isolatedDirectories\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: cli/Valet/SiteIsolate.php
+
+		-
+			message: '#^Parameter \#1 \$file of method Valet\\SiteIsolate\:\:nginxPath\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/SiteIsolate.php
+
+		-
+			message: '#^Parameter \#1 \$key of method Illuminate\\Support\\Collection\<int,string\>\:\:contains\(\) expects \(callable\(string, int\)\: bool\)\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/SiteIsolate.php
+
+		-
+			message: '#^Parameter \#1 \$url of method Valet\\SiteIsolate\:\:isolatedPhpVersion\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/SiteIsolate.php
+
+		-
+			message: '#^Parameter \#3 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/SiteIsolate.php
+
+		-
+			message: '#^Binary operation "\." between ''\:'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 2
+			path: cli/Valet/SiteLink.php
+
+		-
+			message: '#^Anonymous function has an unused use \$domain\.$#'
+			identifier: closure.unusedUse
+			count: 1
+			path: cli/Valet/SiteProxy.php
+
+		-
+			message: '#^Binary operation "\." between ''\.'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 3
+			path: cli/Valet/SiteProxy.php
+
+		-
+			message: '#^Method Valet\\SiteProxy\:\:proxies\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: cli/Valet/SiteProxy.php
+
+		-
+			message: '#^Binary operation "\." between ''\:'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/Valet/SiteSecure.php
+
+		-
+			message: '#^Offset 1 might not exist on array\{\}\|array\{non\-falsy\-string, string\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: cli/Valet/SiteSecure.php
+
+		-
+			message: '#^Cannot call method isAvailable\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: cli/Valet/Valet.php
+
+		-
+			message: '#^Method Valet\\Valet\:\:getAvailablePackageManager\(\) should return class\-string but returns string\.$#'
+			identifier: return.type
+			count: 1
+			path: cli/Valet/Valet.php
+
+		-
+			message: '#^Method Valet\\Valet\:\:getAvailableServiceManager\(\) should return class\-string but returns string\.$#'
+			identifier: return.type
+			count: 1
+			path: cli/Valet/Valet.php
+
+		-
+			message: '#^Method Valet\\Valet\:\:getRunningFpmVersions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/Valet/Valet.php
+
+		-
+			message: '#^Parameter \#1 \$path of method Valet\\Filesystem\:\:realpath\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/Valet/Valet.php
+
+		-
+			message: '#^Binary operation "\." between ''\.'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 4
+			path: cli/app.php
+
+		-
+			message: '#^Binary operation "\." between ''Current Nginx port …'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 2
+			path: cli/app.php
+
+		-
+			message: '#^Parameter \#1 \$domain of static method Valet\\Facades\\Hosts\:\:install\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/app.php
+
+		-
+			message: '#^Parameter \#1 \$oldDomain of static method Valet\\Facades\\SiteSecure\:\:reSecureForNewDomain\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/app.php
+
+		-
+			message: '#^Parameter \#1 \$path of function basename expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 8
+			path: cli/app.php
+
+		-
+			message: '#^Parameter \#1 \$sitePath of static method Valet\\Drivers\\ValetDriver\:\:assign\(\) expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/app.php
+
+		-
+			message: '#^Parameter \#1 \$target of static method Valet\\Facades\\SiteLink\:\:link\(\) expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/app.php
+
+		-
+			message: '#^Parameter \#1 \$value of function count expects array\|Countable, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/app.php
+
+		-
+			message: '#^Parameter \#2 \$array of function array_map expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/app.php
+
+		-
+			message: '#^Parameter \#2 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/app.php
+
+		-
+			message: '#^Parameter \#3 \.\.\.\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/app.php
+
+		-
+			message: '#^If condition is always false\.$#'
+			identifier: if.alwaysFalse
+			count: 1
+			path: cli/includes/compatibility.php
+
+		-
+			message: '#^Parameter \#1 \$haystack of function strpos expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/includes/compatibility.php
+
+		-
+			message: '#^Binary operation "\." between mixed and ''/\.config/valet'' results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/includes/helpers.php
+
+		-
+			message: '#^Binary operation "\." between mixed and ''/\.valet'' results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: cli/includes/helpers.php
+
+		-
+			message: '#^Function Valet\\strArrayReplace\(\) has parameter \$searchAndReplace with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: cli/includes/helpers.php
+
+		-
+			message: '#^Function Valet\\user\(\) should return string but returns mixed\.$#'
+			identifier: return.type
+			count: 2
+			path: cli/includes/helpers.php
+
+		-
+			message: '#^Parameter \#1 \$arg of function escapeshellarg expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: cli/includes/helpers.php
+
+		-
+			message: '#^Parameter \#1 \$haystack of function strpos expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: cli/includes/helpers.php
+
+		-
+			message: '#^Method Valet\\Tests\\CliTest\:\:databaseNamesProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/CliTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\CliTest\:\:directoryProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/CliTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\CliTest\:\:invalidProxyDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/CliTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\CliTest\:\:invalidUnproxyDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/CliTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\CliTest\:\:isolateDirectoryDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/CliTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\CliTest\:\:nginxPortDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/CliTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\CliTest\:\:nginxProxyDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/CliTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\CliTest\:\:nginxUnproxyDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/CliTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\CliTest\:\:parkedDirectoryProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/CliTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\CliTest\:\:secureNginxDomainProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/CliTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\CliTest\:\:securedNginxDomainProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/CliTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\CliTest\:\:unIsolateDirectoryDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/CliTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\CliTest\:\:unsecureNginxDomainProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/CliTest.php
+
+		-
+			message: '#^Parameter \#1 \$path of function basename expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 4
+			path: tests/CliTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\BasicValetDriverTest\:\:test_it_routes_to_index_if_404\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/BasicValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\BasicValetDriverTest\:\:test_it_serves_anything\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/BasicValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\BasicValetDriverTest\:\:test_it_serves_directory_with_index_html\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/BasicValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\BasicValetDriverTest\:\:test_it_serves_directory_with_index_php\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/BasicValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\BasicValetDriverTest\:\:test_it_serves_php_files_from_root\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/BasicValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\BasicValetDriverTest\:\:test_it_serves_static_files\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/BasicValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\BasicWithPublicValetDriverTest\:\:test_it_doesnt_serve_from_not_public\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/BasicWithPublicValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\BasicWithPublicValetDriverTest\:\:test_it_doesnt_serve_php_files_from_root\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/BasicWithPublicValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\BasicWithPublicValetDriverTest\:\:test_it_route_to_public_index_if_404\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/BasicWithPublicValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\BasicWithPublicValetDriverTest\:\:test_it_serves_anything_with_public\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/BasicWithPublicValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\BasicWithPublicValetDriverTest\:\:test_it_serves_directory_with_index_html\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/BasicWithPublicValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\BasicWithPublicValetDriverTest\:\:test_it_serves_directory_with_index_php\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/BasicWithPublicValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\BasicWithPublicValetDriverTest\:\:test_it_serves_php_files_from_public\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/BasicWithPublicValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\BasicWithPublicValetDriverTest\:\:test_it_serves_static_files\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/BasicWithPublicValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\BedrockValetDriverTest\:\:test_it_doesnt_serve_non_bedrock_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/BedrockValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\BedrockValetDriverTest\:\:test_it_gets_front_controller\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/BedrockValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\BedrockValetDriverTest\:\:test_it_serves_bedrock_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/BedrockValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\CakeValetDriverTest\:\:test_it_doesnt_serve_non_cake_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/CakeValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\CakeValetDriverTest\:\:test_it_gets_front_controller\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/CakeValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\CakeValetDriverTest\:\:test_it_serves_cake_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/CakeValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\Concrete5ValetDriverTest\:\:test_it_doesnt_serve_non_concrete5_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/Concrete5ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\Concrete5ValetDriverTest\:\:test_it_gets_front_controller\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/Concrete5ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\Concrete5ValetDriverTest\:\:test_it_serves_concrete5_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/Concrete5ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\ContaoValetDriverTest\:\:test_it_doesnt_serve_non_contao_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/ContaoValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\ContaoValetDriverTest\:\:test_it_gets_front_controller\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/ContaoValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\ContaoValetDriverTest\:\:test_it_preserves_legacy_contao_routing\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/ContaoValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\ContaoValetDriverTest\:\:test_it_serves_contao_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/ContaoValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\CraftValetDriverTest\:\:test_it_doesnt_serve_non_craft_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/CraftValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\CraftValetDriverTest\:\:test_it_gets_front_controller\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/CraftValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\CraftValetDriverTest\:\:test_it_serves_craft_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/CraftValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\DrupalValetDriverTest\:\:test_it_doesnt_serve_non_drupal_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/DrupalValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\DrupalValetDriverTest\:\:test_it_gets_front_controller\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/DrupalValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\DrupalValetDriverTest\:\:test_it_serves_drupal_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/DrupalValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\JigsawValetDriverTest\:\:test_it_doesnt_serve_non_jigsaw_projects_with_public_directory\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/JigsawValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\JigsawValetDriverTest\:\:test_it_mutates_uri\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/JigsawValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\JigsawValetDriverTest\:\:test_it_serves_jigsaw_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/JigsawValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\JoomlaValetDriverTest\:\:test_it_doesnt_serve_non_joomla_projects_with_public_directory\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/JoomlaValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\JoomlaValetDriverTest\:\:test_it_gets_front_controller\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/JoomlaValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\JoomlaValetDriverTest\:\:test_it_serves_joomla_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/JoomlaValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\KatanaValetDriverTest\:\:test_it_doesnt_serve_non_katana_projects_with_public_directory\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/KatanaValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\KatanaValetDriverTest\:\:test_it_mutates_uri\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/KatanaValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\KatanaValetDriverTest\:\:test_it_serves_katana_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/KatanaValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\KirbyValetDriverTest\:\:test_it_doesnt_serve_non_kirby_projects_with_public_directory\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/KirbyValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\KirbyValetDriverTest\:\:test_it_gets_front_controller\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/KirbyValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\KirbyValetDriverTest\:\:test_it_serves_kirby_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/KirbyValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\LaravelValetDriverTest\:\:test_it_doesnt_serve_non_laravel_projects_with_public_directory\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/LaravelValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\LaravelValetDriverTest\:\:test_it_gets_front_controller\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/LaravelValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\LaravelValetDriverTest\:\:test_it_serves_laravel_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/LaravelValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\Magento2ValetDriverTest\:\:test_it_doesnt_serve_non_magento2_projects_with_public_directory\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/Magento2ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\Magento2ValetDriverTest\:\:test_it_gets_front_controller\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/Magento2ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\Magento2ValetDriverTest\:\:test_it_serves_magento2_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/Magento2ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\NeosValetDriverTest\:\:test_it_doesnt_serve_non_neos_projects_with_public_directory\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/NeosValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\NeosValetDriverTest\:\:test_it_gets_front_controller\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/NeosValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\NeosValetDriverTest\:\:test_it_serves_neos_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/NeosValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\SculpinValetDriverTest\:\:test_it_doesnt_serve_non_sculpin_projects_with_public_directory\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/SculpinValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\SculpinValetDriverTest\:\:test_it_mutates_uri\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/SculpinValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\SculpinValetDriverTest\:\:test_it_serves_sculpin_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/SculpinValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\Shopware5ValetDriverTest\:\:test_it_doesnt_serve_non_shopware5_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/Shopware5ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\Shopware5ValetDriverTest\:\:test_it_gets_the_shop_front_controller\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/Shopware5ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\Shopware5ValetDriverTest\:\:test_it_routes_the_installer_and_updater_to_their_own_front_controllers\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/Shopware5ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\Shopware5ValetDriverTest\:\:test_it_serves_files_but_not_directories_as_static\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/Shopware5ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\Shopware5ValetDriverTest\:\:test_it_serves_shopware5_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/Shopware5ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\StatamicV1ValetDriverTest\:\:test_it_doesnt_serve_non_statamicv1_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/StatamicV1ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\StatamicV1ValetDriverTest\:\:test_it_gets_front_controller\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/StatamicV1ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\StatamicV1ValetDriverTest\:\:test_it_serves_statamicv1_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/StatamicV1ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\StatamicV2ValetDriverTest\:\:test_it_doesnt_serve_non_statamic_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/StatamicV2ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\StatamicV2ValetDriverTest\:\:test_it_gets_front_controller\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/StatamicV2ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\StatamicV2ValetDriverTest\:\:test_it_serves_statamic_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/StatamicV2ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\StatamicValetDriverTest\:\:test_it_doesnt_serve_laravel_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/StatamicValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\StatamicValetDriverTest\:\:test_it_doesnt_serve_non_statamic_projects_with_public_directory\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/StatamicValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\StatamicValetDriverTest\:\:test_it_gets_front_controller\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/StatamicValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\StatamicValetDriverTest\:\:test_it_serves_statamic_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/StatamicValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\StatamicValetDriverTest\:\:test_it_serves_statically_cached_pages\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/StatamicValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\SymfonyValetDriverTest\:\:test_it_doesnt_serve_non_symfony_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/SymfonyValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\SymfonyValetDriverTest\:\:test_it_gets_front_controller\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/SymfonyValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\SymfonyValetDriverTest\:\:test_it_serves_symfony_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/SymfonyValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\Typo3ValetDriverTest\:\:test_it_doesnt_serve_non_typo3_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/Typo3ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\Typo3ValetDriverTest\:\:test_it_gets_front_controller\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/Typo3ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\Typo3ValetDriverTest\:\:test_it_serves_typo3_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/Typo3ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\ValetDriverTest\:\:test_it_assigns_drivers_to_given_project\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\ValetDriverTest\:\:test_it_checks_composer_dependencies\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\ValetDriverTest\:\:test_it_gets_drivers_in_given_path\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\ValetDriverTest\:\:test_it_prioritizes_non_basic_matches\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\ValetDriverTest\:\:test_it_prioritizes_statamic\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/ValetDriverTest.php
+
+		-
+			message: '#^Parameter \#1 \$object of function get_class expects object, Valet\\Drivers\\ValetDriver\|null given\.$#'
+			identifier: argument.type
+			count: 5
+			path: tests/Drivers/ValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\WordPressValetDriverTest\:\:test_it_doesnt_serve_non_wordpress_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/WordPressValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\WordPressValetDriverTest\:\:test_it_gets_front_controller\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/WordPressValetDriverTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Drivers\\WordPressValetDriverTest\:\:test_it_serves_wordpress_projects\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Drivers/WordPressValetDriverTest.php
+
+		-
+			message: '#^Parameter \#1 \$cli of class Valet\\PackageManagers\\AltLinux constructor expects Valet\\CommandLine, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 2
+			path: tests/Unit/AltLinuxTest.php
+
+		-
+			message: '#^Parameter \#2 \$serviceManager of class Valet\\PackageManagers\\AltLinux constructor expects Valet\\Contracts\\ServiceManager, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 2
+			path: tests/Unit/AltLinuxTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Unit\\AptTest\:\:candidateProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/AptTest.php
+
+		-
+			message: '#^Parameter \#1 \$cli of class Valet\\PackageManagers\\Apt constructor expects Valet\\CommandLine, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/AptTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Unit\\CommandLineTest\:\:prefixProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/CommandLineTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\:\:shouldNotReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 6
+			path: tests/Unit/ConfigurationTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 35
+			path: tests/Unit/ConfigurationTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Unit\\ConfigurationTest\:\:configDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/ConfigurationTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Unit\\ConfigurationTest\:\:defaultConfig\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/ConfigurationTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Unit\\ConfigurationTest\:\:domainDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/ConfigurationTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Unit\\ConfigurationTest\:\:updateConfigDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/ConfigurationTest.php
+
+		-
+			message: '#^Parameter \#1 \$files of class Valet\\Configuration constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/ConfigurationTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\ConfigurationTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/ConfigurationTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\:\:shouldNotReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/Unit/DevToolsTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 11
+			path: tests/Unit/DevToolsTest.php
+
+		-
+			message: '#^Parameter \#1 \$pm of class Valet\\DevTools constructor expects Valet\\Contracts\\PackageManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\PackageManager\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/DevToolsTest.php
+
+		-
+			message: '#^Parameter \#2 \$sm of class Valet\\DevTools constructor expects Valet\\Contracts\\ServiceManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\ServiceManager\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/DevToolsTest.php
+
+		-
+			message: '#^Parameter \#3 \$cli of class Valet\\DevTools constructor expects Valet\\CommandLine, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\CommandLine\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/DevToolsTest.php
+
+		-
+			message: '#^Parameter \#4 \$files of class Valet\\DevTools constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/DevToolsTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\DevToolsTest\:\:\$commandLine \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/DevToolsTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\DevToolsTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/DevToolsTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\DevToolsTest\:\:\$packageManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/DevToolsTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\DevToolsTest\:\:\$serviceManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\ServiceManager\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/DevToolsTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertSame\(\) with string and string will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: tests/Unit/DnfTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Unit\\DnfTest\:\:redisProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/DnfTest.php
+
+		-
+			message: '#^Parameter \#1 \$cli of class Valet\\PackageManagers\\Dnf constructor expects Valet\\CommandLine, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 5
+			path: tests/Unit/DnfTest.php
+
+		-
+			message: '#^Parameter \#2 \$sm of class Valet\\Mysql constructor expects Valet\\Contracts\\ServiceManager, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/DnfTest.php
+
+		-
+			message: '#^Parameter \#3 \$cli of class Valet\\Mysql constructor expects Valet\\CommandLine, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/DnfTest.php
+
+		-
+			message: '#^Parameter \#4 \$files of class Valet\\Mysql constructor expects Valet\\Filesystem, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/DnfTest.php
+
+		-
+			message: '#^Parameter \#5 \$configuration of class Valet\\Mysql constructor expects Valet\\Configuration, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/DnfTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/Unit/HostsTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 3
+			path: tests/Unit/HostsTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 24
+			path: tests/Unit/HostsTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\ResolvedDns\:\:shouldNotReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/Unit/HostsTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\ResolvedDns\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: tests/Unit/HostsTest.php
+
+		-
+			message: '#^Parameter \#1 \$pm of class Valet\\Hosts constructor expects Valet\\Contracts\\PackageManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\PackageManager\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/HostsTest.php
+
+		-
+			message: '#^Parameter \#2 \$sm of class Valet\\Hosts constructor expects Valet\\Contracts\\ServiceManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\ServiceManager\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/HostsTest.php
+
+		-
+			message: '#^Parameter \#3 \$files of class Valet\\Hosts constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/HostsTest.php
+
+		-
+			message: '#^Parameter \#4 \$cli of class Valet\\Hosts constructor expects Valet\\CommandLine, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\CommandLine\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/HostsTest.php
+
+		-
+			message: '#^Parameter \#5 \$config of class Valet\\Hosts constructor expects Valet\\Configuration, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Configuration\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/HostsTest.php
+
+		-
+			message: '#^Parameter \#6 \$resolvedDns of class Valet\\Hosts constructor expects Valet\\ResolvedDns\|null, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\ResolvedDns\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/HostsTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\HostsTest\:\:\$commandLine \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/HostsTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\HostsTest\:\:\$configuration \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/HostsTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\HostsTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/HostsTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\HostsTest\:\:\$packageManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/HostsTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\HostsTest\:\:\$resolvedDns \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\ResolvedDns\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/HostsTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\HostsTest\:\:\$serviceManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\ServiceManager\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/HostsTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: tests/Unit/LegacyDnsMigrationTest.php
+
+		-
+			message: '#^Cannot access offset ''op'' on array\<string, mixed\>\|false\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: tests/Unit/LegacyDnsMigrationTest.php
+
+		-
+			message: '#^Cannot access offset ''state'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: tests/Unit/LegacyDnsMigrationTest.php
+
+		-
+			message: '#^Cannot access offset mixed on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: tests/Unit/LegacyDnsMigrationTest.php
+
+		-
+			message: '#^Cannot call method getPathname\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 7
+			path: tests/Unit/LegacyDnsMigrationTest.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_key_last expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/LegacyDnsMigrationTest.php
+
+		-
+			message: '#^Parameter \#2 \$array of function implode expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/LegacyDnsMigrationTest.php
+
+		-
+			message: '#^Parameter \#2 \$callback of function array_filter expects \(callable\(string\)\: bool\)\|null, Closure\(mixed\)\: \(0\|1\|false\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/LegacyDnsMigrationTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 3
+			path: tests/Unit/MailpitTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/Unit/MailpitTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\ServiceManager\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 10
+			path: tests/Unit/MailpitTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 8
+			path: tests/Unit/MailpitTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\SiteProxy\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/Unit/MailpitTest.php
+
+		-
+			message: '#^Parameter \#1 \$pm of class Valet\\Mailpit constructor expects Valet\\Contracts\\PackageManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\PackageManager\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/MailpitTest.php
+
+		-
+			message: '#^Parameter \#2 \$sm of class Valet\\Mailpit constructor expects Valet\\Contracts\\ServiceManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\ServiceManager\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/MailpitTest.php
+
+		-
+			message: '#^Parameter \#3 \$cli of class Valet\\Mailpit constructor expects Valet\\CommandLine, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\CommandLine\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/MailpitTest.php
+
+		-
+			message: '#^Parameter \#4 \$files of class Valet\\Mailpit constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/MailpitTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\MailpitTest\:\:\$commandLine \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/MailpitTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\MailpitTest\:\:\$config \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/MailpitTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\MailpitTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/MailpitTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\MailpitTest\:\:\$packageManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/MailpitTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\MailpitTest\:\:\$serviceManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\ServiceManager\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/MailpitTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\MailpitTest\:\:\$siteProxy \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\SiteProxy\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/MailpitTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\MailpitTest\:\:\$siteSecure \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\SiteSecure\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/MailpitTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 5
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 9
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager\:\:shouldNotReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 23
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\ServiceManager\:\:shouldNotReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\ServiceManager\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 9
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Unit\\MysqlTest\:\:itWillNotOverrideWhenInstalled\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Unit\\MysqlTest\:\:itWillNotOverrideWhenMariaDbInstalled\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Unit\\MysqlTest\:\:packageDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Offset 1 might not exist on array\{\}\|array\{non\-falsy\-string, non\-empty\-string\}\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Parameter \#1 \$pm of class Valet\\Mysql constructor expects Valet\\Contracts\\PackageManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\PackageManager\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Parameter \#1 \$pm of class Valet\\Mysql constructor expects Valet\\Contracts\\PackageManager, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 2
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Parameter \#1 \$pm of class Valet\\Mysql constructor expects Valet\\Contracts\\PackageManager, PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager given\.$#'
+			identifier: argument.type
+			count: 5
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Parameter \#2 \$haystack of method PHPUnit\\Framework\\Assert\:\:assertStringContainsString\(\) expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 2
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Parameter \#2 \$sm of class Valet\\Mysql constructor expects Valet\\Contracts\\ServiceManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\ServiceManager\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Parameter \#2 \$sm of class Valet\\Mysql constructor expects Valet\\Contracts\\ServiceManager, PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\ServiceManager given\.$#'
+			identifier: argument.type
+			count: 7
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Parameter \#3 \$cli of class Valet\\Mysql constructor expects Valet\\CommandLine, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\CommandLine\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Parameter \#3 \$cli of class Valet\\Mysql constructor expects Valet\\CommandLine, PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine given\.$#'
+			identifier: argument.type
+			count: 7
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Parameter \#4 \$files of class Valet\\Mysql constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Parameter \#4 \$files of class Valet\\Mysql constructor expects Valet\\Filesystem, PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem given\.$#'
+			identifier: argument.type
+			count: 7
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Parameter \#5 \$configuration of class Valet\\Mysql constructor expects Valet\\Configuration, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Configuration\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Parameter \#5 \$configuration of class Valet\\Mysql constructor expects Valet\\Configuration, PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration given\.$#'
+			identifier: argument.type
+			count: 7
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\MysqlTest\:\:\$commandLine \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\MysqlTest\:\:\$config \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\MysqlTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\MysqlTest\:\:\$packageManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\MysqlTest\:\:\$serviceManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\ServiceManager\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/MysqlTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 9
+			path: tests/Unit/NginxTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 3
+			path: tests/Unit/NginxTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: tests/Unit/NginxTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\ServiceManager\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 10
+			path: tests/Unit/NginxTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\:\:shouldNotReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/Unit/NginxTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 49
+			path: tests/Unit/NginxTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\SiteSecure\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/Unit/NginxTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 3
+			path: tests/Unit/NginxTest.php
+
+		-
+			message: '#^Parameter \#1 \$pm of class Valet\\Nginx constructor expects Valet\\Contracts\\PackageManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\PackageManager\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/NginxTest.php
+
+		-
+			message: '#^Parameter \#2 \$sm of class Valet\\Nginx constructor expects Valet\\Contracts\\ServiceManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\ServiceManager\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/NginxTest.php
+
+		-
+			message: '#^Parameter \#3 \$cli of class Valet\\Nginx constructor expects Valet\\CommandLine, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\CommandLine\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/NginxTest.php
+
+		-
+			message: '#^Parameter \#4 \$files of class Valet\\Nginx constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/NginxTest.php
+
+		-
+			message: '#^Parameter \#5 \$configuration of class Valet\\Nginx constructor expects Valet\\Configuration, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Configuration\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/NginxTest.php
+
+		-
+			message: '#^Parameter \#6 \$siteSecure of class Valet\\Nginx constructor expects Valet\\SiteSecure, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\SiteSecure\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/NginxTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\NginxTest\:\:\$commandLine \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/NginxTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\NginxTest\:\:\$config \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/NginxTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\NginxTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/NginxTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\NginxTest\:\:\$packageManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/NginxTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\NginxTest\:\:\$serviceManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\ServiceManager\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/NginxTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\NginxTest\:\:\$siteSecure \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\SiteSecure\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/NginxTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/Unit/NgrokTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\:\:shouldNotReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 3
+			path: tests/Unit/NgrokTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 5
+			path: tests/Unit/NgrokTest.php
+
+		-
+			message: '#^Call to an undefined static method Valet\\Facades\\Filesystem\:\:ensureDirExists\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: tests/Unit/NgrokTest.php
+
+		-
+			message: '#^Parameter \#1 \$cli of class Valet\\Ngrok constructor expects Valet\\CommandLine, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\CommandLine\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/NgrokTest.php
+
+		-
+			message: '#^Parameter \#2 \$filesystem of class Valet\\Ngrok constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/NgrokTest.php
+
+		-
+			message: '#^Parameter \#3 \$request of class Httpful\\Response constructor expects Httpful\\Request, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 2
+			path: tests/Unit/NgrokTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\NgrokTest\:\:\$commandLine \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/NgrokTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\NgrokTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/NgrokTest.php
+
+		-
+			message: '#^Parameter \#1 \$cli of class Valet\\PackageManagers\\PackageKit constructor expects Valet\\CommandLine, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/PackageKitTest.php
+
+		-
+			message: '#^Call to an undefined method Valet\\CommandLine\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/Unit/PacmanTest.php
+
+		-
+			message: '#^Parameter \#1 \$cli of class Valet\\PackageManagers\\Pacman constructor expects Valet\\CommandLine, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/PacmanTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\InvocationMocker\:\:once\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 5
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 13
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\ServiceManager\:\:expects\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\ServiceManager\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 10
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 16
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Nginx\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 3
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Unit\\PhpFpmTest\:\:deprecatedVersionDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Unit\\PhpFpmTest\:\:executableVersionOnlyProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Unit\\PhpFpmTest\:\:executableVersionProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Unit\\PhpFpmTest\:\:invalidVersionProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Unit\\PhpFpmTest\:\:socketFileVersionProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Unit\\PhpFpmTest\:\:versionAndSocketProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Unit\\PhpFpmTest\:\:versionDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Unit\\PhpFpmTest\:\:versionPairProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Unit\\PhpFpmTest\:\:versionProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Parameter \#1 \$config of class Valet\\PhpFpm constructor expects Valet\\Configuration, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Configuration\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Parameter \#2 \$pm of class Valet\\PhpFpm constructor expects Valet\\Contracts\\PackageManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\PackageManager\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Parameter \#3 \$sm of class Valet\\PhpFpm constructor expects Valet\\Contracts\\ServiceManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\ServiceManager\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Parameter \#4 \$cli of class Valet\\PhpFpm constructor expects Valet\\CommandLine, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\CommandLine\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Parameter \#5 \$files of class Valet\\PhpFpm constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Parameter \#6 \$site of class Valet\\PhpFpm constructor expects Valet\\Site, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Site\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Parameter \#7 \$nginx of class Valet\\PhpFpm constructor expects Valet\\Nginx, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Nginx\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\PhpFpmTest\:\:\$commandLine \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\PhpFpmTest\:\:\$config \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\PhpFpmTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\PhpFpmTest\:\:\$nginx \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Nginx\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\PhpFpmTest\:\:\$packageManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\PhpFpmTest\:\:\$serviceManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\ServiceManager\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\PhpFpmTest\:\:\$site \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Site\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/PhpFpmTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: tests/Unit/RequirementsTest.php
+
+		-
+			message: '#^Parameter \#1 \$cli of class Valet\\Requirements constructor expects Valet\\CommandLine, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/RequirementsTest.php
+
+		-
+			message: '#^Parameter \#1 \$files of class Valet\\ResolvedDns constructor expects Valet\\Filesystem, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/ResolvedDnsTest.php
+
+		-
+			message: '#^Parameter \#2 \$cli of class Valet\\ResolvedDns constructor expects Valet\\CommandLine, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/ResolvedDnsTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\ResolvedDnsTest\:\:\$commands type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/ResolvedDnsTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\ResolvedDnsTest\:\:\$files type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/ResolvedDnsTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 5
+			path: tests/Unit/SeLinuxTest.php
+
+		-
+			message: '#^Parameter \#1 \$cli of class Valet\\SeLinux constructor expects Valet\\CommandLine, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/SeLinuxTest.php
+
+		-
+			message: '#^Parameter \#3 \$configuration of class Valet\\SeLinux constructor expects Valet\\Configuration, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/SeLinuxTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\SeLinuxTest\:\:\$cli \(Mockery\\MockInterface&Valet\\CommandLine\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/SeLinuxTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\SeLinuxTest\:\:\$config \(Mockery\\MockInterface&Valet\\Configuration\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/SeLinuxTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\SeLinuxTest\:\:\$pm \(Mockery\\MockInterface&Valet\\Contracts\\PackageManager\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/SeLinuxTest.php
+
+		-
+			message: '#^Call to an undefined method object\:\:start\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/Unit/ServiceManagerSecurityTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Unit\\ServiceManagerSecurityTest\:\:invalidServiceNames\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/ServiceManagerSecurityTest.php
+
+		-
+			message: '#^Parameter \#1 \$cli of class Valet\\ServiceManagers\\Systemd constructor expects Valet\\CommandLine, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/ServiceManagerSecurityTest.php
+
+		-
+			message: '#^Parameter \#2 \$files of class Valet\\ServiceManagers\\Systemd constructor expects Valet\\Filesystem, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/ServiceManagerSecurityTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 6
+			path: tests/Unit/SiteIsolateTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: tests/Unit/SiteIsolateTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 14
+			path: tests/Unit/SiteIsolateTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Site\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: tests/Unit/SiteIsolateTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\SiteSecure\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 3
+			path: tests/Unit/SiteIsolateTest.php
+
+		-
+			message: '#^Parameter \#1 \$pm of class Valet\\SiteIsolate constructor expects Valet\\Contracts\\PackageManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\PackageManager\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/SiteIsolateTest.php
+
+		-
+			message: '#^Parameter \#2 \$config of class Valet\\SiteIsolate constructor expects Valet\\Configuration, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Configuration\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/SiteIsolateTest.php
+
+		-
+			message: '#^Parameter \#3 \$filesystem of class Valet\\SiteIsolate constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/SiteIsolateTest.php
+
+		-
+			message: '#^Parameter \#4 \$siteSecure of class Valet\\SiteIsolate constructor expects Valet\\SiteSecure, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\SiteSecure\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/SiteIsolateTest.php
+
+		-
+			message: '#^Parameter \#5 \$site of class Valet\\SiteIsolate constructor expects Valet\\Site, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Site\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/SiteIsolateTest.php
+
+		-
+			message: '#^Property Unit\\SiteIsolateTest\:\:\$config \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/SiteIsolateTest.php
+
+		-
+			message: '#^Property Unit\\SiteIsolateTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/SiteIsolateTest.php
+
+		-
+			message: '#^Property Unit\\SiteIsolateTest\:\:\$packageManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/SiteIsolateTest.php
+
+		-
+			message: '#^Property Unit\\SiteIsolateTest\:\:\$site \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Site\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/SiteIsolateTest.php
+
+		-
+			message: '#^Property Unit\\SiteIsolateTest\:\:\$siteSecure \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\SiteSecure\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/SiteIsolateTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 4
+			path: tests/Unit/SiteLinkTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\:\:shouldNotReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/Unit/SiteLinkTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 8
+			path: tests/Unit/SiteLinkTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\SiteSecure\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/Unit/SiteLinkTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 2
+			path: tests/Unit/SiteLinkTest.php
+
+		-
+			message: '#^Parameter \#1 \$filesystem of class Valet\\SiteLink constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/SiteLinkTest.php
+
+		-
+			message: '#^Parameter \#2 \$config of class Valet\\SiteLink constructor expects Valet\\Configuration, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Configuration\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/SiteLinkTest.php
+
+		-
+			message: '#^Parameter \#3 \$siteSecure of class Valet\\SiteLink constructor expects Valet\\SiteSecure, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\SiteSecure\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/SiteLinkTest.php
+
+		-
+			message: '#^Property Unit\\SiteLinkTest\:\:\$config \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/SiteLinkTest.php
+
+		-
+			message: '#^Property Unit\\SiteLinkTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/SiteLinkTest.php
+
+		-
+			message: '#^Property Unit\\SiteLinkTest\:\:\$siteSecure \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\SiteSecure\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/SiteLinkTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: tests/Unit/SiteProxyTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 5
+			path: tests/Unit/SiteProxyTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\SiteSecure\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: tests/Unit/SiteProxyTest.php
+
+		-
+			message: '#^Parameter \#1 \$filesystem of class Valet\\SiteProxy constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/SiteProxyTest.php
+
+		-
+			message: '#^Parameter \#2 \$config of class Valet\\SiteProxy constructor expects Valet\\Configuration, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Configuration\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/SiteProxyTest.php
+
+		-
+			message: '#^Parameter \#3 \$siteSecure of class Valet\\SiteProxy constructor expects Valet\\SiteSecure, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\SiteSecure\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/SiteProxyTest.php
+
+		-
+			message: '#^Property Unit\\SiteProxyTest\:\:\$config \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/SiteProxyTest.php
+
+		-
+			message: '#^Property Unit\\SiteProxyTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/SiteProxyTest.php
+
+		-
+			message: '#^Property Unit\\SiteProxyTest\:\:\$siteSecure \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\SiteSecure\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/SiteProxyTest.php
+
+		-
+			message: '#^Call to an undefined method Mockery\\MockInterface\|Valet\\CommandLine\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 9
+			path: tests/Unit/SiteSecureTest.php
+
+		-
+			message: '#^Call to an undefined method Mockery\\MockInterface\|Valet\\Configuration\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 4
+			path: tests/Unit/SiteSecureTest.php
+
+		-
+			message: '#^Call to an undefined method Mockery\\MockInterface\|Valet\\Filesystem\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 22
+			path: tests/Unit/SiteSecureTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: tests/Unit/SiteSecureTest.php
+
+		-
+			message: '#^Parameter \#1 \$filesystem of class Valet\\SiteSecure constructor expects Valet\\Filesystem, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/SiteSecureTest.php
+
+		-
+			message: '#^Parameter \#2 \$cli of class Valet\\SiteSecure constructor expects Valet\\CommandLine, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/SiteSecureTest.php
+
+		-
+			message: '#^Parameter \#3 \$config of class Valet\\SiteSecure constructor expects Valet\\Configuration, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/SiteSecureTest.php
+
+		-
+			message: '#^Property Unit\\SiteSecureTest\:\:\$pm \(Valet\\Contracts\\PackageManager\) does not accept mixed\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/SiteSecureTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 3
+			path: tests/Unit/SiteTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 12
+			path: tests/Unit/SiteTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: tests/Unit/SiteTest.php
+
+		-
+			message: '#^Parameter \#1 \$config of class Valet\\Site constructor expects Valet\\Configuration, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Configuration\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/SiteTest.php
+
+		-
+			message: '#^Parameter \#2 \$cli of class Valet\\Site constructor expects Valet\\CommandLine, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\CommandLine\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/SiteTest.php
+
+		-
+			message: '#^Parameter \#3 \$files of class Valet\\Site constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/SiteTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\SiteTest\:\:\$commandLine \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/SiteTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\SiteTest\:\:\$config \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Configuration\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/SiteTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\SiteTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/SiteTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 7
+			path: tests/Unit/ValetRedisTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\ServiceManager\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 4
+			path: tests/Unit/ValetRedisTest.php
+
+		-
+			message: '#^Parameter \#1 \$pm of class Valet\\ValetRedis constructor expects Valet\\Contracts\\PackageManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\PackageManager\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/ValetRedisTest.php
+
+		-
+			message: '#^Parameter \#2 \$sm of class Valet\\ValetRedis constructor expects Valet\\Contracts\\ServiceManager, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Contracts\\ServiceManager\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/ValetRedisTest.php
+
+		-
+			message: '#^Parameter \#3 \$cli of class Valet\\ValetRedis constructor expects Valet\\CommandLine, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\CommandLine\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/ValetRedisTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\ValetRedisTest\:\:\$commandLine \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/ValetRedisTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\ValetRedisTest\:\:\$packageManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\PackageManager\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/ValetRedisTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\ValetRedisTest\:\:\$serviceManager \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Contracts\\ServiceManager\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/ValetRedisTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 3
+			path: tests/Unit/ValetTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\:\:shouldReceive\(\)\.$#'
+			identifier: method.notFound
+			count: 6
+			path: tests/Unit/ValetTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 3
+			path: tests/Unit/ValetTest.php
+
+		-
+			message: '#^Method Valet\\Tests\\Unit\\ValetTest\:\:versionDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/ValetTest.php
+
+		-
+			message: '#^Parameter \#1 \$cli of class Valet\\Valet constructor expects Valet\\CommandLine, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\CommandLine\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/ValetTest.php
+
+		-
+			message: '#^Parameter \#2 \$files of class Valet\\Valet constructor expects Valet\\Filesystem, \(Mockery\\MockInterface&PHPUnit\\Framework\\MockObject\\MockObject\)\|\(Mockery\\MockInterface&Valet\\Filesystem\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Unit/ValetTest.php
+
+		-
+			message: '#^Parameter \#3 \$request of class Httpful\\Response constructor expects Httpful\\Request, Mockery\\MockInterface given\.$#'
+			identifier: argument.type
+			count: 2
+			path: tests/Unit/ValetTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\ValetTest\:\:\$commandLine \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\CommandLine\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/ValetTest.php
+
+		-
+			message: '#^Property Valet\\Tests\\Unit\\ValetTest\:\:\$filesystem \(PHPUnit\\Framework\\MockObject\\MockObject\|Valet\\Filesystem\) does not accept Mockery\\MockInterface\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Unit/ValetTest.php
+
+		-
+			message: '#^Parameter \#2 \$array of function implode expects array, array\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/integration/resolved-dns.php

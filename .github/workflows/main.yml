@@ -1,6 +1,9 @@
 name: CI
 
-on: [pull_request]
+on:
+  pull_request:
+  push:
+    branches: [main]
 
 jobs:
   resolved_dns:
@@ -69,3 +72,18 @@ jobs:
           composer install --no-interaction --prefer-dist
       - name: CS Fixer
         run: vendor/bin/php-cs-fixer check --config=.php-cs-fixer.dist.php
+  phpstan:
+    name: PHPStan
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          # The baseline was generated on PHP 8.4 with the dependencies it resolves.
+          php-version: 8.4
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+      - name: PHPStan
+        run: vendor/bin/phpstan analyse --no-progress --memory-limit=2G
