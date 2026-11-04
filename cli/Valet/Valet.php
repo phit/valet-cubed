@@ -126,6 +126,7 @@ class Valet
      */
     public function environmentSetup(): void
     {
+        $this->requireWhich();
         $this->serviceManagerSetup();
         $this->packageManagerSetup();
     }
@@ -225,6 +226,24 @@ class Valet
         }
 
         return $runningVersions;
+    }
+
+    /**
+     * Valet detects package managers, services and tools with "which", which
+     * minimal images omit. Without it every detection fails with a misleading
+     * "No compatible package manager found."
+     */
+    private function requireWhich(): void
+    {
+        $missing = false;
+        $this->cli->run('command -v which', function () use (&$missing) {
+            $missing = true;
+        });
+
+        if ($missing) {
+            throw new DomainException('Valet requires the "which" command. Install it with your package manager '
+                . '(the package is usually called "which") and try again.');
+        }
     }
 
     /**

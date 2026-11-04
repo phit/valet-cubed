@@ -42,6 +42,27 @@ class ValetTest extends TestCase
     /**
      * @test
      */
+    public function itWillRequireTheWhichCommand(): void
+    {
+        $this->commandLine
+            ->shouldReceive('run')
+            ->with('command -v which', Mockery::type('callable'))
+            ->once()
+            ->andReturnUsing(function (string $command, callable $onError) {
+                $onError(1, '');
+
+                return '';
+            });
+
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('Valet requires the "which" command');
+
+        $this->valet->environmentSetup();
+    }
+
+    /**
+     * @test
+     */
     public function itWillLinkValetBinFileToSystemPath(): void
     {
         $this->commandLine
