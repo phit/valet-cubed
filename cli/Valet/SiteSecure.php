@@ -34,7 +34,7 @@ class SiteSecure
     /**
      * Secure the given host with TLS.
      */
-    public function secure(string $url, string $stub = null): void
+    public function secure(string $url, ?string $stub = null): void
     {
         $this->validateSiteUrl($url);
         if ($stub === null) {
@@ -377,7 +377,7 @@ class SiteSecure
     /**
      * Extract Proxy pass of exising nginx config.
      */
-    private function getProxyPass(string $url, string $siteConf = null): ?string
+    private function getProxyPass(string $url, ?string $siteConf = null): ?string
     {
         if ($siteConf === null && !$this->files->exists($this->nginxPath($url))) {
             return null;

@@ -160,7 +160,7 @@ class PhpFpm
     /**
      * Get FPM socket file name for a given PHP version.
      */
-    public function socketFileName(string $version = null): string
+    public function socketFileName(?string $version = null): string
     {
         if (!$version) {
             $version = $this->getCurrentVersion();
@@ -200,7 +200,7 @@ class PhpFpm
      * Get executable php path.
      * @return false|string
      */
-    public function getPhpExecutablePath(string $version = null)
+    public function getPhpExecutablePath(?string $version = null)
     {
         if (!$version) {
             $bin = DevToolsFacade::getBin('php', ['/usr/local/bin/php']);
@@ -274,7 +274,7 @@ class PhpFpm
     /**
      * Determine php service name.
      */
-    private function serviceName(string $version = null): string
+    private function serviceName(?string $version = null): string
     {
         if (!$version) {
             $version = $this->getCurrentVersion();
@@ -374,7 +374,7 @@ class PhpFpm
      * Get the path to the FPM configuration file for the current PHP version.
      * @throws \DomainException
      */
-    private function fpmConfigPath(string $version = null): string
+    private function fpmConfigPath(?string $version = null): string
     {
         $version = $version ?: $this->getCurrentVersion();
         $versionWithoutDot = preg_replace('~[^\d]~', '', $version);

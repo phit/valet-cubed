@@ -5,7 +5,7 @@ namespace Valet\Facades;
 /**
  * Class PhpFpm.
  *
- * @method static void         install(string $version = null, bool $installExt = true)
+ * @method static void         install(?string $version = null, bool $installExt = true)
  * @method static void         uninstall()
  * @method static void         restart($version = null)
  * @method static void         stop($version = null)
