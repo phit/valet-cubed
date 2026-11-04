@@ -2,9 +2,11 @@
 
 namespace Valet\Tests\Unit;
 
+use ConsoleComponents\Writer;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\Attributes\Test;
+use Symfony\Component\Console\Output\BufferedOutput;
 use Valet\CommandLine;
 use Valet\Configuration;
 use Valet\Contracts\PackageManager;
@@ -52,6 +54,7 @@ class NginxTest extends TestCase
     #[Test]
     public function itWillInstallSuccessfully(): void
     {
+        Writer::fake();
         $this->filesystem->shouldReceive('exists')->with(Nginx::FORMER_SERVICE_OVERRIDE)->once()->andReturnFalse();
         $this->commandLine
             ->shouldReceive('run')
@@ -200,6 +203,10 @@ class NginxTest extends TestCase
             ->andReturn('test');
 
         $this->siteSecure
+            ->shouldReceive('secured')
+            ->andReturn(collect(['blog.test', 'shop.test']));
+
+        $this->siteSecure
             ->shouldReceive('reSecureForNewDomain')
             ->with('test', 'test')
             ->once();
@@ -215,6 +222,10 @@ class NginxTest extends TestCase
         $this->filesystem->shouldReceive('putAsUser')->with(VALET_HOME_PATH . '/Nginx/example.test', $updated)->once();
 
         $this->nginx->install();
+
+        /** @var BufferedOutput $output */
+        $output = Writer::output();
+        $this->assertStringContainsString('Renewing certificates for 2 secured sites...', $output->fetch());
     }
 
     #[Test]

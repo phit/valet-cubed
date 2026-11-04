@@ -49,6 +49,21 @@ class SiteSecureTest extends TestCase
     }
 
     #[Test]
+    public function itWillTrustAnExistingCaOnlyOncePerRun(): void
+    {
+        // Renewing every secured site used to trust the same CA again for each.
+        $this->filesystem->shouldReceive('exists')->with(VALET_HOME_PATH . '/CA/ValetLinuxCASelfSigned.key')->andReturnTrue();
+        $this->filesystem->shouldReceive('exists')->with(VALET_HOME_PATH . '/CA/ValetLinuxCASelfSigned.pem')->andReturnTrue();
+        $this->filesystem->shouldReceive('copy')->once();
+        $this->commandLine->shouldReceive('run')->once()->with($this->pm->getCaUpdateCommand(), null, RunAs::Root);
+        $this->commandLine->shouldReceive('runAsUser')->times(3)->with(Mockery::pattern('/^certutil /'));
+
+        foreach (['blog.test', 'shop.test', 'api.test'] as $site) {
+            (fn () => $this->createCa(365))->call($this->siteSecure);
+        }
+    }
+
+    #[Test]
     public function itWillSecureNewDomain(): void
     {
         $phpFpm = Mockery::mock(PhpFpm::class);

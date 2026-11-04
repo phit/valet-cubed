@@ -23,6 +23,12 @@ class SiteSecure
     private string $caCertificateCommonName = 'Valet Linux CA Self Signed CN';
     private string $certificateDummyEmail = 'certificate@valet.linux';
 
+    /**
+     * Whether this run already trusted the existing CA. Trusting it again for
+     * every secured site took seconds each when renewing them all.
+     */
+    private bool $caTrusted = false;
+
     public function __construct(Filesystem $filesystem, CommandLine $cli, Configuration $config, PackageManager $pm)
     {
         $this->files = $filesystem;
@@ -152,7 +158,10 @@ class SiteSecure
         $caKeyPath = $this->caPath($this->caCertificateKey);
 
         if ($this->files->exists($caKeyPath) && $this->files->exists($caPemPath)) {
-            $this->trustCa($caPemPath);
+            if (!$this->caTrusted) {
+                $this->trustCa($caPemPath);
+                $this->caTrusted = true;
+            }
             return;
         }
 

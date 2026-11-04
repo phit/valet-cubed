@@ -2,6 +2,7 @@
 
 namespace Valet;
 
+use ConsoleComponents\Writer;
 use Illuminate\Support\Collection;
 use Valet\Contracts\PackageManager;
 use Valet\Contracts\ServiceManager;
@@ -182,6 +183,11 @@ class Nginx
     private function rewriteSecureNginxFiles(): void
     {
         $domain = $this->configuration->get('domain');
+
+        $count = $this->siteSecure->secured()->count();
+        if ($count > 0) {
+            Writer::info(sprintf('Renewing certificates for %d secured site%s...', $count, $count === 1 ? '' : 's'));
+        }
 
         $this->siteSecure->reSecureForNewDomain($domain, $domain);
     }
