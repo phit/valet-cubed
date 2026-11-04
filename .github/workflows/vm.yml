@@ -14,6 +14,11 @@ on:
     - cron: '17 4 * * 1'
   workflow_dispatch:
 
+# A new push to the same pull request supersedes the running matrix.
+concurrency:
+  group: vm-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
 jobs:
   vm:
     name: ${{ matrix.distro }} / ${{ matrix.scenario }}
