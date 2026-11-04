@@ -12,7 +12,7 @@ use RuntimeException;
  */
 class Journal
 {
-    public const BASE = '/var/lib/valet-linux-plus';
+    public const BASE = '/var/lib/valet-cubed';
     public const DIR = self::BASE . '/dns-migrations';
 
     /**

@@ -20,10 +20,10 @@ class Migrator
         Inspector::RESOLV, Inspector::RESOLV_BACKUP, Inspector::DNSMASQ_CONF, Inspector::DNSMASQ_CONF_BACKUP,
         Inspector::DNSMASQ_OPTIONS, Inspector::DNSMASQ_VALET, Inspector::DNSMASQ_NM, Inspector::DNSMASQ_DEFAULT,
         Inspector::NM_VALET, Inspector::WATCHER_DIR, Inspector::WATCHER_UNIT, Inspector::WATCHER_SYSV,
-        Inspector::HOSTS, ResolvedDns::UNIT, ResolvedDns::DELEGATE,
+        Inspector::HOSTS, ResolvedDns::UNIT, ResolvedDns::DELEGATE, ResolvedDns::FORMER_UNIT, ResolvedDns::FORMER_DELEGATE,
     ];
 
-    private const BACKEND_UNITS = ['valet-linux-plus-dns.service', 'systemd-resolved.service'];
+    private const BACKEND_UNITS = [ResolvedDns::SERVICE, ResolvedDns::FORMER_SERVICE, 'systemd-resolved.service'];
 
     /**
      * @var callable(string): void
@@ -466,7 +466,9 @@ class Migrator
             'file-restore' => [(string) $step['from'], (string) $step['to']],
             'file-remove', 'dir-remove', 'file-write', 'symlink', 'immutable', 'package-file' => [(string) $step['path']],
             'command' => [Inspector::WATCHER_SYSV],
-            'valet-backend' => [Inspector::HOSTS, ResolvedDns::UNIT, ResolvedDns::DELEGATE],
+            'valet-backend' => [
+                Inspector::HOSTS, ResolvedDns::UNIT, ResolvedDns::DELEGATE, ResolvedDns::FORMER_UNIT, ResolvedDns::FORMER_DELEGATE,
+            ],
             default => [],
         };
     }

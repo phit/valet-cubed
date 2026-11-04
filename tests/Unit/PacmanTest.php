@@ -70,7 +70,7 @@ class PacmanTest extends TestCase
         $pacman->enablePhpExtensions('8.5', ['cli', 'mysql', 'gd', 'zip', 'curl', 'mbstring', 'pgsql', 'intl']);
 
         $this->assertSame(
-            "printf '%s\\n' '; Enabled by Valet Linux+' 'extension=pdo_mysql' 'extension=gd' 'extension=zip' "
+            "printf '%s\\n' '; Enabled by Valet Cubed' 'extension=pdo_mysql' 'extension=gd' 'extension=zip' "
             . "'extension=curl' 'extension=intl' > '/etc/php/conf.d/valet.ini'",
             $written
         );

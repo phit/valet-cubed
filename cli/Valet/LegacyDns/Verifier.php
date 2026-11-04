@@ -2,6 +2,7 @@
 
 namespace Valet\LegacyDns;
 
+use Valet\Hosts;
 use Valet\ResolvedDns;
 
 /**
@@ -136,7 +137,8 @@ class Verifier
             return 'valet-migration-' . bin2hex(random_bytes(4)) . '.' . $domain;
         }
         $hosts = (string) ($this->system->node(Inspector::HOSTS)['content'] ?? '');
-        if (preg_match('/# Valet Linux\+ hosts start\n(?:#[^\n]*\n)*127\.0\.0\.1\t(\S+)\n/', $hosts, $matches)) {
+        $start = preg_quote(Hosts::START_MARKER, '/');
+        if (preg_match('/' . $start . '\n(?:#[^\n]*\n)*127\.0\.0\.1\t(\S+)\n/', $hosts, $matches)) {
             return $matches[1];
         }
 

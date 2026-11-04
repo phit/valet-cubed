@@ -35,7 +35,8 @@ class Inspector
         'dnsmasq.service',
         'NetworkManager.service',
         'valet-dns.service',
-        'valet-linux-plus-dns.service',
+        ResolvedDns::SERVICE,
+        ResolvedDns::FORMER_SERVICE,
     ];
 
     private const PATHS = [
@@ -43,6 +44,7 @@ class Inspector
         self::DNSMASQ_OPTIONS, self::DNSMASQ_VALET, self::DNSMASQ_NM, self::DNSMASQ_DEFAULT, self::NM_VALET,
         self::NM_MAIN, self::WATCHER_DIR, self::WATCHER_UNIT, self::WATCHER_SYSV, self::RESOLVED_CONF,
         self::RESOLVED_CONF_BACKUP, self::RC_LOCAL_BACKUP, self::HOSTS, ResolvedDns::UNIT, ResolvedDns::DELEGATE,
+        ResolvedDns::FORMER_UNIT, ResolvedDns::FORMER_DELEGATE,
     ];
 
     private const PACKAGE_PATHS = [self::DNSMASQ_CONF, self::DNSMASQ_DEFAULT, self::DNSMASQ_NM];

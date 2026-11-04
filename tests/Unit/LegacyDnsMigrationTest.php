@@ -73,6 +73,7 @@ class LegacyDnsMigrationTest extends TestCase
             'NetworkManager.service' => ['load' => 'loaded', 'active' => 'active', 'enabled' => 'enabled', 'preset' => 'enabled'],
             'dnsmasq.service' => ['load' => 'not-found', 'active' => 'inactive', 'enabled' => '', 'preset' => ''],
             'valet-dns.service' => ['load' => 'not-found', 'active' => 'inactive', 'enabled' => '', 'preset' => ''],
+            'valet-cubed-dns.service' => ['load' => 'not-found', 'active' => 'inactive', 'enabled' => '', 'preset' => ''],
             'valet-linux-plus-dns.service' => ['load' => 'not-found', 'active' => 'inactive', 'enabled' => '', 'preset' => ''],
         ];
         $this->link('/etc/resolv.conf', '../run/systemd/resolve/stub-resolv.conf');
@@ -595,7 +596,7 @@ class LegacyDnsMigrationTest extends TestCase
                 $backend();
             }
             $hosts = $this->get('/etc/hosts');
-            $this->put('/etc/hosts', $hosts . "\n# Valet Linux+ hosts start\n# Managed by Valet Linux+. Do not edit between these markers.\n127.0.0.1\tapp.{$domain}\n# Valet Linux+ hosts end\n");
+            $this->put('/etc/hosts', $hosts . "\n# Valet Cubed hosts start\n# Managed by Valet Cubed. Do not edit between these markers.\n127.0.0.1\tapp.{$domain}\n# Valet Cubed hosts end\n");
         });
     }
 
@@ -753,7 +754,7 @@ class LegacyDnsMigrationTest extends TestCase
         );
         foreach ($iterator as $file) {
             $path = substr($file->getPathname(), strlen($this->root));
-            if (str_starts_with($path, '/var/lib/valet-linux-plus')) {
+            if (str_starts_with($path, '/var/lib/valet-cubed')) {
                 continue;
             }
             $result[$path] = match (true) {

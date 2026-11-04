@@ -71,6 +71,35 @@ class ResolvedDnsTest extends TestCase
         $this->assertArrayNotHasKey(ResolvedDns::UNIT, $this->files);
     }
 
+    public function testReplacesTheResolverWrittenBeforeTheRename(): void
+    {
+        $this->files[ResolvedDns::FORMER_UNIT] = "# Managed by Valet Linux+\n[Unit]\n";
+        $this->files[ResolvedDns::FORMER_DELEGATE] = "# Managed by Valet Linux+\n[Delegate]\n";
+
+        $this->assertTrue($this->dns->activate('test'));
+
+        $this->assertArrayNotHasKey(ResolvedDns::FORMER_UNIT, $this->files);
+        $this->assertArrayNotHasKey(ResolvedDns::FORMER_DELEGATE, $this->files);
+        $this->assertArrayHasKey(ResolvedDns::UNIT, $this->files);
+        // The former service holds the same port, so it stops before the new one starts.
+        $stopped = array_search('systemctl disable --now valet-linux-plus-dns.service', $this->commands, true);
+        $started = array_search('systemctl restart valet-cubed-dns.service', $this->commands, true);
+        $this->assertIsInt($stopped);
+        $this->assertIsInt($started);
+        $this->assertLessThan($started, $stopped);
+    }
+
+    public function testKeepsUnownedFilesWithTheFormerNames(): void
+    {
+        $this->files[ResolvedDns::FORMER_UNIT] = 'user configuration';
+
+        $this->assertTrue($this->dns->activate('test'));
+        $this->dns->deactivate();
+
+        $this->assertSame('user configuration', $this->files[ResolvedDns::FORMER_UNIT]);
+        $this->assertNotContains('systemctl disable --now valet-linux-plus-dns.service', $this->commands);
+    }
+
     public function testUnsupportedOrNonActiveResolverFallsBackWithoutChangingDns(): void
     {
         $this->version = 'systemd 257';
@@ -117,10 +146,10 @@ class ResolvedDnsTest extends TestCase
 
     public function testRollsBackWhenStartingTheResolverFails(): void
     {
-        $this->failure = 'systemctl restart valet-linux-plus-dns.service';
+        $this->failure = 'systemctl restart valet-cubed-dns.service';
         $this->assertFalse($this->dns->activate('test'));
         $this->assertSame([], $this->files);
-        $this->assertContains('systemctl disable --now valet-linux-plus-dns.service', $this->commands);
+        $this->assertContains('systemctl disable --now valet-cubed-dns.service', $this->commands);
     }
 
     public function testRollsBackWhenDelegatedLookupDoesNotResolveLocally(): void
@@ -148,7 +177,7 @@ class ResolvedDnsTest extends TestCase
             $this->fail('Expected a reload error');
         } catch (\RuntimeException $exception) {
             $this->assertArrayHasKey(ResolvedDns::UNIT, $this->files);
-            $this->assertNotContains('systemctl disable --now valet-linux-plus-dns.service', $this->commands);
+            $this->assertNotContains('systemctl disable --now valet-cubed-dns.service', $this->commands);
         }
     }
 
@@ -158,7 +187,7 @@ class ResolvedDnsTest extends TestCase
         $this->commands = [];
         $this->assertTrue($this->dns->activate('test'));
         $this->assertNotContains('systemctl reload systemd-resolved.service', $this->commands);
-        $this->assertNotContains('systemctl restart valet-linux-plus-dns.service', $this->commands);
+        $this->assertNotContains('systemctl restart valet-cubed-dns.service', $this->commands);
     }
 
     public function testCleanupDoesNotReloadAnInactiveSystemResolver(): void

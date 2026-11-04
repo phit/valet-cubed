@@ -107,6 +107,7 @@ DNS_PATHS=(
     /etc/resolv.conf /etc/resolv.conf.bak /etc/dnsmasq.conf /etc/dnsmasq.conf.bak /etc/default/dnsmasq
     /etc/systemd/resolved.conf /etc/systemd/resolved.conf.bak /etc/hosts
     /etc/systemd/system/valet-dns.service /etc/init.d/valet-dns
+    /etc/systemd/system/valet-cubed-dns.service /etc/systemd/dns-delegate.d/valet-cubed.dns-delegate
     /etc/systemd/system/valet-linux-plus-dns.service /etc/systemd/dns-delegate.d/valet-linux-plus.dns-delegate
 )
 
@@ -132,7 +133,7 @@ snapshot() {
             fi
         done
     } > "$dir/files.tsv"
-    for unit in systemd-resolved dnsmasq NetworkManager valet-dns valet-linux-plus-dns; do
+    for unit in systemd-resolved dnsmasq NetworkManager valet-dns valet-cubed-dns valet-linux-plus-dns; do
         printf '%s\t%s\n' "$unit" "$(unit_state "$unit")"
     done > "$dir/units.tsv"
     {
@@ -231,7 +232,7 @@ verify_restored() {
     if [[ "$(getenforce 2>/dev/null)" == Enforcing ]]; then
         check "only nginx and PHP-FPM run permissive under SELinux" bash -c "semanage permissive -l -n | grep -qx '\s*httpd_t\s*'"
     fi
-    if [[ -f /etc/systemd/dns-delegate.d/valet-linux-plus.dns-delegate ]]; then
+    if [[ -f /etc/systemd/dns-delegate.d/valet-cubed.dns-delegate ]]; then
         check "wildcard subdomain resolves through delegation" resolves_to sub.app.test 127.0.0.1
         check "delegation does not answer for other domains" bash -c "! getent ahosts unregistered-name.example.invalid"
     else
@@ -241,8 +242,8 @@ verify_restored() {
         if (( systemd_version >= 258 )); then
             # Delegation was expected; keep the evidence of why it fell back.
             {
-                echo "--- valet-linux-plus-dns journal"
-                journalctl -u valet-linux-plus-dns --no-pager -n 50 2>&1
+                echo "--- valet-cubed-dns journal"
+                journalctl -u valet-cubed-dns --no-pager -n 50 2>&1
                 echo "--- SELinux"
                 getenforce 2>&1
                 ausearch -m AVC -ts recent 2>/dev/null || grep denied /var/log/audit/audit.log 2>/dev/null | tail -20
@@ -670,8 +671,8 @@ after_reboot() {
     snapshot now
     check "uninstall leaves the baseline resolver" same_resolver_as baseline
     check "LAN DNS works after uninstall" resolves_to "$LAN_NAME" "$LAN_ADDRESS"
-    check "Valet delegation removed" test ! -e /etc/systemd/dns-delegate.d/valet-linux-plus.dns-delegate
-    check "Valet hosts block removed" bash -c "! grep -q 'Valet Linux+ hosts start' /etc/hosts"
+    check "Valet delegation removed" test ! -e /etc/systemd/dns-delegate.d/valet-cubed.dns-delegate
+    check "Valet hosts block removed" bash -c "! grep -q 'Valet Cubed hosts start' /etc/hosts"
     check "user /etc/hosts entry preserved" grep -q "$HOSTS_NAME" /etc/hosts
     finish_phase final
 }

@@ -9,10 +9,18 @@ use RuntimeException;
  */
 class ResolvedDns
 {
-    public const UNIT = '/etc/systemd/system/valet-linux-plus-dns.service';
-    public const DELEGATE = '/etc/systemd/dns-delegate.d/valet-linux-plus.dns-delegate';
-    private const MARKER = '# Managed by Valet Linux+';
-    private const SERVICE = 'valet-linux-plus-dns.service';
+    public const UNIT = '/etc/systemd/system/valet-cubed-dns.service';
+    public const DELEGATE = '/etc/systemd/dns-delegate.d/valet-cubed.dns-delegate';
+    public const SERVICE = 'valet-cubed-dns.service';
+    private const MARKER = '# Managed by Valet Cubed';
+
+    /**
+     * Names used before the rename to Valet Cubed; removed when found.
+     */
+    public const FORMER_UNIT = '/etc/systemd/system/valet-linux-plus-dns.service';
+    public const FORMER_DELEGATE = '/etc/systemd/dns-delegate.d/valet-linux-plus.dns-delegate';
+    public const FORMER_SERVICE = 'valet-linux-plus-dns.service';
+    private const FORMER_MARKER = '# Managed by Valet Linux+';
 
     /**
      * @var callable(int): void
@@ -54,8 +62,11 @@ class ResolvedDns
             return false;
         }
 
+        // The former service listens on the same address and port.
+        $this->removeFormerNames();
+
         $binary = $this->binary();
-        $unit = self::MARKER . "\n[Unit]\nDescription=Valet Linux+ local wildcard DNS\nAfter=network.target\n\n"
+        $unit = self::MARKER . "\n[Unit]\nDescription=Valet Cubed local wildcard DNS\nAfter=network.target\n\n"
             . "[Service]\nType=simple\nDynamicUser=yes\nExecStart=" . $binary
             . ' --keep-in-foreground --conf-file=/dev/null --no-resolv --no-hosts --bind-interfaces'
             . ' --listen-address=127.0.0.2 --port=53535 --local=/' . $domain . '/ --address=/' . $domain . "/127.0.0.1\n"
@@ -103,17 +114,28 @@ class ResolvedDns
 
     public function deactivate(): void
     {
-        $delegateOwned = $this->owned(self::DELEGATE);
-        $unitOwned = $this->owned(self::UNIT);
+        $this->remove(self::UNIT, self::DELEGATE, self::SERVICE, self::MARKER);
+        $this->removeFormerNames();
+    }
+
+    private function removeFormerNames(): void
+    {
+        $this->remove(self::FORMER_UNIT, self::FORMER_DELEGATE, self::FORMER_SERVICE, self::FORMER_MARKER);
+    }
+
+    private function remove(string $unit, string $delegate, string $service, string $marker): void
+    {
+        $delegateOwned = $this->owned($delegate, $marker);
+        $unitOwned = $this->owned($unit, $marker);
         if ($delegateOwned) {
-            $this->files->unlink(self::DELEGATE);
+            $this->files->unlink($delegate);
             if (trim($this->cli->run('systemctl is-active systemd-resolved.service 2>/dev/null')) === 'active') {
                 $this->command('systemctl reload systemd-resolved.service');
             }
         }
         if ($unitOwned) {
-            $this->cli->run('systemctl disable --now ' . self::SERVICE);
-            $this->files->unlink(self::UNIT);
+            $this->cli->run('systemctl disable --now ' . $service);
+            $this->files->unlink($unit);
             $this->cli->run('systemctl daemon-reload');
         }
     }
@@ -136,9 +158,9 @@ class ResolvedDns
         return false;
     }
 
-    private function owned(string $path): bool
+    private function owned(string $path, string $marker): bool
     {
-        return $this->files->exists($path) && str_starts_with($this->files->get($path), self::MARKER . "\n");
+        return $this->files->exists($path) && str_starts_with($this->files->get($path), $marker . "\n");
     }
 
     private function binary(): ?string

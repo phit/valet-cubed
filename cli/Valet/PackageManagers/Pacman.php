@@ -192,7 +192,7 @@ class Pacman implements PackageManager
         $this->cli->run(\sprintf(
             'printf %s %s > %s',
             escapeshellarg('%s\n'),
-            implode(' ', array_map('escapeshellarg', array_merge(['; Enabled by Valet Linux+'], $enable))),
+            implode(' ', array_map('escapeshellarg', array_merge(['; Enabled by Valet Cubed'], $enable))),
             escapeshellarg($iniFile)
         ));
     }

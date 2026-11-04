@@ -53,6 +53,7 @@ class NginxTest extends TestCase
      */
     public function itWillInstallSuccessfully(): void
     {
+        $this->filesystem->shouldReceive('exists')->with(Nginx::FORMER_SERVICE_OVERRIDE)->once()->andReturnFalse();
         $this->commandLine
             ->shouldReceive('run')
             ->with('systemctl show nginx.service -p ProtectHome --value 2>/dev/null')
@@ -290,6 +291,11 @@ class NginxTest extends TestCase
             ->with(Nginx::SERVICE_OVERRIDE)
             ->once()
             ->andReturnFalse();
+        $this->filesystem
+            ->shouldReceive('exists')
+            ->with(Nginx::FORMER_SERVICE_OVERRIDE)
+            ->once()
+            ->andReturnFalse();
 
         $this->filesystem
             ->shouldReceive('restore')
@@ -330,6 +336,7 @@ class NginxTest extends TestCase
      */
     public function itWillLiftHomeProtectionFromTheNginxUnit(): void
     {
+        $this->filesystem->shouldReceive('exists')->with(Nginx::FORMER_SERVICE_OVERRIDE)->once()->andReturnFalse();
         $this->commandLine->shouldReceive('run')
             ->with('systemctl show nginx.service -p ProtectHome --value 2>/dev/null')
             ->once()
@@ -347,11 +354,31 @@ class NginxTest extends TestCase
     /**
      * @test
      */
+    public function itWillRemoveTheOverrideWrittenBeforeTheRename(): void
+    {
+        $this->filesystem->shouldReceive('exists')->with(Nginx::FORMER_SERVICE_OVERRIDE)->once()->andReturnTrue();
+        $this->filesystem->shouldReceive('unlink')->with(Nginx::FORMER_SERVICE_OVERRIDE)->once();
+        $this->commandLine->shouldReceive('run')->with('systemctl daemon-reload', null, RunAs::Root)->once();
+        $this->commandLine->shouldReceive('run')
+            ->with('systemctl show nginx.service -p ProtectHome --value 2>/dev/null')
+            ->once()
+            ->andReturn("no\n");
+        $this->filesystem->shouldNotReceive('put');
+
+        (fn () => $this->installServiceOverride())->call($this->nginx);
+        $this->assertTrue(true);
+    }
+
+    /**
+     * @test
+     */
     public function itWillRemoveTheUnitOverrideOnUninstall(): void
     {
         $this->serviceManager->shouldReceive('stop')->with('nginx');
         $this->filesystem->shouldReceive('exists')->with(Nginx::SERVICE_OVERRIDE)->once()->andReturnTrue();
         $this->filesystem->shouldReceive('unlink')->with(Nginx::SERVICE_OVERRIDE)->once();
+        $this->filesystem->shouldReceive('exists')->with(Nginx::FORMER_SERVICE_OVERRIDE)->once()->andReturnTrue();
+        $this->filesystem->shouldReceive('unlink')->with(Nginx::FORMER_SERVICE_OVERRIDE)->once();
         $this->commandLine->shouldReceive('run')->with('systemctl daemon-reload', null, RunAs::Root)->once();
         $this->filesystem->shouldReceive('restore');
         $this->filesystem->shouldReceive('unlink');

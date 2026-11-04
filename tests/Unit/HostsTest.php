@@ -65,6 +65,17 @@ class HostsTest extends TestCase
         $this->resolvedDns->shouldNotReceive('deactivate');
         $this->filesystem->shouldReceive('exists')->once()->with('/etc/hosts')->andReturnTrue();
         $this->filesystem->shouldReceive('get')->once()->with('/etc/hosts')->andReturn(
+            "127.0.0.1 localhost\n\n# Valet Cubed hosts start\n127.0.0.1 app.test\n# Valet Cubed hosts end\n"
+        );
+        $this->expectHostsFileWrite("127.0.0.1 localhost\n");
+        $this->hosts->updateDomain('test');
+    }
+
+    public function testRemovesTheHostsBlockWrittenBeforeTheRename(): void
+    {
+        $this->resolvedDns->shouldReceive('activate')->once()->with('test')->andReturn(true);
+        $this->filesystem->shouldReceive('exists')->once()->with('/etc/hosts')->andReturnTrue();
+        $this->filesystem->shouldReceive('get')->once()->with('/etc/hosts')->andReturn(
             "127.0.0.1 localhost\n\n# Valet Linux+ hosts start\n127.0.0.1 app.test\n# Valet Linux+ hosts end\n"
         );
         $this->expectHostsFileWrite("127.0.0.1 localhost\n");
@@ -91,10 +102,10 @@ class HostsTest extends TestCase
             ->andReturn(implode(PHP_EOL, [
                 '127.0.0.1 localhost',
                 '',
-                '# Valet Linux+ hosts start',
-                '# Managed by Valet Linux+. Do not edit between these markers.',
+                '# Valet Cubed hosts start',
+                '# Managed by Valet Cubed. Do not edit between these markers.',
                 '127.0.0.1 app.test',
-                '# Valet Linux+ hosts end',
+                '# Valet Cubed hosts end',
                 '',
             ]));
 
@@ -126,10 +137,10 @@ class HostsTest extends TestCase
             ->andReturn(implode(PHP_EOL, [
                 '127.0.0.1 localhost',
                 '',
-                '# Valet Linux+ hosts start',
-                '# Managed by Valet Linux+. Do not edit between these markers.',
+                '# Valet Cubed hosts start',
+                '# Managed by Valet Cubed. Do not edit between these markers.',
                 '127.0.0.1 app.test',
-                '# Valet Linux+ hosts end',
+                '# Valet Cubed hosts end',
                 '',
             ]));
 
@@ -271,22 +282,22 @@ class HostsTest extends TestCase
             ->andReturn(implode(PHP_EOL, [
                 '127.0.0.1 localhost',
                 '',
-                '# Valet Linux+ hosts start',
-                '# Managed by Valet Linux+. Do not edit between these markers.',
+                '# Valet Cubed hosts start',
+                '# Managed by Valet Cubed. Do not edit between these markers.',
                 '127.0.0.1 old.test',
-                '# Valet Linux+ hosts end',
+                '# Valet Cubed hosts end',
                 '',
             ]));
 
         $expected = implode(PHP_EOL, [
             '127.0.0.1 localhost',
             '',
-            '# Valet Linux+ hosts start',
-            '# Managed by Valet Linux+. Do not edit between these markers.',
+            '# Valet Cubed hosts start',
+            '# Managed by Valet Cubed. Do not edit between these markers.',
             '127.0.0.1' . "\t" . 'app.' . $domain,
             '127.0.0.1' . "\t" . 'linked.' . $domain,
             '127.0.0.1' . "\t" . 'proxy.' . $domain,
-            '# Valet Linux+ hosts end',
+            '# Valet Cubed hosts end',
             '',
         ]);
 

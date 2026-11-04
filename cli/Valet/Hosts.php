@@ -20,8 +20,11 @@ class Hosts
     private bool $usingDelegatedDns = false;
 
     public string $hostsPath = '/etc/hosts';
-    private string $startMarker = '# Valet Linux+ hosts start';
-    private string $endMarker = '# Valet Linux+ hosts end';
+    public const START_MARKER = '# Valet Cubed hosts start';
+    public const END_MARKER = '# Valet Cubed hosts end';
+    // Markers used before the rename to Valet Cubed; the block is removed when found.
+    public const FORMER_START_MARKER = '# Valet Linux+ hosts start';
+    public const FORMER_END_MARKER = '# Valet Linux+ hosts end';
 
     /**
      * Create a new Hosts instance.
@@ -175,15 +178,15 @@ class Hosts
         $contents = rtrim($this->withoutValetHosts($contents));
 
         $block = [
-            $this->startMarker,
-            '# Managed by Valet Linux+. Do not edit between these markers.',
+            self::START_MARKER,
+            '# Managed by Valet Cubed. Do not edit between these markers.',
         ];
 
         foreach ($hosts as $host) {
             $block[] = '127.0.0.1' . "\t" . $host;
         }
 
-        $block[] = $this->endMarker;
+        $block[] = self::END_MARKER;
 
         $contents = trim($contents) === ''
             ? implode(PHP_EOL, $block) . PHP_EOL
@@ -199,7 +202,7 @@ class Hosts
         }
 
         $contents = $this->files->get($this->hostsPath);
-        if (!str_contains($contents, $this->startMarker)) {
+        if (!str_contains($contents, self::START_MARKER) && !str_contains($contents, self::FORMER_START_MARKER)) {
             return;
         }
         $this->writeHostsFile(rtrim($this->withoutValetHosts($contents)) . PHP_EOL);
@@ -220,12 +223,11 @@ class Hosts
 
     private function withoutValetHosts(string $contents): string
     {
-        $pattern = sprintf(
-            '/\n?%s\n.*?\n%s\n?/s',
-            preg_quote($this->startMarker, '/'),
-            preg_quote($this->endMarker, '/')
-        );
+        foreach ([[self::START_MARKER, self::END_MARKER], [self::FORMER_START_MARKER, self::FORMER_END_MARKER]] as [$start, $end]) {
+            $pattern = sprintf('/\n?%s\n.*?\n%s\n?/s', preg_quote($start, '/'), preg_quote($end, '/'));
+            $contents = preg_replace($pattern, PHP_EOL, $contents) ?? $contents;
+        }
 
-        return preg_replace($pattern, PHP_EOL, $contents) ?? $contents;
+        return $contents;
     }
 }
