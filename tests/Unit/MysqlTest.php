@@ -11,6 +11,7 @@ use Valet\Contracts\PackageManager;
 use Valet\Contracts\ServiceManager;
 use Valet\Filesystem;
 use Valet\Mysql;
+use Valet\PackageManagers\Apt;
 use Valet\PhpFpm;
 use Valet\Tests\TestCase;
 
@@ -169,6 +170,58 @@ class MysqlTest extends TestCase
             ->andReturn([]);
 
         $this->mysql->install($useMariaDB);
+    }
+
+    /**
+     * @test
+     */
+    public function itWillInstallMariaDbWhenAptOffersNoMysqlServer(): void
+    {
+        Writer::fake();
+        $apt = Mockery::mock(Apt::class);
+        $apt->shouldReceive('packageName')->with('mysql')->andReturn('mysql-server');
+        $apt->shouldReceive('packageName')->with('mariadb')->andReturn('mariadb-server');
+        $apt->shouldReceive('installed')->with('mysql-server')->andReturnFalse();
+        $apt->shouldReceive('installed')->with('mariadb-server')->andReturnFalse();
+        $apt->shouldReceive('hasInstallCandidate')->with('mysql-server')->once()->andReturnFalse();
+        $phpFpm = Mockery::mock(PhpFpm::class);
+        swap(PhpFpm::class, $phpFpm);
+        $phpFpm->shouldReceive('getCurrentVersion')->andReturn('8.4');
+        $apt->shouldReceive('getPhpExtensionName')->with('8.4', 'mysql')->andReturn('php8.4-mysql');
+        $apt->shouldReceive('ensureInstalled')->with('php8.4-mysql')->once();
+        $apt->shouldReceive('installOrFail')->with('mariadb-server')->once();
+        $apt->shouldNotReceive('installOrFail')->with('mysql-server');
+        $this->serviceManager->shouldReceive('enable')->with('mariadb')->once();
+        $this->commandLine->shouldReceive('run')->andReturn('');
+        $this->config->shouldReceive('get')->with('mysql', [])->andReturn([]);
+        $this->config->shouldReceive('set')->with('mysql', ['user' => 'valet', 'password' => ''])->once();
+
+        (new Mysql($apt, $this->serviceManager, $this->commandLine, $this->filesystem, $this->config))->install();
+    }
+
+    /**
+     * @test
+     */
+    public function itWillInstallMysqlWhenAptOffersIt(): void
+    {
+        Writer::fake();
+        $apt = Mockery::mock(Apt::class);
+        $apt->shouldReceive('packageName')->with('mysql')->andReturn('mysql-server');
+        $apt->shouldReceive('packageName')->with('mariadb')->andReturn('mariadb-server');
+        $apt->shouldReceive('installed')->andReturnFalse();
+        $apt->shouldReceive('hasInstallCandidate')->with('mysql-server')->once()->andReturnTrue();
+        $phpFpm = Mockery::mock(PhpFpm::class);
+        swap(PhpFpm::class, $phpFpm);
+        $phpFpm->shouldReceive('getCurrentVersion')->andReturn('8.4');
+        $apt->shouldReceive('getPhpExtensionName')->andReturn('php8.4-mysql');
+        $apt->shouldReceive('ensureInstalled');
+        $apt->shouldReceive('installOrFail')->with('mysql-server')->once();
+        $this->serviceManager->shouldReceive('enable')->with('mysql')->once();
+        $this->commandLine->shouldReceive('run')->andReturn('');
+        $this->config->shouldReceive('get')->andReturn([]);
+        $this->config->shouldReceive('set');
+
+        (new Mysql($apt, $this->serviceManager, $this->commandLine, $this->filesystem, $this->config))->install();
     }
 
     /**

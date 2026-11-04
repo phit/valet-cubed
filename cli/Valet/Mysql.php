@@ -7,6 +7,7 @@ use PDO;
 use Valet\Contracts\PackageManager;
 use Valet\Contracts\ServiceManager;
 use Valet\Facades\PhpFpm as PhpFpmFacade;
+use Valet\PackageManagers\Apt;
 use Valet\PackageManagers\Dnf;
 use Valet\PackageManagers\Pacman;
 
@@ -57,6 +58,11 @@ class Mysql
     {
         if ($this->currentPackage === null) {
             if ($this->pm instanceof Pacman || $this->pm instanceof Dnf) {
+                $useMariaDB = true;
+            }
+            // Debian ships MariaDB only; Ubuntu ships both.
+            if (!$useMariaDB && $this->pm instanceof Apt && !$this->pm->hasInstallCandidate($this->pm->packageName('mysql'))) {
+                Writer::info('MySQL is not available from the package repositories; installing MariaDB instead');
                 $useMariaDB = true;
             }
             $package = $useMariaDB ? $this->pm->packageName('mariadb') : $this->pm->packageName('mysql');

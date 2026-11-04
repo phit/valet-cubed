@@ -51,6 +51,16 @@ class Apt implements PackageManager
     }
 
     /**
+     * Determine if the package repositories offer the given package.
+     */
+    public function hasInstallCandidate(string $package): bool
+    {
+        $output = $this->cli->run('apt-cache policy '.escapeshellarg($package).' 2>/dev/null');
+
+        return preg_match('/^\s*Candidate:\s*(\S+)/m', $output, $matches) === 1 && $matches[1] !== '(none)';
+    }
+
+    /**
      * Ensure that the given package is installed.
      */
     public function ensureInstalled(string $package): void

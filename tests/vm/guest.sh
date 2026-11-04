@@ -526,10 +526,8 @@ valet_install() {
     # --no-interaction aborts at Valet's database prompts, so answer on stdin.
     # New MySQL: password "root", then link php (default). Existing MariaDB:
     # user root, empty password (socket auth as root), no retry, link php.
-    # Debian ships no mysql-server; Valet needs --mariadb there.
-    local flags="--ignore-selinux"
-    [[ "$DISTRO" == debian-* ]] && flags+=" --mariadb"
-    as_valet "printf 'root\\n\\nno\\nyes\\n' | valet install $flags"
+    # Debian ships no mysql-server; Valet falls back to MariaDB there.
+    as_valet "printf 'root\\n\\nno\\nyes\\n' | valet install --ignore-selinux"
 }
 
 install_checkout() {
