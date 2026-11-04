@@ -28,7 +28,7 @@ class Valet
     public Filesystem $files;
     private string $valetBin = '/usr/local/bin/valet';
     private string $phpBin = '/usr/local/bin/php';
-    private string $github = 'https://api.github.com/repos/genesisweb/valet-linux-plus/releases/latest';
+    private string $github = 'https://api.github.com/repos/phit/valet-cubed/releases/latest';
 
     /**
      * Create a new Valet instance.
@@ -110,7 +110,7 @@ class Valet
     }
 
     /**
-     * Retrieve the latest version of Valet Linux Plus.
+     * Retrieve the latest version of Valet Cubed.
      * @throws Exception
      * @return string|bool
      */

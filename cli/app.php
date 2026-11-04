@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Valet Linux+ console application.
+ * Valet Cubed console application.
  */
 
 use ConsoleComponents\Writer;
@@ -46,9 +46,9 @@ if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
  * Create the application.
  */
 Container::setInstance(new Container());
-$version = '2.0.3';
+$version = '3.0.0';
 
-$app = new Application('ValetLinux+', $version);
+$app = new Application('Valet Cubed', $version);
 
 /**
  * Detect environment.
@@ -327,10 +327,10 @@ if (is_dir(VALET_HOME_PATH)) {
         $script = dirname(__FILE__) . '/scripts/update.sh';
 
         if (Valet::onLatestVersion($version)) {
-            Writer::info('You have the latest version of Valet Linux+');
+            Writer::info('You have the latest version of Valet Cubed');
             passthru(escapeshellarg($script));
         } else {
-            Writer::warn('There is a new release of Valet Linux+');
+            Writer::warn('There is a new release of Valet Cubed');
             Writer::warn('Updating now...');
             $latestVersion = Valet::getLatestVersion();
             if ($latestVersion) {
@@ -339,7 +339,7 @@ if (is_dir(VALET_HOME_PATH)) {
                 passthru(escapeshellarg($script) . ' update');
             }
         }
-    })->descriptions('Update Valet Linux+ and clean up cruft');
+    })->descriptions('Update Valet Cubed and clean up cruft');
 
     /**
      * Get or set the domain currently being used by Valet.

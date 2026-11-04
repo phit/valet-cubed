@@ -1,18 +1,25 @@
 {
-    "name": "genesisweb/valet-linux-plus",
-    "description": "Advanced local development experience for Linux.",
+    "name": "phit/valet-cubed",
+    "description": "Advanced local development experience for Linux. A fork of a fork of a fork of Laravel Valet.",
+    "homepage": "https://phit.github.io/valet-cubed/",
     "keywords": [
         "laravel",
-        "zonda",
-        "wwdhhd",
-        "ubuntu",
-        "fedora",
-        "arch",
+        "valet",
         "linux",
-        "valet"
+        "nginx",
+        "php",
+        "development",
+        "ubuntu",
+        "debian",
+        "fedora",
+        "arch"
     ],
     "license": "MIT",
     "authors": [
+        {
+            "name": "phit",
+            "homepage": "https://github.com/phit"
+        },
         {
             "name": "Uttam Rabadiya",
             "email": "mail@uttam.dev"
@@ -59,11 +66,12 @@
         "symfony/var-dumper": "^7.0",
         "ext-zip": "*"
     },
+    "conflict": {
+        "genesisweb/valet-linux-plus": "*"
+    },
     "scripts": {
-        "post-install-cmd": [
-        ],
-        "post-update-cmd": [
-        ]
+        "post-install-cmd": [],
+        "post-update-cmd": []
     },
     "bin": [
         "valet"

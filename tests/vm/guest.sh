@@ -617,7 +617,11 @@ install_checkout() {
     echo "--- installing this checkout"
     as_valet "composer global config repositories.valet-checkout '{\"type\": \"path\", \"url\": \"$CHECKOUT\", \"options\": {\"symlink\": false}}'" \
         || die "composer repository setup failed"
-    valet_install_package "genesisweb/valet-linux-plus:*@dev" || die "this checkout cannot be installed with Composer"
+    # Switch packages the way the README tells Valet Linux+ users to.
+    if as_valet "composer global show genesisweb/valet-linux-plus" >/dev/null 2>&1; then
+        as_valet "composer global remove --no-interaction genesisweb/valet-linux-plus" || die "the old package cannot be removed"
+    fi
+    valet_install_package "phit/valet-cubed:*@dev" || die "this checkout cannot be installed with Composer"
     valet_install > "$OUT/install.log" 2>&1
     echo "install exit status: $?" | tee -a "$OUT/install.log"
     as_valet "cd ~/sites && valet park" >> "$OUT/install.log" 2>&1

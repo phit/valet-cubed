@@ -1,23 +1,24 @@
 <p align="center"><img width="500" src="art/logo.png"></p>
 
 <p align="center">
-<a href="https://scrutinizer-ci.com/g/genesisweb/valet-linux-plus/?branch=master"><img src="https://scrutinizer-ci.com/g/genesisweb/valet-linux-plus/badges/quality-score.png?b=master" alt="Scrutinizer"></a>
-<a href="https://packagist.org/packages/genesisweb/valet-linux-plus"><img src="https://poser.pugx.org/genesisweb/valet-linux-plus/downloads.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/genesisweb/valet-linux-plus"><img src="https://poser.pugx.org/genesisweb/valet-linux-plus/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/genesisweb/valet-linux-plus"><img src="https://poser.pugx.org/genesisweb/valet-linux-plus/license.svg" alt="License"></a>
+<a href="https://packagist.org/packages/phit/valet-cubed"><img src="https://poser.pugx.org/phit/valet-cubed/downloads.svg" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/phit/valet-cubed"><img src="https://poser.pugx.org/phit/valet-cubed/v/stable.svg" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/phit/valet-cubed"><img src="https://poser.pugx.org/phit/valet-cubed/license.svg" alt="License"></a>
 </p>
 
 ## Introduction
 
-Valet *Linux+* is an advanced development environment for Linux minimalists. No Vagrant. You can even share your sites publicly using local tunnels. _Yeah, we like it too._
+Valet Cubed is a fork of [Valet Linux+](https://github.com/valet-linux-plus/valet-linux-plus), which forked [Valet Linux](https://github.com/cpriego/valet-linux), which forked [Laravel Valet](https://github.com/laravel/valet). Hence the name.
 
-Valet *Linux+* configures your system to always run Nginx in the background when your machine starts. On systems using the systemd-resolved stub with systemd 258 or newer and `dnsmasq` installed, Valet delegates its configured domain to a separate loopback-only DNS service. This supports wildcard subdomains without changing the system's upstream DNS servers. Valet verifies that the delegation works before removing its managed `/etc/hosts` entries.
+Valet Cubed is an advanced development environment for Linux minimalists. No Vagrant. You can even share your sites publicly using local tunnels. _Yeah, we like it too._
+
+Valet Cubed configures your system to always run Nginx in the background when your machine starts. On systems using the systemd-resolved stub with systemd 258 or newer and `dnsmasq` installed, Valet delegates its configured domain to a separate loopback-only DNS service. This supports wildcard subdomains without changing the system's upstream DNS servers. Valet verifies that the delegation works before removing its managed `/etc/hosts` entries.
 
 On other systems, or if the delegated resolver cannot be started, Valet writes a managed block to `/etc/hosts` for registered parked, linked, secured, and proxied site names. This fallback supports concrete names but not wildcard subdomains. Valet does not install or configure a system-wide dnsmasq service. Browsers configured to use their own DNS-over-HTTPS resolver may bypass the local delegation.
 
 `valet install` and `valet uninstall` never change DNS settings made by older releases. If they find them, they print a warning that points to the migration below.
 
-In other words, a blazing fast PHP development environment that uses roughly 7mb of RAM. Valet *Linux+* isn't a complete replacement for Vagrant or Homestead, but provides a great alternative if you want flexible basics, prefer extreme speed, or are working on a machine with a limited amount of RAM.
+In other words, a blazing fast PHP development environment that uses roughly 7mb of RAM. Valet Cubed isn't a complete replacement for Vagrant or Homestead, but provides a great alternative if you want flexible basics, prefer extreme speed, or are working on a machine with a limited amount of RAM.
 
 ## Migrating from the old DNS integration
 
@@ -60,9 +61,21 @@ Limitations:
 - It does not undo the old `valet uninstall`, which could leave `/etc/resolv.conf` pointing to `/run/systemd/resolve/resolv.conf` with systemd-resolved disabled. The preview detects this and prints the commands to fix it.
 - It does not restore `/etc/systemd/resolved.conf.bak`, `/etc/rc.local.bak`, or custom nameservers kept in `/opt/valet-linux`. It lists them for you to review.
 
+## Switching from Valet Linux+
+
+Valet Cubed is published as a new Composer package. Remove the old one, then install Valet Cubed:
+
+```bash
+composer global remove genesisweb/valet-linux-plus
+composer global require phit/valet-cubed
+valet install
+```
+
+The command is still `valet`, and your configuration in `~/.config/valet` is kept.
+
 ## Official Documentation
 
-Documentation for Valet can be found on the [Valet Linux website](https://valetlinux.plus/).
+Documentation for Valet Cubed can be found on the [Valet Cubed website](https://phit.github.io/valet-cubed/).
 
 ## License
 

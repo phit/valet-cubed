@@ -24,7 +24,7 @@ function check_dependencies() {
     if [[ $msg != '' ]]; then
         printf "%sYou have missing Valet dependencies:\n" "${RED}"
         printf "%s" "$msg"
-        printf "\nPlease refer to https://valetlinux.plus/ on how to install them.%s\n" "${NC}"
+        printf "\nPlease refer to https://phit.github.io/valet-cubed/ on how to install them.%s\n" "${NC}"
         exit 1
     fi
 }
@@ -58,7 +58,7 @@ fi
 # Valet CLI script which is written in PHP. Will use PHP to do it.
 if [[ ! -f "$DIR/cli/valet.php" ]]
 then
-    DIR="$( cd "$DIR/../genesisweb/valet-linux-plus" && pwd )"
+    DIR="$( cd "$DIR/../phit/valet-cubed" && pwd )"
 fi
 
 # If the command is one of the commands that requires "sudo" privileges
