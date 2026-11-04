@@ -145,7 +145,14 @@ class Configuration
      */
     private function read(): array
     {
-        return json_decode($this->files->get($this->path()), true);
+        // Missing before the first install, and while migrateConfig() moves
+        // an old ~/.valet home.
+        if (!$this->files->exists($this->path())) {
+            return [];
+        }
+        $config = json_decode($this->files->get($this->path()), true);
+
+        return is_array($config) ? $config : [];
     }
 
     /**

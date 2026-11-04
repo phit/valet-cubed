@@ -19,7 +19,19 @@ class ConfigurationTest extends TestCase
         parent::setUp();
 
         $this->filesystem = \Mockery::mock(Filesystem::class);
+        $this->filesystem->shouldReceive('exists')->with(VALET_HOME_PATH . '/config.json')->andReturnTrue()->byDefault();
         $this->configuration = new Configuration($this->filesystem);
+    }
+
+    /**
+     * @test
+     */
+    public function itWillReturnDefaultsWithoutAConfigurationFile(): void
+    {
+        $this->filesystem->shouldReceive('exists')->with(VALET_HOME_PATH . '/config.json')->andReturnFalse();
+        $this->filesystem->shouldNotReceive('get');
+
+        $this->assertSame('8.4', $this->configuration->get('php_version', '8.4'));
     }
 
     /**
@@ -232,7 +244,7 @@ class ConfigurationTest extends TestCase
 
         $this->filesystem
             ->shouldReceive('exists')
-            ->once()
+            ->twice()
             ->with(VALET_HOME_PATH.'/config.json')
             ->andReturnTrue();
 
