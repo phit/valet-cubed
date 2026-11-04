@@ -6,6 +6,7 @@ use ConsoleComponents\Writer;
 use Valet\Contracts\PackageManager;
 use Valet\Contracts\ServiceManager;
 use Valet\Facades\DevTools as DevToolsFacade;
+use Valet\PackageManagers\Pacman;
 
 class PhpFpm
 {
@@ -315,7 +316,10 @@ class PhpFpm
         foreach (self::COMMON_EXTENSIONS as $ext) {
             $extArray[] = $this->pm->getPhpExtensionName($version, $ext);
         }
-        $this->pm->ensureInstalled(implode(' ', $extArray));
+        $this->pm->ensureInstalled(implode(' ', array_unique($extArray)));
+        if ($this->pm instanceof Pacman) {
+            $this->pm->enablePhpExtensions($version, self::COMMON_EXTENSIONS);
+        }
     }
 
     /**
