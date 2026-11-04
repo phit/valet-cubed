@@ -274,6 +274,20 @@ class LegacyDnsMigrationTest extends TestCase
         $this->assertFalse($this->plan(['dnsmasq' => 'disable'])->blocked());
     }
 
+    public function testNarrowBindingInTheRestoredBackupIsNotAConflict(): void
+    {
+        $this->installTwoPointX();
+        $this->put('/etc/dnsmasq.conf.bak', "bind-interfaces\nlisten-address=10.54.0.1\naddress=/printer.office/10.54.0.20\n");
+
+        $plan = $this->plan();
+        $this->assertSame('keep', $plan->decisions['dnsmasq']['chosen']);
+        $this->assertFalse($plan->blocked(), implode("\n", $plan->conflicts));
+
+        $this->assertSame('completed', $this->migrator()->apply($plan, ['example.com'])['status']);
+        $this->assertSame('active', $this->units['dnsmasq.service']['active']);
+        $this->assertSame('active', $this->units['systemd-resolved.service']['active']);
+    }
+
     public function testCustomisedDnsmasqBackupIsRestoredWithAWarning(): void
     {
         $this->installTwoPointX();

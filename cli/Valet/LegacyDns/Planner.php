@@ -536,18 +536,8 @@ class Planner
      */
     private function remainingDnsmasqConfig(): array
     {
-        $sources = [I::DNSMASQ_CONF => $this->dnsmasqConf];
-        foreach ($this->facts['dirs'][I::DNSMASQ_DIR] ?? [] as $entry) {
-            $path = I::DNSMASQ_DIR . '/' . $entry;
-            if (in_array($path, $this->removed, true) || $entry === 'README'
-                || preg_match('/(\.dpkg-[a-z]+|\.rpm[a-z]+|~|\.bak)$/', $entry)) {
-                continue;
-            }
-            $sources[$path] = $this->content($path);
-        }
-
         $settings = [];
-        foreach ($sources as $path => $content) {
+        foreach ($this->remainingDnsmasqSources() as $path => $content) {
             if ($this->pristine($path, $content) === true) {
                 continue;
             }
@@ -567,12 +557,30 @@ class Planner
         return $settings;
     }
 
+    /**
+     * dnsmasq configuration files as they will be after the planned changes:
+     * dnsmasq.conf restored from its backup, Valet files removed.
+     *
+     * @return array<string, ?string> Content by path
+     */
+    private function remainingDnsmasqSources(): array
+    {
+        $sources = [I::DNSMASQ_CONF => $this->dnsmasqConf];
+        foreach ($this->facts['dirs'][I::DNSMASQ_DIR] ?? [] as $entry) {
+            $path = I::DNSMASQ_DIR . '/' . $entry;
+            if (in_array($path, $this->removed, true) || $entry === 'README'
+                || preg_match('/(\.dpkg-[a-z]+|\.rpm[a-z]+|~|\.bak)$/', $entry)) {
+                continue;
+            }
+            $sources[$path] = $this->content($path);
+        }
+
+        return $sources;
+    }
+
     private function dnsmasqBindsNarrowly(): bool
     {
-        $all = implode("\n", array_map(fn ($path) => (string) $this->content($path), array_merge(
-            [I::DNSMASQ_CONF],
-            array_map(fn ($entry) => I::DNSMASQ_DIR . '/' . $entry, $this->facts['dirs'][I::DNSMASQ_DIR] ?? [])
-        )));
+        $all = implode("\n", array_map('strval', $this->remainingDnsmasqSources()));
 
         return (bool) preg_match('/^\s*bind-(interfaces|dynamic)\s*$/m', $all)
             && (bool) preg_match('/^\s*(listen-address|except-interface\s*=\s*lo)/m', $all);
