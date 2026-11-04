@@ -61,6 +61,30 @@ then
     DIR="$( cd "$DIR/../phit/valet-cubed" && pwd )"
 fi
 
+# The PHP that runs Valet: the system PHP, or else the first php on the PATH
+# (for example Homebrew's), skipping Valet's own php helper. Resolved once,
+# before sudo resets the PATH, and passed on as VALET_PHP.
+function find_php() {
+    if [[ -x /usr/bin/php ]]; then
+        echo /usr/bin/php
+        return
+    fi
+
+    local candidate
+    while read -r candidate; do
+        if [[ "$(readlink -f "$candidate")" != "$(readlink -f "$DIR/php")" ]]; then
+            echo "$candidate"
+            return
+        fi
+    done < <(type -ap php)
+}
+
+VALET_PHP="${VALET_PHP:-$(find_php)}"
+if [[ -z "$VALET_PHP" ]]; then
+    echo "Valet needs PHP on the command line, but no php was found." >&2
+    exit 1
+fi
+
 # If the command is one of the commands that requires "sudo" privileges
 # then we'll proxy the incoming CLI request using sudo, which allows
 # us to never require the end users to manually specify each sudo.
@@ -73,7 +97,7 @@ then
 
     if [[ "$EUID" -ne 0 ]]
     then
-        sudo env HOME="$HOME_PATH" "$SOURCE" "$@"
+        sudo env HOME="$HOME_PATH" VALET_PHP="$VALET_PHP" "$SOURCE" "$@"
         exit 0
     fi
 fi
@@ -82,7 +106,7 @@ if [[ -n $2 && "domain port" =~ $1 ]]
 then
     if [[ "$EUID" -ne 0 ]]
     then
-        sudo env HOME="$HOME_PATH" "$SOURCE" "$@"
+        sudo env HOME="$HOME_PATH" VALET_PHP="$VALET_PHP" "$SOURCE" "$@"
         exit 0
     fi
 fi
@@ -123,10 +147,10 @@ elif [[ "$1" = "php" ]]
 then
     if [[ $2 == *"--site="* ]]; then
         SITE=${2#*=}
-        PHP_BIN=$(/usr/bin/php "$DIR/cli/valet.php" which-php "$SITE")
+        PHP_BIN=$("$VALET_PHP" "$DIR/cli/valet.php" which-php "$SITE")
         PHP_ARGS=("${@:3}")
     else
-        PHP_BIN=$(/usr/bin/php "$DIR/cli/valet.php" which-php)
+        PHP_BIN=$("$VALET_PHP" "$DIR/cli/valet.php" which-php)
         PHP_ARGS=("${@:2}")
     fi
 
@@ -142,10 +166,10 @@ elif [[ "$1" = "composer" ]]
 then
     if [[ $2 == *"--site="* ]]; then
         SITE=${2#*=}
-        PHP_BIN=$(/usr/bin/php "$DIR/cli/valet.php" which-php "$SITE")
+        PHP_BIN=$("$VALET_PHP" "$DIR/cli/valet.php" which-php "$SITE")
         COMPOSER_ARGS=("${@:3}")
     else
-        PHP_BIN=$(/usr/bin/php "$DIR/cli/valet.php" which-php)
+        PHP_BIN=$("$VALET_PHP" "$DIR/cli/valet.php" which-php)
         COMPOSER_ARGS=("${@:2}")
     fi
 
@@ -161,5 +185,5 @@ then
 # and let it handle the request. These are commands which can be run
 # without sudo and don't require taking over terminals like Ngrok.
 else
-    /usr/bin/php "$DIR/cli/valet.php" "$@"
+    "$VALET_PHP" "$DIR/cli/valet.php" "$@"
 fi
