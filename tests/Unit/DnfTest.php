@@ -27,6 +27,34 @@ class DnfTest extends TestCase
         $mysql->stop();
     }
 
+    /**
+     * @dataProvider redisProvider
+     */
+    public function testUsesValkeyWhereNothingProvidesRedis(array $installed, string $provides, string $expected): void
+    {
+        $cli = Mockery::mock(CommandLine::class);
+        foreach (['redis', 'valkey'] as $package) {
+            $cli->shouldReceive('run')
+                ->with("rpm -q '" . $package . "' >/dev/null 2>&1 && echo ok || echo no")
+                ->andReturn(in_array($package, $installed, true) ? 'ok' : 'no');
+        }
+        $cli->shouldReceive('run')->with('dnf -q repoquery --whatprovides redis 2>/dev/null')->andReturn($provides);
+        $manager = new Dnf($cli);
+
+        $this->assertSame($expected, $manager->packageName('redis'));
+        $this->assertSame($expected, $manager->packageName('redis'));
+    }
+
+    public function redisProvider(): array
+    {
+        return [
+            'fedora' => [[], "redis-0:7.2.11-1.fc44.x86_64\n", 'redis'],
+            'rhel 10' => [[], '', 'valkey'],
+            'valkey installed' => [['valkey'], '', 'valkey'],
+            'redis installed' => [['redis'], '', 'redis'],
+        ];
+    }
+
     public function testPrefersInstalledRemiPackagesAndUsesMatchingExtensions(): void
     {
         $cli = Mockery::mock(CommandLine::class);

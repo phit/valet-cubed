@@ -28,6 +28,8 @@ class Dnf implements PackageManager
 
     private array $phpConventionCache = [];
 
+    private ?string $redisPackage = null;
+
     /**
      * Create a new Apt instance.
      */
@@ -170,9 +172,28 @@ class Dnf implements PackageManager
      */
     public function packageName(string $name): string
     {
+        if ($name === 'redis') {
+            return $this->redisPackage ??= $this->resolveRedisPackage();
+        }
         if (isset(self::PACKAGES[$name])) {
             return self::PACKAGES[$name];
         }
         throw new \InvalidArgumentException(\sprintf('Package not found by %s', $name));
+    }
+
+    /**
+     * RHEL 10 and its rebuilds ship Valkey instead of Redis, and nothing
+     * provides "redis" there.
+     */
+    private function resolveRedisPackage(): string
+    {
+        foreach (['redis', 'valkey'] as $package) {
+            if ($this->installed($package)) {
+                return $package;
+            }
+        }
+        $provides = trim($this->cli->run('dnf -q repoquery --whatprovides redis 2>/dev/null'));
+
+        return $provides === '' ? 'valkey' : 'redis';
     }
 }
