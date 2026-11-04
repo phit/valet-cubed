@@ -158,8 +158,10 @@ class Valet
             PhpFpmFacade::stop();
         }
 
-        // Copy directory
+        // Copy directory. Valet runs as root here; the copy must belong to the
+        // user, who creates certificates and logs in it.
         $this->files->copyDirectory($oldHomePath, $newHomePath);
+        $this->cli->run(\sprintf('chown -R %s %s', escapeshellarg(user() . ':' . group()), escapeshellarg($newHomePath)), null, RunAs::Root);
 
         // Replace $oldHomePath to $newHomePath in Certificates, Valet.conf file
         $this->updateNginxConfFiles();
