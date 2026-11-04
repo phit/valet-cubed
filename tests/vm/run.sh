@@ -57,7 +57,10 @@ done
 BASE="$CACHE/$(basename "$IMAGE_URL")"
 if [[ ! -f "$BASE" ]]; then
     echo "Downloading $IMAGE_URL"
-    curl -fsSL --retry 3 -o "$BASE.part" "$IMAGE_URL"
+    if ! curl -fsSL --retry 3 --retry-all-errors --http1.1 -o "$BASE.part" "$IMAGE_URL"; then
+        result fail "image download failed for $IMAGE_URL"
+        exit 1
+    fi
     mv "$BASE.part" "$BASE"
 fi
 algorithm="${IMAGE_SUM%%:*}"
