@@ -7,7 +7,6 @@ use Valet\Contracts\PackageManager;
 use Valet\Contracts\ServiceManager;
 use Valet\Facades\Configuration;
 use Valet\Facades\SiteProxy as SiteProxyFacade;
-use Valet\Facades\SiteSecure as SiteSecureFacade;
 
 class Mailpit
 {
@@ -56,18 +55,37 @@ class Mailpit
 
         $this->sm->start(self::SERVICE_NAME);
 
-        try {
-            if (!$this->sm->disabled('mailhog')) {
+        $this->removeMailHog();
+    }
+
+    /**
+     * Remove MailHog, which releases before 2.0 installed as a service with
+     * a secured nginx site. Each part is removed on its own: an upgraded
+     * home can hold the site without its certificate, which stops nginx.
+     */
+    private function removeMailHog(): void
+    {
+        $units = array_filter(
+            ['/etc/systemd/system/mailhog.service', '/etc/init.d/mailhog'],
+            fn (string $path) => $this->files->exists($path)
+        );
+        if ($units !== []) {
+            try {
+                $this->sm->stop('mailhog');
                 $this->sm->disable('mailhog');
-                if ($this->files->exists('/opt/valet-linux/mailhog')) {
-                    $this->files->remove('/opt/valet-linux/mailhog');
-                }
-                $domain = Configuration::get('domain');
-                if ($this->files->exists(VALET_HOME_PATH . "/Nginx/mailhog.$domain")) {
-                    SiteSecureFacade::unsecure("mailhog.$domain");
-                }
+            } catch (DomainException $e) {
             }
-        } catch (\DomainException $e) {
+            foreach ($units as $unit) {
+                $this->files->unlink($unit);
+            }
+            $this->cli->run('systemctl daemon-reload', null, RunAs::Root);
+        }
+        $this->files->unlink('/opt/valet-linux/mailhog');
+
+        $site = 'mailhog.' . Configuration::get('domain');
+        $this->files->unlink(VALET_HOME_PATH . '/Nginx/' . $site);
+        foreach (['crt', 'key', 'csr', 'conf'] as $extension) {
+            $this->files->unlink(VALET_HOME_PATH . '/Certificates/' . $site . '.' . $extension);
         }
     }
 

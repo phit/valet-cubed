@@ -10,6 +10,7 @@ use Valet\Contracts\PackageManager;
 use Valet\Contracts\ServiceManager;
 use Valet\Filesystem;
 use Valet\Mailpit;
+use Valet\RunAs;
 use Valet\SiteProxy;
 use Valet\SiteSecure;
 use Valet\Tests\TestCase;
@@ -108,38 +109,18 @@ class MailpitTest extends TestCase
             ->once()
             ->with('mailpit');
 
-        $this->serviceManager
-            ->shouldReceive('disabled')
-            ->once()
-            ->with('mailhog')
-            ->andReturnFalse();
-
-        $this->serviceManager
-            ->shouldReceive('disable')
-            ->once()
-            ->with('mailhog');
-
-        $this->filesystem
-            ->shouldReceive('exists')
-            ->once()
-            ->with('/opt/valet-linux/mailhog')
-            ->andReturnTrue();
-
-        $this->filesystem
-            ->shouldReceive('remove')
-            ->once()
-            ->with('/opt/valet-linux/mailhog');
-
-        $this->filesystem
-            ->shouldReceive('exists')
-            ->once()
-            ->with(VALET_HOME_PATH . "/Nginx/mailhog.test")
-            ->andReturnTrue();
-
-        $this->siteSecure
-            ->shouldReceive('unsecure')
-            ->once()
-            ->with('mailhog.test');
+        // MailHog from releases before 2.0, with the site but not its certificate.
+        $this->filesystem->shouldReceive('exists')->with('/etc/systemd/system/mailhog.service')->once()->andReturnTrue();
+        $this->filesystem->shouldReceive('exists')->with('/etc/init.d/mailhog')->once()->andReturnFalse();
+        $this->serviceManager->shouldReceive('stop')->with('mailhog')->once();
+        $this->serviceManager->shouldReceive('disable')->with('mailhog')->once();
+        $this->filesystem->shouldReceive('unlink')->with('/etc/systemd/system/mailhog.service')->once();
+        $this->commandLine->shouldReceive('run')->with('systemctl daemon-reload', null, RunAs::Root)->once();
+        $this->filesystem->shouldReceive('unlink')->with('/opt/valet-linux/mailhog')->once();
+        $this->filesystem->shouldReceive('unlink')->with(VALET_HOME_PATH . '/Nginx/mailhog.test')->once();
+        foreach (['crt', 'key', 'csr', 'conf'] as $extension) {
+            $this->filesystem->shouldReceive('unlink')->with(VALET_HOME_PATH . '/Certificates/mailhog.test.' . $extension)->once();
+        }
 
         $this->mailpit->install();
     }
