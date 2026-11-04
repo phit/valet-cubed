@@ -17,7 +17,7 @@ class AltLinuxTest extends TestCase
         $this->assertSame('php8.3-fpm', $manager->getPhpFpmServiceName('8.3'));
         $this->assertSame('php8.3-mysqlnd', $manager->getPhpExtensionName('8.3', 'mysql'));
         $this->assertSame('/etc/pki/ca-trust/source/anchors', $manager->getCaCertificatesPath());
-        $this->assertSame('sudo update-ca-trust', $manager->getCaUpdateCommand());
+        $this->assertSame('update-ca-trust', $manager->getCaUpdateCommand());
     }
 
     public function testAltLinuxDetectionAcceptsQuotedOsReleaseId(): void

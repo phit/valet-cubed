@@ -132,7 +132,7 @@ class Eopkg implements PackageManager
      */
     public function getCaUpdateCommand(): string
     {
-        return 'sudo update-ca-certificates';
+        return 'update-ca-certificates';
     }
 
     /**

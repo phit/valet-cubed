@@ -391,10 +391,11 @@ class Mysql
     private function configureDataDirectory(): void
     {
         $this->cli->run(
-            'sudo mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql',
+            'mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql',
             function ($statusCode, $output) {
                 Writer::error(\sprintf('%s: %s', $statusCode, $output));
-            }
+            },
+            RunAs::Root
         );
         $this->restart();
     }
@@ -431,10 +432,10 @@ class Mysql
             if (file_put_contents($file, $sql) === false) {
                 throw new \RuntimeException('Unable to write temporary MySQL script.');
             }
-            $this->cli->run('sudo mysql < ' . escapeshellarg($file), function ($statusCode, $error) use (&$success) {
+            $this->cli->run('mysql < ' . escapeshellarg($file), function ($statusCode, $error) use (&$success) {
                 Writer::warn('Setting password for valet user failed due to `['.$statusCode.'] '.$error.'`');
                 $success = false;
-            });
+            }, RunAs::Root);
         } finally {
             unlink($file);
         }

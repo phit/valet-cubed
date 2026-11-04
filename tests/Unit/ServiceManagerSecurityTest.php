@@ -8,6 +8,7 @@ use Valet\CommandLine;
 use Valet\Filesystem;
 use Valet\ServiceManagers\LinuxService;
 use Valet\ServiceManagers\Systemd;
+use Valet\RunAs;
 use Valet\Tests\TestCase;
 
 class ServiceManagerSecurityTest extends TestCase
@@ -17,7 +18,7 @@ class ServiceManagerSecurityTest extends TestCase
         $cli = Mockery::mock(CommandLine::class);
         $cli->shouldReceive('run')->once()->with("systemctl status 'mysql' | grep Loaded")->andReturn('not found');
         $cli->shouldReceive('run')->once()->with("systemctl status 'mysqld' | grep Loaded")->andReturn('Loaded: loaded');
-        $cli->shouldReceive('quietly')->once()->with('sudo systemctl start mysqld');
+        $cli->shouldReceive('quietly')->once()->with('systemctl start mysqld', RunAs::Root);
         (new Systemd($cli, Mockery::mock(Filesystem::class)))->start('mysql');
     }
 

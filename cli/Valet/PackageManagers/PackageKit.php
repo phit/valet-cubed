@@ -132,7 +132,7 @@ class PackageKit implements PackageManager
      */
     public function getCaUpdateCommand(): string
     {
-        return 'sudo update-ca-trust';
+        return 'update-ca-trust';
     }
 
     /**

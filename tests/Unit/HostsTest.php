@@ -13,6 +13,7 @@ use Valet\Contracts\ServiceManager;
 use Valet\Filesystem;
 use Valet\Hosts;
 use Valet\ResolvedDns;
+use Valet\RunAs;
 use Valet\Tests\TestCase;
 
 class HostsTest extends TestCase
@@ -305,10 +306,10 @@ class HostsTest extends TestCase
             ->shouldReceive('passthru')
             ->once()
             ->with(sprintf(
-                'sudo cp %s %s',
+                'cp %s %s',
                 escapeshellarg($temporaryPath),
                 escapeshellarg('/etc/hosts')
-            ));
+            ), RunAs::Root);
 
         $this->filesystem
             ->shouldReceive('unlink')

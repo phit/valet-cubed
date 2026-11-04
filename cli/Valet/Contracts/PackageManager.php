@@ -54,7 +54,7 @@ interface PackageManager
     public function packageName(string $name): string;
 
     /**
-     * Get the command to update CA certificates
+     * Get the command to update CA certificates; callers run it as root.
      */
     public function getCaUpdateCommand(): string;
 }

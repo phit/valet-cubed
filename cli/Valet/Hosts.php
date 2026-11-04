@@ -211,10 +211,10 @@ class Hosts
 
         $this->files->putAsUser($temporaryPath, $contents);
         $this->cli->passthru(sprintf(
-            'sudo cp %s %s',
+            'cp %s %s',
             escapeshellarg($temporaryPath),
             escapeshellarg($this->hostsPath)
-        ));
+        ), RunAs::Root);
         $this->files->unlink($temporaryPath);
     }
 

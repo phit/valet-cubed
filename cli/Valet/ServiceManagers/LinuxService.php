@@ -7,6 +7,7 @@ use DomainException;
 use Valet\CommandLine;
 use Valet\Contracts\ServiceManager;
 use Valet\Filesystem;
+use Valet\RunAs;
 
 class LinuxService implements ServiceManager
 {
@@ -39,7 +40,7 @@ class LinuxService implements ServiceManager
 
         foreach ($services as $service) {
             Writer::twoColumnDetail(ucfirst($service), 'Starting');
-            $this->cli->quietly('sudo service '.$this->getRealService($service).' start');
+            $this->cli->quietly('service '.$this->getRealService($service).' start', RunAs::Root);
         }
     }
 
@@ -54,7 +55,7 @@ class LinuxService implements ServiceManager
 
         foreach ($services as $service) {
             Writer::twoColumnDetail(ucfirst($service), 'Stopping');
-            $this->cli->quietly('sudo service '.$this->getRealService($service).' stop');
+            $this->cli->quietly('service '.$this->getRealService($service).' stop', RunAs::Root);
         }
     }
 
@@ -69,7 +70,7 @@ class LinuxService implements ServiceManager
 
         foreach ($services as $service) {
             Writer::twoColumnDetail(ucfirst($service), 'Restarting');
-            $this->cli->quietly('sudo service '.$this->getRealService($service).' restart');
+            $this->cli->quietly('service '.$this->getRealService($service).' restart', RunAs::Root);
         }
     }
 
@@ -105,8 +106,8 @@ class LinuxService implements ServiceManager
     {
         try {
             $service = $this->getRealService($service);
-            $this->cli->quietly("sudo chmod -x /etc/init.d/{$service}");
-            $this->cli->quietly("sudo update-rc.d $service defaults");
+            $this->cli->quietly("chmod -x /etc/init.d/{$service}", RunAs::Root);
+            $this->cli->quietly("update-rc.d $service defaults", RunAs::Root);
 
             Writer::twoColumnDetail(ucfirst($service), 'Disabled');
         } catch (DomainException $e) {
@@ -121,7 +122,7 @@ class LinuxService implements ServiceManager
     {
         try {
             $service = $this->getRealService($service);
-            $this->cli->quietly("sudo update-rc.d $service defaults");
+            $this->cli->quietly("update-rc.d $service defaults", RunAs::Root);
             Writer::twoColumnDetail(ucfirst($service), 'Enabled');
         } catch (DomainException $e) {
             Writer::warn(ucfirst($service).' unavailable.');

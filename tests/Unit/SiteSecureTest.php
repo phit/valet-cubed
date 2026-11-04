@@ -9,6 +9,7 @@ use Valet\Configuration;
 use Valet\Contracts\PackageManager;
 use Valet\Filesystem;
 use Valet\PhpFpm;
+use Valet\RunAs;
 use Valet\SiteSecure;
 use Valet\Tests\TestCase;
 
@@ -93,7 +94,7 @@ class SiteSecureTest extends TestCase
         $this->commandLine
             ->shouldReceive('run')
             ->once()
-            ->with($this->pm->getCaUpdateCommand());
+            ->with($this->pm->getCaUpdateCommand(), null, RunAs::Root);
 
         $caExpireInDate = (new \DateTime())->diff(new \DateTime("+20 years"));
         $expiryInDays = (int)$caExpireInDate->format('%a'); // 20 years in days
@@ -125,7 +126,7 @@ class SiteSecureTest extends TestCase
         $this->commandLine
             ->shouldReceive('run')
             ->once()
-            ->with($this->pm->getCaUpdateCommand());
+            ->with($this->pm->getCaUpdateCommand(), null, RunAs::Root);
 
         $this->commandLine
             ->shouldReceive('runAsUser')

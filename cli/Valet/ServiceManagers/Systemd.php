@@ -7,6 +7,7 @@ use DomainException;
 use Valet\CommandLine;
 use Valet\Contracts\ServiceManager;
 use Valet\Filesystem;
+use Valet\RunAs;
 
 class Systemd implements ServiceManager
 {
@@ -44,7 +45,7 @@ class Systemd implements ServiceManager
 
         foreach ($services as $service) {
             Writer::twoColumnDetail(ucfirst($service), 'Starting');
-            $this->cli->quietly('sudo systemctl start '.$this->getRealService($service));
+            $this->cli->quietly('systemctl start '.$this->getRealService($service), RunAs::Root);
         }
     }
 
@@ -59,7 +60,7 @@ class Systemd implements ServiceManager
 
         foreach ($services as $service) {
             Writer::twoColumnDetail(ucfirst($service), 'Stopping');
-            $this->cli->quietly('sudo systemctl stop '.$this->getRealService($service));
+            $this->cli->quietly('systemctl stop '.$this->getRealService($service), RunAs::Root);
         }
     }
 
@@ -74,7 +75,7 @@ class Systemd implements ServiceManager
 
         foreach ($services as $service) {
             Writer::twoColumnDetail(ucfirst($service), 'Restarting');
-            $this->cli->quietly('sudo systemctl restart '.$this->getRealService($service));
+            $this->cli->quietly('systemctl restart '.$this->getRealService($service), RunAs::Root);
         }
     }
 
@@ -112,7 +113,7 @@ class Systemd implements ServiceManager
             $service = $this->getRealService($service);
 
             if ($this->disabled($service)) {
-                $this->cli->quietly('sudo systemctl enable '.$service);
+                $this->cli->quietly('systemctl enable '.$service, RunAs::Root);
             }
 
             Writer::twoColumnDetail(ucfirst($service), 'Enabled');
@@ -130,7 +131,7 @@ class Systemd implements ServiceManager
             $service = $this->getRealService($service);
 
             if (!$this->disabled($service)) {
-                $this->cli->quietly('sudo systemctl disable '.$service);
+                $this->cli->quietly('systemctl disable '.$service, RunAs::Root);
             }
 
             Writer::twoColumnDetail(ucfirst($service), 'Disabled');
