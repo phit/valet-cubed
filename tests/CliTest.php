@@ -709,7 +709,8 @@ class CliTest extends TestCase
                 [
                     'domain' => null,
                 ],
-                'valet-linux-plus.test is secured',
+                // Without a site, the command uses the current directory's name.
+                '{cwd}.test is secured',
             ],
             [
                 [
@@ -734,7 +735,7 @@ class CliTest extends TestCase
         $siteSecured->shouldReceive('secured')->withNoArgs()->once()->andReturn(collect([
             'domain-1.test',
             'domain-2.test',
-            'valet-linux-plus.test',
+            basename(getcwd()) . '.test',
         ]));
         swap(SiteSecure::class, $siteSecured);
 
@@ -746,7 +747,7 @@ class CliTest extends TestCase
         $output = Writer::output();
 
         $this->assertStringContainsString(
-            $expectedMessage,
+            str_replace('{cwd}', basename(getcwd()), $expectedMessage),
             $output->fetch()
         );
     }
