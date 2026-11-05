@@ -46,7 +46,7 @@ if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
  * Create the application.
  */
 Container::setInstance(new Container());
-$version = '3.0.0';
+$version = '3.0.1';
 
 $app = new Application('Valet Cubed', $version);
 
