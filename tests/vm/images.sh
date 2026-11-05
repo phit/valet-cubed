@@ -56,8 +56,8 @@ image_for() {
             FAMILY="pacman"
             ;;
         opensuse-leap-16.0)
-            IMAGE_URL="https://download.opensuse.org/distribution/leap/16.0/appliances/Leap-16.0-Minimal-VM.x86_64-Cloud-Build18.89.qcow2"
-            IMAGE_SUM="sha256:2f328a0135f9c8bf62c5ec012405169f76188ea7abf18f9c65cb0ea5374c042b"
+            IMAGE_URL="https://download.opensuse.org/distribution/leap/16.0/appliances/Leap-16.0-Minimal-VM.x86_64-Cloud-Build18.90.qcow2"
+            IMAGE_SUM="sha256:93dafb8f613f7085b1ce76e0be78f8c2201dc665257b8a5a19f8211c0cdc23af"
             FAMILY="zypper"
             ;;
         alt-p11)
