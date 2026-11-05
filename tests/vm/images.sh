@@ -62,7 +62,7 @@ image_for() {
             ;;
         alt-p11)
             # Rolling name: ALT replaces this file in place.
-            IMAGE_URL="https://ftp.altlinux.org/pub/distributions/ALTLinux/images/p11/cloud/x86_64/alt-server-11.1-p11-cloud-x86_64.qcow2"
+            IMAGE_URL="https://mirror.yandex.ru/altlinux/p11/images/cloud/x86_64/alt-server-11.1-p11-cloud-x86_64.qcow2"
             IMAGE_SUM="sha256:b6ffa3bd52b3dbe1e8e2389cc988daffcb351e7e38918265cad58e1641e2374f"
             FAMILY="altapt"
             ;;

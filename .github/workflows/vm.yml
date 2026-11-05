@@ -94,11 +94,18 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y qemu-system-x86 qemu-utils cloud-image-utils
+      - name: Identify pinned image
+        id: image
+        run: |
+          . tests/vm/images.sh
+          image_for ${{ matrix.distro }}
+          echo "sum=${IMAGE_SUM#*:}" >> "$GITHUB_OUTPUT"
       - name: Cache pinned image
         uses: actions/cache@v6
         with:
           path: ~/.cache/valet-vm
-          key: vm-image-${{ matrix.distro }}-${{ hashFiles('tests/vm/images.sh') }}
+          # Per image, so changing another entry in images.sh keeps this one.
+          key: vm-image-${{ matrix.distro }}-${{ steps.image.outputs.sum }}
       - name: Run scenario
         run: tests/vm/run.sh ${{ matrix.distro }} ${{ matrix.scenario }}
       - name: Summarize
