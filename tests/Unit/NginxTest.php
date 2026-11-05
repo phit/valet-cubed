@@ -210,9 +210,11 @@ class NginxTest extends TestCase
             ->shouldReceive('reSecureForNewDomain')
             ->with('test', 'test')
             ->once();
+        $this->siteSecure->shouldReceive('rebuildUnsecuredProxies')->once();
 
-        $old = "# ISOLATED_PHP_VERSION=8.2\nrewrite ^ /old/valet/server.php last;\n"
-            . "error_page 404 /old/valet/server.php;\nfastcgi_index /old/valet/server.php;\n"
+        // Proxy and isolated stubs quote the path after error_page.
+        $old = "rewrite ^ /old/valet/server.php last;\n"
+            . "error_page 404 \"/old/valet/server.php\";\nfastcgi_index /old/valet/server.php;\n"
             . "fastcgi_param SCRIPT_FILENAME /old/valet/server.php;\n# custom setting\n";
         $updated = str_replace('/old/valet/server.php', VALET_SERVER_PATH, $old);
         $this->filesystem->shouldReceive('scandir')->with(VALET_HOME_PATH . '/Nginx')->once()

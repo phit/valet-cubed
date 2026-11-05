@@ -190,22 +190,22 @@ class Nginx
         }
 
         $this->siteSecure->reSecureForNewDomain($domain, $domain);
+        $this->siteSecure->rebuildUnsecuredProxies();
     }
 
     /**
-     * Refresh Valet's router path without replacing custom site configuration.
+     * Point every site configuration at this installation's router, without
+     * replacing custom configuration. Secured, isolated and proxied sites keep
+     * their configuration across installs, so an old path would outlive a move.
      */
-    private function rewriteIsolatedNginxFiles(): void
+    private function rewriteServerPathInNginxFiles(): void
     {
         foreach ($this->configuredSites() as $site) {
             $path = VALET_HOME_PATH . '/Nginx/' . $site;
             $contents = $this->files->get($path);
-            if (!str_contains($contents, '# ' . ISOLATED_PHP_VERSION)) {
-                continue;
-            }
 
             $updated = preg_replace_callback(
-                '~^(\s*(?:rewrite\s+\^\s+|error_page\s+404\s+|fastcgi_index\s+|fastcgi_param\s+SCRIPT_FILENAME\s+))/[^\s;]*/server\.php(?=\s|;)~m',
+                '~^(\s*(?:rewrite\s+\^\s+|error_page\s+404\s+|fastcgi_index\s+|fastcgi_param\s+SCRIPT_FILENAME\s+)"?)/[^\s;"]*/server\.php(?="|\s|;)~m',
                 static fn ($match) => $match[1] . VALET_SERVER_PATH,
                 $contents
             );
@@ -302,6 +302,6 @@ class Nginx
         $this->files->putAsUser($nginxDirectory . '/.keep', "\n");
 
         $this->rewriteSecureNginxFiles();
-        $this->rewriteIsolatedNginxFiles();
+        $this->rewriteServerPathInNginxFiles();
     }
 }

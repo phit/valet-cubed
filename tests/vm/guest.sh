@@ -533,6 +533,7 @@ scenario() {
         as_valet "valet install --no-interaction --ignore-selinux" >> "$OUT/legacy-install.log" 2>&1
     fi
     as_valet "cd ~/sites && valet park" >> "$OUT/legacy-install.log" 2>&1
+    legacy_sites
     sleep 2
     snapshot legacy
     if resolves_to "$LAN_NAME" "$LAN_ADDRESS"; then
@@ -566,6 +567,11 @@ scenario() {
     check "normal install does not modify legacy DNS files" \
         same_files_as legacy '^/(etc/(dnsmasq|NetworkManager|resolv|default/dnsmasq|systemd/(resolved|system/valet-dns))|opt/valet-linux)' '^/opt/valet-linux/mailhog\b'
     check "normal install warns about the legacy integration" grep -q 'dns:migrate' "$OUT/install.log"
+    check "site configurations point only at an existing router" router_paths_exist
+    if [[ -e "$STATE/legacy-secured" ]]; then
+        check "site secured by the original release is served after the upgrade" \
+            bash -c "curl -sSk --max-time 10 --resolve legacy-tls.test:443:127.0.0.1 https://legacy-tls.test/ | grep -qx valet-ok"
+    fi
     snapshot pre-migration
     # Rollback must restore the legacy behaviour, which is not always a
     # working wildcard (see the note after the original install).
@@ -586,6 +592,34 @@ scenario() {
     verify_restored
     snapshot migrated
     finish_phase
+}
+
+# Sites the original release keeps its own nginx configuration for, which
+# Valet must carry over: a secured site and a proxy. Old releases that
+# cannot create them on this distribution are noted, not failed.
+legacy_sites() {
+    local nginx
+    nginx="$(as_valet 'test -d ~/.valet && echo ~/.valet || echo ~/.config/valet')/Nginx"
+    as_valet "mkdir -p ~/sites/legacy-tls && echo '<?php echo \"valet-ok\";' > ~/sites/legacy-tls/index.php && valet secure legacy-tls" \
+        >> "$OUT/legacy-install.log" 2>&1
+    if grep -qs 'server\.php' "$nginx/legacy-tls.test"; then
+        touch "$STATE/legacy-secured"
+    else
+        note "the original release did not secure a site on $DISTRO"
+    fi
+    as_valet "valet proxy legacy-proxy http://127.0.0.1:8099" >> "$OUT/legacy-install.log" 2>&1
+    [[ -e "$nginx/legacy-proxy.test" ]] || note "the original release did not proxy a site on $DISTRO"
+}
+
+# Every router path in Valet's site configurations exists.
+router_paths_exist() {
+    local paths
+    paths="$(grep -rhoE '/[^[:space:];]*/server\.php' /home/valet/.config/valet/Nginx | sort -u)"
+    echo "$paths"
+    [[ -n "$paths" ]] || return 0
+    while read -r path; do
+        test -e "$path" || { echo "missing: $path"; return 1; }
+    done <<< "$paths"
 }
 
 legacy_dns_component() {

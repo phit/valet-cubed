@@ -133,10 +133,12 @@ class SiteSecure
 
         foreach ($secured as $oldUrl) {
             $newUrl = str_replace('.' . $oldDomain, '.' . $domain, $oldUrl);
-            $hasConf = $this->files->exists($this->nginxPath($oldUrl));
-            $nginxConf = null;
-            if ($hasConf) {
-                $nginxConf = $this->files->get($this->nginxPath($oldUrl));
+            // Rebuild from the current stub, keeping only what the site is: a
+            // proxy keeps its target, an isolated site its PHP version.
+            // Configurations from older releases point at sockets, routers and
+            // listen addresses that no longer exist.
+            $nginxConf = $this->prepareConf($oldUrl, true);
+            if ($nginxConf !== null) {
                 $nginxConf = str_replace($oldUrl, $newUrl, $nginxConf);
             }
 
@@ -144,6 +146,41 @@ class SiteSecure
 
             $this->secure($newUrl, $nginxConf);
         }
+    }
+
+    /**
+     * Rebuild the configuration of proxies that are not secured from the current stub.
+     */
+    public function rebuildUnsecuredProxies(): void
+    {
+        if (!$this->files->exists($this->nginxPath())) {
+            return;
+        }
+
+        $secured = $this->secured();
+
+        foreach ($this->files->scandir($this->nginxPath()) as $site) {
+            if (str_starts_with($site, '.') || $secured->contains($site)) {
+                continue;
+            }
+
+            $stub = $this->rebuildProxyConf($site, false);
+            if ($stub !== null) {
+                $this->files->putAsUser($this->nginxPath($site), $this->buildUnsecureNginxServer($site, $stub));
+            }
+        }
+    }
+
+    /**
+     * A proxy configuration holds nothing but its target, so it can be rebuilt
+     * from the current stub. Releases before 2.0 bound proxies to 127.0.0.1,
+     * which takes every request to that address away from Valet's other sites.
+     */
+    private function rebuildProxyConf(string $url, bool $secure): ?string
+    {
+        $conf = $this->prepareConf($url, $secure);
+
+        return $conf !== null && preg_match('/^# valet stub: (secure\.)?proxy\.valet\.conf/', $conf) ? $conf : null;
     }
 
     /**

@@ -326,6 +326,73 @@ class SiteSecureTest extends TestCase
     }
 
     #[Test]
+    public function itWillRebuildSecuredSitesFromTheCurrentStubs(): void
+    {
+        $nginx = VALET_HOME_PATH . '/Nginx';
+        $certificates = VALET_HOME_PATH . '/Certificates';
+        // Releases before 2.0 wrote no stub marker and used a socket that no longer exists.
+        $legacySite = "server {\n    listen 127.0.0.1:443 ssl http2;\n        fastcgi_pass unix:/home/user/.config/valet/valet.sock;\n}\n";
+        $proxy = "# valet stub: secure.proxy.valet.conf\nserver {\n    listen 127.0.0.1:443 ssl http2;\n"
+            . "    location / {\n        proxy_pass http://127.0.0.1:8099;\n    }\n}\n";
+        $stub = VALET_ROOT_PATH . '/cli/stubs/secure.proxy.valet.conf';
+
+        $this->filesystem->shouldReceive('exists')->with($certificates)->andReturnTrue();
+        $this->filesystem->shouldReceive('scandir')->with($certificates)->andReturn(['site.test.crt', 'api.test.crt']);
+        $this->filesystem->shouldReceive('exists')->with($nginx . '/site.test')->andReturnTrue();
+        $this->filesystem->shouldReceive('get')->with($nginx . '/site.test')->andReturn($legacySite);
+        $this->filesystem->shouldReceive('exists')->with($nginx . '/api.test')->andReturnTrue();
+        $this->filesystem->shouldReceive('get')->with($nginx . '/api.test')->andReturn($proxy);
+        $this->filesystem->shouldReceive('get')->with($stub)->andReturn(file_get_contents($stub));
+
+        /** @var SiteSecure&MockInterface $siteSecure */
+        $siteSecure = Mockery::mock(SiteSecure::class . '[unsecure,secure]', [
+            $this->filesystem, $this->commandLine, $this->config, $this->pm,
+        ]);
+        $siteSecure->shouldReceive('unsecure')->with('site.test')->once();
+        $siteSecure->shouldReceive('unsecure')->with('api.test')->once();
+        // No stub: secure() builds the site from the default stub.
+        $siteSecure->shouldReceive('secure')->with('site.test', null)->once();
+        $siteSecure->shouldReceive('secure')->with('api.test', Mockery::on(
+            fn (string $conf) => str_starts_with($conf, '# valet stub: secure.proxy.valet.conf')
+                && !str_contains($conf, 'listen 127.0.0.1')
+                && str_contains($conf, 'proxy_pass http://127.0.0.1:8099;')
+        ))->once();
+
+        $siteSecure->reSecureForNewDomain('test', 'test');
+    }
+
+    #[Test]
+    public function itWillRebuildUnsecuredProxiesFromTheCurrentStub(): void
+    {
+        $nginx = VALET_HOME_PATH . '/Nginx';
+        // Releases before 2.0 bound proxies to 127.0.0.1, taking over every site.
+        $legacyProxy = "# valet stub: proxy.valet.conf\n\nserver {\n    listen 127.0.0.1:80;\n"
+            . "    error_page 404 \"/old/valet/server.php\";\n    location / {\n        proxy_pass http://127.0.0.1:8099;\n    }\n}\n";
+        $stub = VALET_ROOT_PATH . '/cli/stubs/proxy.valet.conf';
+
+        $this->filesystem->shouldReceive('exists')->with($nginx)->andReturnTrue();
+        $this->filesystem->shouldReceive('scandir')->with(VALET_HOME_PATH . '/Certificates')->andReturn(['secure.test.crt']);
+        $this->filesystem->shouldReceive('scandir')->with($nginx)->andReturn(['.keep', 'api.test', 'secure.test', 'isolated.test']);
+        $this->filesystem->shouldReceive('exists')->with($nginx . '/api.test')->andReturnTrue();
+        $this->filesystem->shouldReceive('get')->with($nginx . '/api.test')->andReturn($legacyProxy);
+        $this->filesystem->shouldReceive('exists')->with($nginx . '/isolated.test')->andReturnTrue();
+        $this->filesystem->shouldReceive('get')->with($nginx . '/isolated.test')->andReturn("# custom site\n");
+        $this->filesystem->shouldReceive('get')->with($stub)->andReturn(file_get_contents($stub));
+        $this->filesystem->shouldReceive('ensureDirExists');
+        $this->config->shouldReceive('get')->with('port', 80)->andReturn(80);
+        $this->config->shouldReceive('get')->with('https_port', 443)->andReturn(443);
+
+        $this->filesystem->shouldReceive('putAsUser')->once()->with($nginx . '/api.test', Mockery::on(
+            fn (string $conf) => !str_contains($conf, 'listen 127.0.0.1')
+                && str_contains($conf, 'proxy_pass http://127.0.0.1:8099;')
+                && !str_contains($conf, '/old/valet/server.php')
+                && str_contains($conf, 'server_name api.test ')
+        ));
+
+        $this->siteSecure->rebuildUnsecuredProxies();
+    }
+
+    #[Test]
     public function itWillRegenerateSecuredSites(): void
     {
         $phpFpm = Mockery::mock(PhpFpm::class);
